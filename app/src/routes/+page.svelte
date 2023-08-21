@@ -29,7 +29,7 @@
     }
 } catch (error) {
     console.log(error);
-    window.location.href = 'https://discodes.xyz/errors/uhoh';
+    //window.location.href = 'https://discodes.xyz/errors/uhoh';
 }
 });
 

@@ -2,6 +2,19 @@
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
 
+    export let data
+    let { supabase, session } = data
+    $: ({ supabase, session } = data)
+
+    const handleSignIn = async () => {
+        await supabase.auth.signInWithOAuth({
+            provider:'discord',
+            options: {
+                redirectTo:`${location.origin}/auth/callback`
+            }
+        })
+    }
+
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";
@@ -111,12 +124,14 @@
     });
 </script>
 
-<NavBar />
 
-<AuthCheck>
+<NavBar>
+    <button on:click="{handleSignIn}" class="btn btn-ghost">
+        Log In
+    </button>
+</NavBar>
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="mt-[64px] w-full h-full">
             <BlocklyComponent {config} locale={en} bind:workspace />
         </div>
     </div>
-</AuthCheck>

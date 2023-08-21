@@ -5,7 +5,6 @@ import Blockly from './Blockly.svelte';
 import Loading from './Loading.svelte';
 import LogOutModal from './LogOutModal.svelte';
 import RoleCheck from './RoleCheck.svelte';
-import Changelog from './Changelog.svelte';
 export {
     NavBar,
     Account,
@@ -13,6 +12,5 @@ export {
     Blockly,
     Loading,
     LogOutModal,
-    RoleCheck,
-    Changelog
+    RoleCheck
 };

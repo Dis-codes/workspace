@@ -7,5 +7,5 @@
 {#if $user}
     <slot/>
 {:else}
-{onMount(() => goto('/errors/login'))}
+{onMount(() => goto('/login'))}
 {/if}

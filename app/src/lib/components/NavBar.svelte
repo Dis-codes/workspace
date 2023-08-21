@@ -5,7 +5,7 @@
     
   </script>
 
-  <div class="navbar bg-base-200 fixed">
+  <div class="navbar bg-base-200 fixed z-10">
     <div class="flex-1">
       <a href="/" class="btn btn-square btn-ghost">
         <img src="/Images/favicon1.png" alt="Profile Picture" class="w-full h-full rounded" />
@@ -13,8 +13,8 @@
       <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
     </div>
     <div class="flex-auto">
-      <a class="btn btn-ghost normal-case no-animation" href="/plugins">Plugins</a>
-      <a class="btn btn-ghost normal-case no-animation mx-2" href="/marketplace">Marketplace</a>
+      <a class="btn btn-ghost normal-case no-animation" href="https://www.discodes.xyz/plugins">Plugins</a>
+      <a class="btn btn-ghost normal-case no-animation mx-2" href="https://www.discodes.xyz/marketplace">Marketplace</a>
       <div class="dropdown w-64">
         <input
           type="text"
@@ -24,7 +24,7 @@
           maxlength="32"
           on:keydown={(event) => {
             if (event.key === "Enter") {
-              window.location.href = `/search/users?keyword=${searchContent}`;
+              window.location.href = `https://www.discodes.xyz/search/users?keyword=${searchContent}`;
             } else if (event.key === "Escape") {
               searchContent = "";
             }
@@ -33,9 +33,9 @@
 
         {#if searchContent}
         <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-full">
-            <li><button on:click={() => window.location.href = `/search/users?keyword=${searchContent}`}>Search <span class="truncate">{searchContent}</span> in people</button></li>
-            <li><button on:click={() => window.location.href =`/search/plugins/${searchContent}`}>Search <span class="truncate">{searchContent}</span> in plugins</button></li>
-            <li><button on:click={() => window.location.href =`/search/marketplace/${searchContent}`}>Search <span class="truncate">{searchContent}</span> in marketplace</button></li>
+            <li><button on:click={() => window.location.href = `https://www.discodes.xyz/search/users?keyword=${searchContent}`}>Search <span class="truncate">{searchContent}</span> in people</button></li>
+            <li><button on:click={() => window.location.href =`https://www.discodes.xyz/search/plugins/${searchContent}`}>Search <span class="truncate">{searchContent}</span> in plugins</button></li>
+            <li><button on:click={() => window.location.href =`https://www.discodes.xyz/search/marketplace/${searchContent}`}>Search <span class="truncate">{searchContent}</span> in marketplace</button></li>
           </ul>
         {/if}
       </div>
@@ -43,7 +43,7 @@
   
     <div class="flex-none">
       {#if $user}
-        <a class="btn btn-ghost normal-case" href="/dashboard">Dashboard</a>
+        <a class="btn btn-ghost normal-case" href="https://www.discodes.xyz/dashboard">Dashboard</a>
         <Account />
       {:else}
         <slot/>

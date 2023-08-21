@@ -12,23 +12,24 @@
     const sessionValue = urlSearchParams.get('session_key');
     
     if (sessionValue) {
-        await supabase.auth.setSession(JSON.parse(sessionValue));
+        const decodedValue = decodeURIComponent(sessionValue);
+        const sessionData = JSON.parse(decodedValue);
         
         // Check if the session is valid
+        await supabase.auth.setSession(sessionData);
         const newSession = await supabase.auth.getSession();
         if (!newSession) {
             window.location.href = 'https://discodes.xyz/errors/permission';
             return;
         }
-        console.log(newSession);
-        //window.location.href = '/';
+        window.location.href = '/';
     }
-    else if (!session) {
-        //window.location.href = 'https://discodes.xyz/getsession';
+    else{
+        window.location.href = 'https://discodes.xyz/getsession';
     }
 } catch (error) {
     console.log(error);
-   // window.location.href = 'https://discodes.xyz/errors/uhoh';
+    window.location.href = 'https://discodes.xyz/errors/uhoh';
 }
 });
 

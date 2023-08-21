@@ -6,21 +6,13 @@
     let { supabase, session } = data
     $: ({ supabase, session } = data)
 
-    const handleSignIn = async () => {
-        await supabase.auth.signInWithOAuth({
-            provider:'discord',
-            options: {
-                redirectTo:`${location.origin}/auth/callback`
-            }
-        })
-    }
-
     onMount(async () => {
+        try { 
     const urlSearchParams = new URLSearchParams(window.location.search);
     const sessionValue = urlSearchParams.get('session_key');
     
     if (sessionValue) {
-        supabase.auth.setSession(JSON.parse(sessionValue));
+        await supabase.auth.setSession(JSON.parse(sessionValue));
         
         // Check if the session is valid
         const newSession = await supabase.auth.getSession();
@@ -34,6 +26,9 @@
     else if (!session) {
         window.location.href = 'https://discodes.xyz/getsession';
     }
+} catch (error) {
+    window.location.href = 'https://discodes.xyz/getsession';
+}
 });
 
     import Blockly from "blockly/core";
@@ -146,11 +141,7 @@
 </script>
 
 
-<NavBar>
-    <button on:click="{handleSignIn}" class="btn btn-ghost">
-        Log In
-    </button>
-</NavBar>
+<NavBar />
     <div class="flex flex-col items-center justify-center h-screen">
         <div class="mt-[64px] w-full h-full">
             <BlocklyComponent {config} locale={en} bind:workspace />

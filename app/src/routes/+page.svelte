@@ -27,7 +27,8 @@
         //window.location.href = 'https://discodes.xyz/getsession';
     }
 } catch (error) {
-    window.location.href = 'https://discodes.xyz/getsession';
+    console.log(error);
+   // window.location.href = 'https://discodes.xyz/errors/uhoh';
 }
 });
 

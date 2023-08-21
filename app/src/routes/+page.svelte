@@ -20,11 +20,11 @@
             window.location.href = 'https://discodes.xyz/errors/permission';
             return;
         }
-        
-        window.location.href = '/';
+        console.log(newSession);
+        //window.location.href = '/';
     }
     else if (!session) {
-        window.location.href = 'https://discodes.xyz/getsession';
+        //window.location.href = 'https://discodes.xyz/getsession';
     }
 } catch (error) {
     window.location.href = 'https://discodes.xyz/getsession';

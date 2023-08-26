@@ -6,7 +6,7 @@
         <p class="py-4 text-lg">Are you sure you want to log out?</p>
         <p class="text-warning text-lg">All Unsaved data will be lost!</p>
         <div class="modal-action">
-        <a class="btn btn-error" href="/logout">Log Out</a>
+        <a class="btn btn-error" href="https://discodes.xyz/auth/logout">Log Out</a>
         <button class="btn">Cancel</button>
         </div>
     </form>

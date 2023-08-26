@@ -15,6 +15,9 @@
     $: ({ supabase, session } = data)
 
     onMount(() => {
+        if (!session?.user) {
+            window.location.href = "https://discodes.xyz/errors/session"
+        }
         const {
         data: { subscription },
         } = supabase.auth.onAuthStateChange((event, _session) => {

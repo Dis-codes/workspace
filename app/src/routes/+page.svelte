@@ -5,34 +5,7 @@
     export let data
     let { supabase, session } = data
     $: ({ supabase, session } = data)
-
-    onMount(async () => {
-        try { 
-    const urlSearchParams = new URLSearchParams(window.location.search);
-    const sessionValue = urlSearchParams.get('session_key');
-    
-    if (sessionValue) {
-        const decodedValue = decodeURIComponent(sessionValue);
-        const sessionData = JSON.parse(decodedValue);
-        
-        // Check if the session is valid
-        await supabase.auth.setSession(sessionData);
-        const newSession = await supabase.auth.getSession();
-        if (!newSession) {
-            window.location.href = 'https://discodes.xyz/errors/permission';
-            return;
-        }
-        window.location.href = '/';
-    }
-    else{
-        window.location.href = 'https://discodes.xyz/getsession';
-    }
-} catch (error) {
-    console.log(error);
-    //window.location.href = 'https://discodes.xyz/errors/uhoh';
-}
-});
-
+  
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";

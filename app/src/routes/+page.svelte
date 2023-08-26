@@ -5,7 +5,7 @@
     export let data
     let { supabase, session } = data
     $: ({ supabase, session } = data)
-
+  
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";

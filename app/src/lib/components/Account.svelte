@@ -5,11 +5,6 @@
     import { GetUserRoles } from "$lib/utils/utils";
     import { onMount } from "svelte";
     let notificationCount = 2;
-    let isAdmin:any
-    
-    onMount(async () => {
-        isAdmin = (await GetUserRoles($user?.user_metadata.provider_id)).includes('1138771459938988052')
-    })
 </script>
 
 <details class="dropdown dropdown-end dropdown-bottom">
@@ -20,20 +15,18 @@
         <li><a href="https://www.discodes.xyz/account"><span class="material-symbols-outlined">
             person
             </span> Account</a></li>
-        <li><a href="https://www.discodes.xyz/notifications"><span class="material-symbols-outlined">
+        <li><a href="https://www.discodes.xyz/account/notifications"><span class="material-symbols-outlined">
             notifications
             </span> Notifications <span class="badge badge-error text-xs">{notificationCount}</span></a></li>
-        <li><a href="https://www.discodes.xyz/settings"><span class="material-symbols-outlined">
+        <li><a href="https://www.discodes.xyz/account"><span class="material-symbols-outlined">
             settings
             </span> Settings</a></li>
         <li><a href="https://www.discodes.xyz/help"><span class="material-symbols-outlined">
             help
             </span> Help & Support</a></li>
-            {#if isAdmin}
-            <li><a href="https://www.discodes.xyz/admin"><span class="material-symbols-outlined">
-                shield_person
-                </span> Admin</a></li>
-            {/if}
+            <li><a href="https://www.discodes.xyz/user/{$user.user_metadata.full_name}"><span class="material-symbols-outlined">
+                account_box
+                </span> Profile</a></li>
         <li class="dropdown-divider"></li>
         <LogOutModal />
     </ul>

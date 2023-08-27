@@ -13,8 +13,8 @@
       <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
     </div>
     <div class="flex-auto">
-      <a class="btn btn-ghost normal-case no-animation" href="https://www.discodes.xyz/plugins">Plugins</a>
-      <a class="btn btn-ghost normal-case no-animation mx-2" href="https://www.discodes.xyz/marketplace">Marketplace</a>
+      <a class="btn btn-ghost normal-case no-animation" href="https://www.discodes.xyz/">Home page</a>
+      <a class="btn btn-ghost normal-case no-animation mx-2" href="https://www.discodes.xyz/search/marketplace">Marketplace</a>
       <div class="dropdown w-64">
         <input
           type="text"

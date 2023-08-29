@@ -16,7 +16,7 @@
 
     onMount(() => {
         if (!session?.user) {
-            if (window.location.hostname == "discodes.xyz") {
+            if (window.location.hostname == "workspace.discodes.xyz") {
                 window.location.href = "https://discodes.xyz/errors/session"
             }
         }
@@ -43,7 +43,7 @@
     <slot />
 
 {:else}
-<RoleCheck roleID={'1139658510343344291'} userID={$user.user_metadata.provider_id}>
+<RoleCheck roleID={'1139658510343344291'} userID={$user?.user_metadata.provider_id}>
     <div class="min-h-screen flex flex-col">
     <slot/>
 </div>

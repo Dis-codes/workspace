@@ -3,7 +3,7 @@
     export let userID:any;
 
     import { goto } from "$app/navigation";
-    import GetUserRoles from "$lib/utils/server";
+    import { GetUserRoles } from 'discodes-utilities';
     import Loading from "./Loading.svelte";
 
     let discordUser:any = GetUserRoles(userID)

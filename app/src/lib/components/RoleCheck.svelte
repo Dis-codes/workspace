@@ -12,7 +12,7 @@
 
 {#await discordUser}
     <Loading/>
-{:then roles} 
+{:then roles}  
 {#if roles.includes(roleID)}
     <slot/>
 {:else}

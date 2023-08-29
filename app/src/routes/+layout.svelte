@@ -16,7 +16,9 @@
 
     onMount(() => {
         if (!session?.user) {
-            window.location.href = "https://discodes.xyz/errors/session"
+            if (window.location.hostname == "discodes.xyz") {
+                window.location.href = "https://discodes.xyz/errors/session"
+            }
         }
         const {
         data: { subscription },

@@ -8,12 +8,12 @@
     import RoleCheck from "$lib/components/RoleCheck.svelte";
 
     export let data
-
+    export let isDev = import.meta.env.DEV
     const allowedUrls: Array<string> = ['/errors/permission', '/']
 
     let { supabase, session } = data
     $: ({ supabase, session } = data)
-
+    
     onMount(() => {
         if (!session?.user) {
             if (window.location.hostname == "workspace.discodes.xyz") {
@@ -39,7 +39,7 @@
 
 
 
-{#if $page.url.pathname == allowedUrls[0] || $page.url.pathname == allowedUrls[1]}
+{#if $page.url.pathname == allowedUrls[0] || $page.url.pathname == allowedUrls[1] || isDev}
     <slot />
 
 {:else}

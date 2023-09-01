@@ -273,7 +273,7 @@ class BlocklyTool {
                 }
             };
             // define JS gen
-            javascriptGenerator[`${idPrefix}${block.func}`] = function (exportblock: Blockly.Block) {
+            javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (exportblock: Blockly.Block) {
                 const args: any = {};
                 for (const argument of blockDisplayContent.args0) {
                     // args0 is an array of blockly argument objects

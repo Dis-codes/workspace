@@ -80,8 +80,8 @@
         rtl: false,
         grid: {
             spacing: 25,
-            length: 7,
-            colour: "#5c5a5a77",
+            length: 3,
+            colour: "#5c5a5a",
             snap: true,
         },
         zoom: {

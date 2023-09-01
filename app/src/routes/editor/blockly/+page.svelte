@@ -2,10 +2,10 @@
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
 
-    export let data
-    let { supabase, session } = data
-    $: ({ supabase, session } = data)
-  
+    export let data;
+    let { supabase, session } = data;
+    $: ({ supabase, session } = data);
+
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";
@@ -13,6 +13,15 @@
 
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
+    import { BlocklyTool } from "$lib/utils/blockRegistryTool";
+    import javascriptGenerator from "$lib/javascript.js";
+
+    const BlockRegistryTool = new BlocklyTool();
+    // register blocks
+    import TestBlocks from "$lib/blocks/test";
+    import TextBlocks from "$lib/blocks/text";
+    BlockRegistryTool.registerFromBlockset(new TestBlocks());
+    BlockRegistryTool.registerFromBlockset(new TextBlocks());
 
     const DarkTheme = Blockly.Theme.defineTheme("a", {
         name: "true_dark",
@@ -71,8 +80,8 @@
         rtl: false,
         grid: {
             spacing: 25,
-            length: 3,
-            colour: "#5c5a5a",
+            length: 7,
+            colour: "#5c5a5a77",
             snap: true,
         },
         zoom: {
@@ -113,12 +122,19 @@
             }
         });
     });
+
+    function copyCode() {
+        const code = javascriptGenerator.workspaceToCode(workspace);
+        console.log(code);
+        navigator.clipboard.writeText(code);
+    }
 </script>
 
-
-<NavBar />
-    <div class="flex flex-col items-center justify-center h-screen">
-        <div class="mt-[64px] w-full h-full">
-            <BlocklyComponent {config} locale={en} bind:workspace />
-        </div>
+<NavBar>
+    <button on:click={copyCode}>Copy Code</button>
+</NavBar>
+<div class="flex flex-col items-center justify-center h-screen">
+    <div class="mt-[64px] w-full h-full">
+        <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
+</div>

@@ -41,11 +41,10 @@
 
 {#if $page.url.pathname == allowedUrls[0] || $page.url.pathname == allowedUrls[1] || isDev}
     <slot />
-
 {:else}
-<RoleCheck roleID={'1144641299748769864'} userID={$user?.user_metadata.provider_id}>
-    <div class="min-h-screen flex flex-col">
-    <slot/>
-</div>
-</RoleCheck>
+    <!-- <RoleCheck roleID={'1144641299748769864'} userID={$user?.user_metadata.provider_id}> -->
+        <div class="min-h-screen flex flex-col">
+            <slot/>
+        </div>
+    <!-- </RoleCheck> -->
 {/if}

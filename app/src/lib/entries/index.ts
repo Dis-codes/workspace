@@ -7,6 +7,8 @@ import colour from "./Colors";
 import variables from "./Variables";
 import functions from "./Functions";
 
+// import coretest from "./coretest";
+
 export default [
     {
         id: "logic",
@@ -64,5 +66,4 @@ export default [
         colour: "#995ba5",
         contents: functions
     }
-
 ]

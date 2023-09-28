@@ -2,10 +2,10 @@
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
 
-    export let data
-    let { supabase, session } = data
-    $: ({ supabase, session } = data)
-  
+    export let data;
+    let { supabase, session } = data;
+    $: ({ supabase, session } = data);
+
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";
@@ -13,6 +13,9 @@
 
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
+    import javascriptGenerator from "$lib/javascript.js";
+
+    import "./blockRegister"
 
     const DarkTheme = Blockly.Theme.defineTheme("a", {
         name: "true_dark",
@@ -113,12 +116,19 @@
             }
         });
     });
+
+    function copyCode() {
+        const code = javascriptGenerator.workspaceToCode(workspace);
+        console.log(code);
+        navigator.clipboard.writeText(code);
+    }
 </script>
 
-
-<NavBar />
-    <div class="flex flex-col items-center justify-center h-screen">
-        <div class="mt-[64px] w-full h-full">
-            <BlocklyComponent {config} locale={en} bind:workspace />
-        </div>
+<NavBar>
+    <button on:click={copyCode}>Copy Code</button>
+</NavBar>
+<div class="flex flex-col items-center justify-center h-screen">
+    <div class="mt-[64px] w-full h-full">
+        <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
+</div>

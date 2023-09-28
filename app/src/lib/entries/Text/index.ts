@@ -9,13 +9,29 @@ export default [
     },
     {
         kind: "block",
-        type: "text_length",
+        type: "text_replace",
         inputs: {
-            VALUE: {
+            TEXT: {
                 shadow: {
                     type: "text",
                     fields: {
-                        TEXT: "Hello!"
+                        TEXT: "Hello World!"
+                    }
+                }
+            },
+            FROM: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "World"
+                    }
+                }
+            },
+            TO: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "Goodbye"
                     }
                 }
             }
@@ -24,34 +40,28 @@ export default [
     {
         kind: "block",
         type: "text_isEmpty",
-        inputs: {
-            VALUE: {
-                shadow: {
-                    type: "text",
-                    fields: {
-                        TEXT: ""
-                    }
-                }
-            }
-        }
+    }, 
+    {
+        kind: "block",
+        type: "text_reverse"
     },
     {
         kind: "block",
-        type: "text_indexOf",
+        type: "text_newline"
+    },
+    {
+        kind: "block",
+        type: "text_append"
+    },
+    {
+        kind: "block",
+        type: "text_length",
         inputs: {
             VALUE: {
                 shadow: {
                     type: "text",
                     fields: {
-                        TEXT: "Hello!"
-                    }
-                }
-            },
-            FIND: {
-                shadow: {
-                    type: "text",
-                    fields: {
-                        TEXT: "e"
+                        TEXT: "abc"
                     }
                 }
             }
@@ -60,20 +70,25 @@ export default [
     {
         kind: "block",
         type: "text_startsEndsWith",
+    },
+    {
+        kind: "block",
+        type: "text_indexOf",
         inputs: {
-            TEXT: {
-                shadow: {
-                    type: "text",
+            VALUE: {
+                block: {
+                    kind: "block",
+                    type: "variables_get_variable",
                     fields: {
-                        TEXT: "Hello!"
+                        NAME: "text"
                     }
                 }
             },
-            OTHERTEXT: {
+            FIND: {
                 shadow: {
                     type: "text",
                     fields: {
-                        TEXT: "H"
+                        TEXT: "World"
                     }
                 }
             }
@@ -81,22 +96,130 @@ export default [
     },
     {
         kind: "block",
-        type: "text_charAt"
+        type: "text_charAt",
+        inputs: {
+            VALUE: {
+                block: {
+                    kind: "block",
+                    type: "variables_get_variable",
+                    fields: {
+                        NAME: "text"
+                    }
+                }
+            },
+            AT: {
+                shadow: {
+                    type: "math_number",
+                    fields: {
+                        NUM: 1
+                    }
+                }
+            }
+        }
     },
     {
         kind: "block",
-        type: "text_getSubstring"
+        type: "text_getSubstring",
+        inputs: {
+            STRING: {
+                block: {
+                    kind: "block",
+                    type: "variables_get_variable",
+                    fields: {
+                        NAME: "text"
+                    }
+                }
+            },
+            AT1: {
+                shadow: {
+                    type: "math_number",
+                    fields: {
+                        NUM: 1
+                    }
+                }
+            },
+            AT2: {
+                shadow: {
+                    type: "math_number",
+                    fields: {
+                        NUM: 5
+                    }
+                }
+            }
+        }
     },
     {
         kind: "block",
-        type: "text_changeCase"
+        type: "text_changeCase",
+        inputs: {
+            TEXT: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "Hello World!"
+                    }
+                }
+            }
+        }
+    },
+    //trim spaces
+    {
+        kind: "block",
+        type: "text_trim",
+        inputs: {
+            TEXT: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: " abc "
+                    }
+                }
+            }
+        }
     },
     {
         kind: "block",
-        type: "text_trim"
+        type: "text_count",
+        inputs: {
+            TEXT: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "Hello World!"
+                    }
+                }
+            },
+            SUB: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "o"
+                    }
+                }
+            }
+        }
     },
     {
         kind: "block",
-        type: "text_append"
+        type: "text_containsNumber",
+    },
+    //for each character in a string
+    {
+        kind: "block",
+        type: "text_forEach",
+        inputs: {
+            TEXT: {
+                shadow: {
+                    type: "text",
+                    fields: {
+                        TEXT: "Hello World!"
+                    }
+                }
+            }
+        }
+    },
+    {
+        kind: "block",
+        type: "text_character",
     }
 ];

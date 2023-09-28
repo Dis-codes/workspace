@@ -13,15 +13,9 @@
 
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
-    import { BlocklyTool } from "$lib/utils/blockRegistryTool";
     import javascriptGenerator from "$lib/javascript.js";
 
-    const BlockRegistryTool = new BlocklyTool();
-    // register blocks
-    import TestBlocks from "$lib/blocks/test";
-    import TextBlocks from "$lib/blocks/text";
-    BlockRegistryTool.registerFromBlockset(new TestBlocks());
-    BlockRegistryTool.registerFromBlockset(new TextBlocks());
+    import "./blockRegister"
 
     const DarkTheme = Blockly.Theme.defineTheme("a", {
         name: "true_dark",

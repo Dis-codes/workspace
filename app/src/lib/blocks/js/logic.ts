@@ -56,7 +56,7 @@ class LogicBlocks {
                 },
                 {
                     func: "switchStatement",
-                    text: ["Check for [A]\n",
+                    text: ["Check for [A]",
                     "If no check\n"],
                     shape: BlockShape.STATEMENT,
                     color: 280,
@@ -113,14 +113,14 @@ class LogicBlocks {
     }
 
     switchStatement(args: any) {
-        return `switch (${args.A}) {\n${args.BRANCH1}\n default:\n${args.BRANCH2}\n}`;
+        return `switch (${args.A}) {\n${args.BRANCH1}default:\n${args.BRANCH2}}`;
 
     }
 
     caseStatement(args: any) {
         switch (args.CASE) {
             case 'case':
-                return `case ${args.CONDITION}:\n${args.BRANCH1}\nbreak`;
+                return `case ${args.CONDITION}:\n${args.BRANCH1}break\n`;
             case 'nobreak':
                 return `case ${args.CONDITION}:\n${args.BRANCH1}`;
             default:
@@ -129,7 +129,7 @@ class LogicBlocks {
     }
 
     stopScript(args: any) {
-        return `return`;
+        return `return\n`;
     }
 }
 

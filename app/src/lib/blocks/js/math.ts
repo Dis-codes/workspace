@@ -7,25 +7,6 @@ class Mathblocks {
             color: "%{BKY_MATH_HUE}",
             blocks: [
                 {
-                    func: "math_operation",
-                    text: "[OPERATION] [A]",
-                    shape: BlockShape.STATEMENT,
-                    inline: true,
-                    arguments: {
-                        OPERATION: {
-                            type: InputShape.MENU,
-                            options: [
-                                ['Add 1 to', 'increment'],
-                                ['Remove 1 from', 'decrement']
-                            ]
-                        },
-                        A: {
-                            type: InputShape.VARIABLE,
-                            check: OutputType.NUMBER
-                        },
-                    },
-                },
-                {
                     func: "convert_to_number",
                     text: "Convert [A] to number",
                     output: OutputType.NUMBER,

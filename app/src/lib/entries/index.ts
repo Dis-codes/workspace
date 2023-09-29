@@ -5,6 +5,10 @@ import text from "./Text";
 import lists from "./Lists";
 import colour from "./Colors";
 import variables from "./Variables";
+import database from "./Database";
+import objects from "./Others/Objects";
+import time from "./Others/Time";
+import terminal from "./Others/Terminal";
 
 import coretest from "./coretest";
 
@@ -84,48 +88,41 @@ export default [
         id: "database",
         kind: "category",
         name: "Database",
-        colour: "#995ba5",
+        colour: "#5aa48d",
+        contents: database
     },
     {
         id: "other",
         kind: "category",
         name: "Other",
-        colour: "#a55b80",
+        colour: "#bc4c94",
         contents: [
             {
                 id: "objects",
                 kind: "category",
                 name: "Objects",
-                colour: "#a55b80",
-                contents: []
+                colour: "#bc4c94",
+                contents: objects
             },
             {
                 id: "time",
                 kind: "category",
                 name: "Time",
-                colour: "#a55b80",
-                contents: []
+                colour: "#a4a464",
+                contents: time
             },
             {
                 id: "terminal",
                 kind: "category",
                 name: "Terminal",
-                colour: "#a55b80",
-                contents: []
+                colour: "#d2437e",
+                contents: terminal
             },
-        ]
-    },
-    {
-        id: "websites",
-        kind: "category",
-        name: "Websites",
-        colour: "#a55b80",
-        contents: [
             {
                 id: "requests",
                 kind: "category",
-                name: "Requests",
-                colour: "#a55b80",
+                name: "API Requests",
+                colour: "#4b9afb",
                 contents: []
             },
         ]
@@ -134,27 +131,27 @@ export default [
         id: "files",
         kind: "category",
         name: "Files",
-        colour: "#a55b80",
+        colour: "#ffac2c",
         contents: [
             {
                 id: "text",
                 kind: "category",
                 name: "Text",
-                colour: "#a55b80",
+                colour: "#ffac2c",
                 contents: []
             },
             {
                 id: "data",
                 kind: "category",
                 name: "data",
-                colour: "#a55b80",
+                colour: "#ffac2c",
                 contents: []
             },
             {
                 id: "images",
                 kind: "category",
                 name: "Images",
-                colour: "#a55b80",
+                colour: "#ffac2c",
                 contents: []
             },
         ]
@@ -177,48 +174,48 @@ export default [
                 id: "base",
                 kind: "category",
                 name: "Base",
-                colour: "#a55b80",
+                colour: "#f5677f",
                 contents: []
             },
             {
                 id: "messages",
                 kind: "category",
                 name: "Messages",
-                colour: "#a55b80",
+                colour: "#509cfc",
                 contents: [
                     {
                         id: "getmessages",
                         kind: "category",
                         name: "Get Message",
-                        colour: "#a55b80",
+                        colour: "#509cfc",
                         contents: []
                     },
                     {
                         id: "setmessages",
                         kind: "category",
                         name: "Set Message",
-                        colour: "#a55b80",
+                        colour: "#509cfc",
                         contents: []
                     },
                     {
                         id: "threads",
                         kind: "category",
                         name: "Threads",
-                        colour: "#a55b80",
+                        colour: "#509cfc",
                         contents: []
                     },
                     {
                         id: "webhooks",
                         kind: "category",
                         name: "Webhooks",
-                        colour: "#a55b80",
+                        colour: "#3c4cf0",
                         contents: []
                     },
                     {
                         id: "reactions",
                         kind: "category",
                         name: "Reactions",
-                        colour: "#a55b80",
+                        colour: "#90644c",
                         contents: []
                     },
                 ]
@@ -231,41 +228,41 @@ export default [
                 id: "embeds",
                 kind: "category",
                 name: "Embeds",
-                colour: "#a55b80",
+                colour: "#40bc54",
                 contents: []
             },
             {
                 id: "interactions",
                 kind: "category",
                 name: "Interactions",
-                colour: "#a55b80",
+                colour: "#d054fc",
                 contents: [
                     {
                         id: "slash",
                         kind: "category",
                         name: "Slash",
-                        colour: "#a55b80",
+                        colour: "#d054fc",
                         contents: []
                     },
                     {
                         id: "buttons",
                         kind: "category",
                         name: "Buttons",
-                        colour: "#a55b80",
+                        colour: "#d054fc",
                         contents: []
                     },
                     {
                         id: "menus",
                         kind: "category",
                         name: "Menus",
-                        colour: "#a55b80",
+                        colour: "#d054fc",
                         contents: []
                     },
                     {
                         id: "forms",
                         kind: "category",
                         name: "Forms",
-                        colour: "#a55b80",
+                        colour: "#d054fc",
                         contents: []
                     },
                 ]
@@ -278,33 +275,33 @@ export default [
                 id: "servers",
                 kind: "category",
                 name: "Servers",
-                colour: "#a55b80",
+                colour: "#e05c4c",
                 contents: [
                     {
                         id: "server",
                         kind: "category",
                         name: "Server",
-                        colour: "#a55b80",
+                        colour: "#e05c4c",
                         contents: []
                     },
                     {
                         id: "channels",
                         kind: "category",
                         name: "Channels",
-                        colour: "#a55b80",
+                        colour: "#a85c7c",
                         contents: [
                             {
                                 id: "text",
                                 kind: "category",
                                 name: "Text",
-                                colour: "#a55b80",
+                                colour: "#a85c7c",
                                 contents: []
                             },
                             {
                                 id: "voice",
                                 kind: "category",
                                 name: "Voice",
-                                colour: "#a55b80",
+                                colour: "#a85c7c",
                                 contents: []
                             },
                         ]
@@ -313,55 +310,55 @@ export default [
                         id: "roles",
                         kind: "category",
                         name: "Roles",
-                        colour: "#a55b80",
+                        colour: "#30b474",
                         contents: []
                     },
                     {
                         id: "members",
                         kind: "category",
                         name: "Members",
-                        colour: "#a55b80",
+                        colour: "#187494",
                         contents: []
                     },
                     {
                         id: "emojis",
                         kind: "category",
                         name: "Emojis",
-                        colour: "#a55b80",
+                        colour: "#187494",
                         contents: []
                     },
                     {
                         id: "stickers",
                         kind: "category",
                         name: "Stickers",
-                        colour: "#a55b80",
+                        colour: "#187494",
                         contents: []
                     },
                     {
                         id: "joins",
                         kind: "category",
                         name: "Joins",
-                        colour: "#a55b80",
+                        colour: "#60cc6c",
                         contents: [
                             {
                                 id: "userjoins",
                                 kind: "category",
                                 name: "User Joins",
-                                colour: "#a55b80",
+                                colour: "#60cc6c",
                                 contents: []
                             },
                             {
                                 id: "userjoins",
                                 kind: "category",
                                 name: "User Leaves",
-                                colour: "#a55b80",
+                                colour: "#60cc6c",
                                 contents: []
                             },
                             {
                                 id: "invites",
                                 kind: "category",
                                 name: "Invites",
-                                colour: "#a55b80",
+                                colour: "#60bcec",
                                 contents: []
                             },
                         ]
@@ -372,7 +369,7 @@ export default [
                 id: "users",
                 kind: "category",
                 name: "Users",
-                colour: "#a55b80",
+                colour: "#60bcec",
                 contents: []
             },
             

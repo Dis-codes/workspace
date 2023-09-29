@@ -93,7 +93,7 @@ class VariablesBlocks {
     }
 
     variable(args: any) {
-        return `${args.VARIABLE} ${args.NAME} = ${args.VALUE}`;
+        return `${args.VARIABLE} ${args.NAME} = ${args.VALUE}\n`;
     }
     floatingvariable(args: any) {
         return `${args.VARIABLE} ${args.NAME} = ${args.VALUE}`;
@@ -105,15 +105,15 @@ class VariablesBlocks {
     change_variable(args: any) {
         switch (args.CHANGE) {
             case 'add':
-                return `${args.NAME} += ${args.VALUE}`;
+                return `${args.NAME} += ${args.VALUE}\n`;
             case 'subtract':
-                return `${args.NAME} -= ${args.VALUE}`;
+                return `${args.NAME} -= ${args.VALUE}\n`;
             case 'multiply':
-                return `${args.NAME} *= ${args.VALUE}`;
+                return `${args.NAME} *= ${args.VALUE}\n`;
             case 'divide':
-                return `${args.NAME} /= ${args.VALUE}`;
+                return `${args.NAME} /= ${args.VALUE}\n`;
             case 'set':
-                return `${args.NAME} = ${args.VALUE}`;
+                return `${args.NAME} = ${args.VALUE}\n`;
             default:
                 return '';
         }

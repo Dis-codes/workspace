@@ -95,19 +95,19 @@ class ListsBlocks {
     }
 
     push(args: any) {
-        return `(${args.LIST}).push(${args.ITEM})`;
+        return `(${args.LIST}).push(${args.ITEM})\n`;
     }
 
     concat(args: any) {
-        return `(${args.LIST}).concat(${args.ITEM})`;
+        return `(${args.LIST}).concat(${args.ITEM})\n`;
     }
 
     filter(args: any) {
-        return `(${args.LIST}).filter(${args.ITEM} => ${args.CONDITION})`;
+        return `(${args.LIST}).filter(${args.ITEM} => ${args.CONDITION})\n`;
     }
 
     map(args: any) {
-        return `(${args.LIST}).map(${args.ITEM} => ${args.CONDITION})`;
+        return `(${args.LIST}).map(${args.ITEM} => ${args.CONDITION})\n`;
     }
 }
 

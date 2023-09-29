@@ -1,9 +1,6 @@
 import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
 
 class TextBlocks {
-    /**
-     * Details for this blockset and its blocks.
-     */
     getRegistry () {
         return {
             id: "text",
@@ -94,7 +91,7 @@ class TextBlocks {
         return `String(${args.TEXT}).${args.OPTION}(${args.OTHERTEXT})`;
     }
 
-    newline (args: any) {
+    newline () {
         return `\\n`;
     }
 
@@ -105,9 +102,9 @@ class TextBlocks {
     forEach (args: any) {
         switch (args.SELECT) {
             case 'char':
-                return `for (let char_i = 0; char_i < String(${args.TEXT}).length; char_i++)\n { ${args.BRANCH1} \n}`;
+                return `for (let char_i = 0; char_i < String(${args.TEXT}).length; char_i++){\nlet char_i_char = String(${args.TEXT})[char_i] ${args.BRANCH1}}`;
             case 'word':
-                return `for (let word_i = 0; word_i < String(${args.TEXT}).split(' ').length; word_i++)\n { ${args.BRANCH1} \n}`;
+                return `for (let word_i = 0; word_i < String(${args.TEXT}).split(' ').length; word_i++){\nlet word_i_word = String(${args.TEXT}).split(' ')[word_i] ${args.BRANCH1}}}`;
             default:
                 return '';
         }
@@ -116,9 +113,9 @@ class TextBlocks {
     character (args: any) {
         switch (args.SELECT) {
             case 'char':
-                return `String(${args.TEXT}).charAt(char_i)`;
+                return `char_i_char`;
             case 'word':
-                return `String(${args.TEXT}).split(' ')[word_i]`;
+                return `word_i_word`;
             default:
                 return '';
         }

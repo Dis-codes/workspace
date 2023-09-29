@@ -1,4 +1,3 @@
-import MathCombinedBlock from "../../blocks/math";
 export default [
     {
         kind: "block",
@@ -180,10 +179,6 @@ export default [
     {
         kind: "block",
         type: "math_random_float"
-    },
-    {
-        kind: "block",
-        type: "math_math_operation",
     },
     {
         kind: "block",

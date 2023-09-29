@@ -1,19 +1,9 @@
-import TestBlocks from "./test"
-import TextBlocks from "./text"
-import Mathblocks from "./math";
-import LogicBlocks from "./logic";
-import ListsBlocks from "./lists";
-import ColorsBlocks from "./colors";
-import VariablesBlocks from "./variables";
+import TestBlocks from "./test/test"
+import js from "./js"
 
 const  blockClasses = [ 
     TestBlocks,
-    TextBlocks,
-    Mathblocks,
-    LogicBlocks,
-    ListsBlocks,
-    ColorsBlocks,
-    VariablesBlocks
+    ...js
     ]
 
 export default blockClasses;

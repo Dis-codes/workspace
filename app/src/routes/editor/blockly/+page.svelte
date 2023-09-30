@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
+    import JSZip from "jszip";
 
     export let data;
     let { supabase, session } = data;
@@ -14,9 +15,13 @@
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
     import javascriptGenerator from "$lib/javascript.js";
-
+    import  {packageJson, indexJs}  from "$lib/components/defaults";
     import "./blockRegister"
+    import {test }from "$lib/components/examples";
 
+    import Prism from 'prismjs';
+
+    let generatedCode = ``;
     const DarkTheme = Blockly.Theme.defineTheme("a", {
         name: "true_dark",
         base: Blockly.Themes.Classic,
@@ -118,17 +123,149 @@
     });
 
     function copyCode() {
-        const code = javascriptGenerator.workspaceToCode(workspace);
-        console.log(code);
-        navigator.clipboard.writeText(code);
+        navigator.clipboard.writeText(generateCode());
+    }
+    function openExample(example: any){
+        Blockly.serialization.workspaces.load(example, workspace);
+    }
+    function openFile() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".dsc, .json, .zip";
+    input.onchange = (event: any) => {
+        if (event.target.files[0].name.endsWith(".zip")) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = async (event: any) => {
+                const contents = event.target.result;
+                try {
+                    const zip = await JSZip.loadAsync(contents);
+                    const workspaceFile = await zip.file("workspace.dsc")?.async("string");
+                    if (workspaceFile) {
+                        const state = JSON.parse(workspaceFile);
+                        Blockly.serialization.workspaces.load(state, workspace);
+                    }
+                } catch (error) {
+                    console.error("Error loading workspace:", error);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            return;
+        }
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+            const contents = event.target.result;
+            try {
+                const state = JSON.parse(contents);
+                Blockly.serialization.workspaces.load(state, workspace);
+            } catch (error) {
+                console.error("Error loading workspace:", error);
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+function saveFile() {
+    const state = Blockly.serialization.workspaces.save(workspace);
+    const data = JSON.stringify(state);
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const fileName = "workspace.dsc";
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    
+    URL.revokeObjectURL(url);
+}
+
+    function updatePackage(){
+        const allBlocks = workspace.getAllBlocks();
+        for (const block of allBlocks) {
+            switch (block.type) {
+                case "blockname" :
+                packageJson.dependencies["moment"] = "^2.29.1"
+                    continue;
+                default:
+                    continue;
+            }
+        }
+    }
+    function generateCode() {
+        return indexJs + javascriptGenerator.workspaceToCode(workspace);
+    }
+    function exportJS() {
+        generatedCode = generateCode();
+        const dialog:any = document.getElementById("showjs");
+        dialog.showModal();	
+    }
+    async function downloadFiles() {
+        updatePackage()
+        const zip = new JSZip();
+        zip.file("index.js", generateCode());
+        zip.file("package.json", JSON.stringify(packageJson, null, 2));
+        zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)`");
+        zip.file("workspace.dsc", JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2));
+        const content = await zip.generateAsync({ type: "blob" });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "bot.zip";
+        a.click();
+        URL.revokeObjectURL(url);
     }
 </script>
 
 <NavBar>
-    <button on:click={copyCode}>Copy Code</button>
+    <div class="dropdown">
+        <label tabindex="0" class="btn m-1">File</label>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><button on:click={openFile}>Open a file</button></li>
+          <li><button on:click={exportJS}>Export to JavaScript</button></li>
+          <li><button on:click={saveFile}>Save a file</button></li>
+          <li><button on:click={downloadFiles}>Download bot</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <label tabindex="0" class="btn m-1">Examples</label>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="https://www.discodes.xyz/search/marketplace" target="_blank">Shared code </a></li>
+          <div class="divider">Build-in</div>
+            <li><button on:click={()=>openExample(test)}>Test</button></li>
+        </ul>
+      </div>
+      <div class="dropdown">
+        <label tabindex="0" class="btn m-1">Links</label>
+        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="https://discord.gg/TsQPMrNyBv">Discord Server</a></li>
+          <li><a href="https://github.com/Dis-codes">Github Organization</a></li>
+          <li><a href="https://www.discodes.xyz/help/">Help</a></li>
+        </ul>
+      </div>
 </NavBar>
 <div class="flex flex-col items-center justify-center h-screen">
-    <div class="mt-[64px] w-full h-full">
+    <div class="mt-[71px] w-full h-full">
         <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
 </div>
+
+<dialog id="showjs" class="modal scroll">
+    <div class="modal-box max-w-full  h-full">
+      <h3 class="font-bold text-3xl text-white">JavaScript code of your bot</h3>
+      <div class="bg-gray-300 w-full mt-4 h-full max-h-[43rem] rounded-md p-4 overflow-auto">
+        <pre><code>
+            {@html Prism.highlight(generatedCode, Prism.languages['javascript'])}
+        </code> </pre>
+     </div>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-primary " on:click={copyCode}>Copy Code to Clipboard</button>
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>

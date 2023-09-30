@@ -13,6 +13,9 @@
       <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
     </div>
     <div class="flex-auto">
+      <slot/>
+    </div>
+    <div class="flex-auto">
       <a class="btn btn-ghost normal-case no-animation" href="https://www.discodes.xyz/">Home page</a>
       <a class="btn btn-ghost normal-case no-animation mx-2" href="https://www.discodes.xyz/search/marketplace">Marketplace</a>
       <div class="dropdown w-64">
@@ -45,9 +48,8 @@
       {#if $user}
         <a class="btn btn-ghost normal-case" href="https://www.discodes.xyz/dashboard">Dashboard</a>
         <Account />
-      {:else}
-        <slot/>
-        <!-- <a class="btn btn-ghost normal-case" href="/login">Log In</a> -->
+      {:else}  
+        <a class="btn btn-ghost normal-case" href="/login">Log In</a>
       {/if}
     </div>
   </div>

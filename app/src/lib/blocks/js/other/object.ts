@@ -9,7 +9,7 @@ class ObjectBlocks {
             blocks: [
                 {
                     func: "create",
-                    text: "create object with",
+                    text: "create object with\n",
                     branches: 1,
                     output: OutputType.OBJECT,
                     inline: true,
@@ -124,7 +124,7 @@ class ObjectBlocks {
     }
 
     add_to_object(args: any) {
-        return `${args.NAME}: ${args.VALUE}`;
+        return `${args.NAME}: ${args.VALUE},\n`;
     }
 
     create(args: any) {

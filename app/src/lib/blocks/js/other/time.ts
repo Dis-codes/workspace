@@ -55,7 +55,7 @@ class TimeBlocks {
                 },
                 {
                     func: "format",
-                    text: "format [DATE] as [FORMAT]",
+                    text: "format [DATE] as [LOCALE] [FORMAT]",
                     inline: true,
                     output: OutputType.STRING,
                     arguments: {
@@ -63,15 +63,33 @@ class TimeBlocks {
                             type: InputShape.VALUE,
                             check: OutputType.STRING
                         },
-                        INPUTFORMAT: {
-                            type: InputShape.VALUE,
-                            check: OutputType.STRING
+                        LOCALE: {
+                            type: InputShape.MENU,
+                            options: [
+                                ['en-US', 'en-US'],
+                                ['fr-FR', 'fr-FR'],
+                                ['de-DE', 'de-DE'],
+                                ['es-ES', 'es-ES'],
+                                ['it-IT', 'it-IT'],
+                                ['nl-NL', 'nl-NL'],
+                                ['pl-PL', 'pl-PL'],
+                                ['pt-BR', 'pt-BR'],
+                                ['ru-RU', 'ru-RU'],
+                                ['ja-JP', 'ja-JP'],
+                                ['zh-CN', 'zh-CN'],
+                                ['zh-TW', 'zh-TW'],
+                                ['ko-KR', 'ko-KR'],
+                                ['tr-TR', 'tr-TR']
+                            ]
                         },
                         FORMAT: {
                             type: InputShape.MENU,
                             options: [
-                                ['en-US', 'en-US'],
-
+                                ['Thursday, December 20, 2012', 'full'],
+                                ['December 20, 2012', 'long'],
+                                ['Dec 20, 2012', 'medium'],
+                                ['12/20/2012', 'short'],
+                                ['Thursday, December 20, 2012 12:00 PM', 'fullDateTime']
                             ]
                         }
                     }
@@ -175,7 +193,18 @@ class TimeBlocks {
     }
 
     wait(args: any) {
-        return `await delay(${args.TIME}, "${args.UNIT}");`;
+        switch (args.UNIT) {
+            case "milliseconds":
+                return `await delay(${args.TIME})`;
+            case "seconds":
+                return `await delay(${args.TIME} * 1000)`;
+            case "minutes":
+                return `await delay(${args.TIME} * 1000 * 60)`;
+            case "hours":
+                return `await delay(${args.TIME} * 1000 * 60 * 60)`;
+            case "days":
+                return `await delay(${args.TIME} * 1000 * 60 * 60 * 24)`;
+        }
     }
 
     current(args: any) {
@@ -186,7 +215,7 @@ class TimeBlocks {
     }
 
     format(args: any) {
-        return `new Date(${args.DATE}).toLocaleDateString("${args.FORMAT}", { ${args.INPUTFORMAT} })`;
+        return `new Date(${args.DATE}).toLocaleDateString("${args.LOCALE}", { ${args.FORMAT} })`;
     }
 
     get_date(args: any) {

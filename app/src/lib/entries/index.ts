@@ -8,7 +8,8 @@ import variables from "./Variables";
 import database from "./Database";
 import objects from "./Others/Objects";
 import time from "./Others/Time";
-import terminal from "./Others/Terminal";
+import terminal from "./Others/others";
+import requests from "./Others/requests";
 
 import coretest from "./coretest";
 
@@ -123,7 +124,7 @@ export default [
                 kind: "category",
                 name: "API Requests",
                 colour: "#4b9afb",
-                contents: []
+                contents: requests
             },
         ]
     },

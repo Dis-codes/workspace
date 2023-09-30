@@ -29,6 +29,8 @@
 		"@supabase/auth-ui-svelte": "^0.2.2",
 		"@supabase/supabase-js": "^2.32.0",
 		"blockly": "^10.1.2",
-		"discodes-utilities": "^1.0.3"
+		"discodes-utilities": "^1.0.3",
+		"jszip": "^3.10.1",
+		"prismjs": "^1.29.0"
 	}
 }

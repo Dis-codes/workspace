@@ -73,6 +73,9 @@
                 dispatch("change");
             });
 
+            // Disable unconnected blocks
+            workspace.addChangeListener(Blockly.Events.disableOrphans);
+
             // TODO this is a terrible hack, but there's no scroll event
             // translate is the most fundamental in a set of methods
             // that move and zoom the workspace

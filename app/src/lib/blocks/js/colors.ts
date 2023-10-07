@@ -52,11 +52,11 @@ class ColorsBlocks {
     }
 
     hex(args: any) {
-        return `#${args.HEX}`;
+        return `"#${args.HEX.replace(/'/g,'')}"`;
     }
 
     random() {
-        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+        return `"#${Math.floor(Math.random() * 16777215).toString(16)}"`;
     }
 }
 

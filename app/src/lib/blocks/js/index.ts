@@ -6,6 +6,7 @@ import ColorsBlocks from "./colors";
 import VariablesBlocks from "./variables";
 import databaseBlocks from "./dabase";
 import other from "./other";
+import djs from "./djs"
 
 export default [
     TextBlocks,
@@ -15,5 +16,6 @@ export default [
     ColorsBlocks,
     VariablesBlocks,
     databaseBlocks,
-    ...other
+    ...other,
+    ...djs
     ]

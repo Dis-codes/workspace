@@ -35,6 +35,21 @@ const OutputType = {
      * Can be used by outputs if needed.
      */
     ANY: null,
+
+    /**
+     * Output for blocks using discord
+     */
+    DISCORD: {
+        /**
+         * Output type for server blocks or inputs.
+         */
+        SERVER: ["Server"],
+
+        /**
+         * Output type for channel blocks or inputs.
+         */
+        CHANNEL: ["Channel"]
+    },
 }
 
 /**

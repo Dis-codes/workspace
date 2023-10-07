@@ -11,6 +11,8 @@ import time from "./Others/Time";
 import terminal from "./Others/others";
 import requests from "./Others/requests";
 
+import server from "./Djs/Server"
+
 import coretest from "./coretest";
 
 export default [
@@ -283,7 +285,7 @@ export default [
                         kind: "category",
                         name: "Server",
                         colour: "#e05c4c",
-                        contents: []
+                        contents: server
                     },
                     {
                         id: "channels",

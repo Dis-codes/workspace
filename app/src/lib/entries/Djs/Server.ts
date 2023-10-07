@@ -40,9 +40,28 @@ export default [
     },
     {
         kind: "block",
-        type: "server_edit"
+        type: "server_edit",
+        inputs: {
+            BRANCH1:{
+                block: {
+                    kind: "block",
+                    type: "server_edit_options",
+                    inputs: {
+                        SETTING: {
+                            shadow: {
+                                kind: "block",
+                                type: "text",
+                                fields: {
+                                    TEXT: "Awesome server"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
-    {
+   /* {
         kind: "block",
         type: "server_edit_options",
         inputs: {
@@ -51,12 +70,12 @@ export default [
                     kind: "block",
                     type: "text",
                     fields: {
-                        TEXT: "t/f"
+                        TEXT: "Awesome server"
                     }
                 }
             }
         }
-    },
+    },*/
     {
         kind: "block",
         type: "server_edit_options_util"

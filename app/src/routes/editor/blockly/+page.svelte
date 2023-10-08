@@ -20,6 +20,10 @@
     import {test }from "$lib/components/examples";
 
     import Prism from 'prismjs';
+    import * as prettier from "prettier";
+    import * as prettierPluginBabel from "prettier/plugins/babel";
+    import * as prettierPluginEstree from "prettier/plugins/estree";
+    import * as prettierPluginHtml from "prettier/plugins/html";
 
     let generatedCode = ``;
     const DarkTheme = Blockly.Theme.defineTheme("a", {
@@ -100,7 +104,6 @@
             wheel: true,
         },
     };
-
     let workspace: Blockly.WorkspaceSvg;
     onMount(() => {
         // dont close out instantly if changes were made
@@ -198,8 +201,8 @@ function saveFile() {
     function generateCode() {
         return indexJs + javascriptGenerator.workspaceToCode(workspace);
     }
-    function exportJS() {
-        generatedCode = generateCode();
+    async function exportJS() {
+        generatedCode = await prettier.format(generateCode(), { semi: true, parser: "babel", plugins: [prettierPluginBabel, prettierPluginEstree, prettierPluginHtml],});
         const dialog:any = document.getElementById("showjs");
         dialog.showModal();	
     }
@@ -218,6 +221,14 @@ function saveFile() {
         a.click();
         URL.revokeObjectURL(url);
     }
+    function deleteUnusedBlocks() {
+        const allBlocks = workspace.getAllBlocks(true);
+        for (const block of allBlocks) {
+            if (!block.isEnabled()) {
+                block.dispose(false, true);
+            }
+        }
+    }
 </script>
 
 <NavBar>
@@ -228,6 +239,9 @@ function saveFile() {
           <li><button on:click={exportJS}>Export to JavaScript</button></li>
           <li><button on:click={saveFile}>Save a file</button></li>
           <li><button on:click={downloadFiles}>Download bot</button></li>
+          <div class="divider">Edit</div>
+          <li><button on:click={deleteUnusedBlocks}>Delete unused blocks</button></li>
+          <!-- <li><button on:click={workspace.cleanUp()}>Clean up blocks</button></li> -->
         </ul>
       </div>
       <div class="dropdown">

@@ -31,6 +31,7 @@
 		"blockly": "^10.1.2",
 		"discodes-utilities": "^1.0.3",
 		"jszip": "^3.10.1",
+		"prettier": "^3.0.3",
 		"prismjs": "^1.29.0"
 	}
 }

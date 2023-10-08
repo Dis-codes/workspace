@@ -93,27 +93,28 @@ class VariablesBlocks {
     }
 
     variable(args: any) {
-        return `${args.VARIABLE} ${args.NAME} = ${args.VALUE}\n`;
+        return `${args.VARIABLE} ${args.NAME.replace(/'/g, "")} = ${args.VALUE}\n`;
     }
     floatingvariable(args: any) {
-        return `${args.VARIABLE} ${args.NAME} = ${args.VALUE}`;
+        return `${args.VARIABLE} ${args.NAME.replace(/'/g, "")} = ${args.VALUE}`;
     }
     get_variable(args: any) {
         return `${args.NAME}`;
     }
 
     change_variable(args: any) {
+        let newName = args.NAME.replace(/'/g, "");
         switch (args.CHANGE) {
             case 'add':
-                return `${args.NAME} += ${args.VALUE}\n`;
+                return `${newName} += ${args.VALUE}\n`;
             case 'subtract':
-                return `${args.NAME} -= ${args.VALUE}\n`;
+                return `${newName} -= ${args.VALUE}\n`;
             case 'multiply':
-                return `${args.NAME} *= ${args.VALUE}\n`;
+                return `${newName} *= ${args.VALUE}\n`;
             case 'divide':
-                return `${args.NAME} /= ${args.VALUE}\n`;
+                return `${newName} /= ${args.VALUE}\n`;
             case 'set':
-                return `${args.NAME} = ${args.VALUE}\n`;
+                return `${newName} = ${args.VALUE}\n`;
             default:
                 return '';
         }

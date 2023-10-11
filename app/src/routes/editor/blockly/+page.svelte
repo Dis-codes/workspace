@@ -1,12 +1,15 @@
 <script lang="ts">
+    //Components
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
-    import JSZip from "jszip";
-
+    import {storageStore} from "$lib/userStore";
+    let storage = storageStore("workspace")
+    // Supabase - sync session
     export let data;
     let { supabase, session } = data;
     $: ({ supabase, session } = data);
 
+    // Blockly
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";
@@ -19,11 +22,15 @@
     import "./blockRegister"
     import {test }from "$lib/components/examples";
 
+    // better code export
     import Prism from 'prismjs';
     import * as prettier from "prettier";
     import * as prettierPluginBabel from "prettier/plugins/babel";
     import * as prettierPluginEstree from "prettier/plugins/estree";
     import * as prettierPluginHtml from "prettier/plugins/html";
+
+    // Other
+    import JSZip from "jszip";
 
     let generatedCode = ``;
     const DarkTheme = Blockly.Theme.defineTheme("a", {
@@ -123,10 +130,30 @@
                     break;
             }
         });
-    });
 
-    function copyCode() {
-        navigator.clipboard.writeText(generateCode());
+    
+        if ($storage?.blocks?.blocks && $storage.blocks.blocks.length > 0) {
+        console.log("workspace found");
+        Blockly.serialization.workspaces.load($storage, workspace);  
+    } else {
+        console.log("no workspace found");
+        noworkspace.showModal();
+        //modal to choose file
+
+    }
+    function saveWorkspace() {
+    const state = Blockly.serialization.workspaces.save(workspace)
+    if (state && state?.blocks && state?.blocks?.length > 0) {
+        storage.set(state);
+        console.log("workspace saved");
+    }
+}
+   // setInterval(saveWorkspace, 30000);
+});
+
+
+    async function copyCode() {
+        navigator.clipboard.writeText(await generateCode());
     }
     function openExample(example: any){
         Blockly.serialization.workspaces.load(example, workspace);
@@ -198,18 +225,24 @@ function saveFile() {
             }
         }
     }
-    function generateCode() {
-        return indexJs + javascriptGenerator.workspaceToCode(workspace);
+    async function generateCode() {
+        let code = indexJs + javascriptGenerator.workspaceToCode(workspace);
+        try {
+            code = await prettier.format(code, { semi: true, parser: "babel", plugins: [prettierPluginBabel, prettierPluginEstree, prettierPluginHtml],});
+        } catch (error) {
+            code = `\nError exporting code: ${error.message}`; // TODO: show this in a dialog
+        }
+        return code;
     }
     async function exportJS() {
-        generatedCode = await prettier.format(generateCode(), { semi: true, parser: "babel", plugins: [prettierPluginBabel, prettierPluginEstree, prettierPluginHtml],});
+        generatedCode = await generateCode();
         const dialog:any = document.getElementById("showjs");
         dialog.showModal();	
     }
     async function downloadFiles() {
         updatePackage()
         const zip = new JSZip();
-        zip.file("index.js", generateCode());
+        zip.file("index.js", await generateCode());
         zip.file("package.json", JSON.stringify(packageJson, null, 2));
         zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)`");
         zip.file("workspace.dsc", JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2));
@@ -282,4 +315,18 @@ function saveFile() {
         </form>
       </div>
     </div>
-  </dialog>
+</dialog>
+
+<!-- dialog for no workspace -->
+<dialog id="noworkspace" class="modal scroll">
+    <div class="modal-box">
+        <h3 class="font-bold text-3xl">No workspace found</h3>
+        <h2 class="font-bold text-xl">Looks like you don´t have any saved file, want to open one?</h2>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-primary " on:click={openFile}>Open a file</button>
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+</dialog>

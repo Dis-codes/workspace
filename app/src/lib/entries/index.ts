@@ -10,6 +10,7 @@ import objects from "./Others/Objects";
 import time from "./Others/Time";
 import terminal from "./Others/others";
 import requests from "./Others/requests";
+import base from "./Djs/Base";
 
 import server from "./Djs/Server"
 
@@ -178,7 +179,7 @@ export default [
                 kind: "category",
                 name: "Base",
                 colour: "#f5677f",
-                contents: []
+                contents: base
             },
             {
                 id: "messages",

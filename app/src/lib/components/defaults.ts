@@ -8,17 +8,23 @@ const packageJson = {
         "node-clean": "rm -rf node_modules && rm package-lock.json && npm cache clear --force && npm cache clean --force && npm i"
     },
     "dependencies": {
-        "discord.js": "^13.7.0",
-        "easy-json-database": "^1.5.0"  
+        "discord.js": "^14.13.0",
+        "easy-json-database": "^1.5.1"
     },
     "devDependencies": {
         "node": "^17"
     }
 }
-const indexJs = `
-//default
-const Discord = require('discord.js');
+const indexJs = `//default
+const { Client, Events, GatewayIntentBits } = require('discord.js');
 
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+
+client.once(Events.ClientReady, c => {
+	console.log('Your bot ' + c.user.tag + ' is ready!');
+});
+
+//Discodes generated code
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 //generated code

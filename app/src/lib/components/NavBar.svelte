@@ -2,20 +2,28 @@
     import Account from "./Account.svelte";
     import { user } from '$lib/userStore';
     let searchContent = '';
-    
+    export let links:boolean = true;
   </script>
 
-  <div class="navbar bg-base-200 fixed z-10">
-    <div class="flex-1">
-      <a href="/" class="btn btn-square btn-ghost">
-        <img src="https://www.discodes.xyz/Images/favicon1.png" alt="Profile Picture" class="w-full h-full rounded" />
-      </a>
-      <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
+<div class="navbar bg-base-200 fixed z-10 h-16">
+  <div class="flex-1">
+    <a href="/" class="btn btn-square btn-ghost">
+      <img src="https://www.discodes.xyz/Images/favicon1.png" alt="Profile Picture" class="w-full h-full rounded" />
+    </a>
+    <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
+    {#if !links}
+    <div class="ml-6">
+      <slot />
     </div>
+    {/if}
+  </div>
+  {#if links}
     <div class="flex-auto">
-      <slot/>
+      <slot />
     </div>
-    <div class="flex-auto">
+      
+
+      <div class="flex-auto">
       <a class="btn btn-ghost normal-case no-animation" href="https://www.discodes.xyz/">Home page</a>
       <a class="btn btn-ghost normal-case no-animation mx-2" href="https://www.discodes.xyz/search/marketplace">Marketplace</a>
       <div class="dropdown w-64">
@@ -43,7 +51,7 @@
         {/if}
       </div>
     </div>
-  
+    {/if}
     <div class="flex-none">
       {#if $user}
         <a class="btn btn-ghost normal-case" href="https://www.discodes.xyz/dashboard">Dashboard</a>

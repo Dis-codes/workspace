@@ -1,36 +1,50 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-</script>
-
-<div class="flex flex-col md:flex-row justify-center items-center h-screen gap-10">
-    <button on:click={() => goto('/editor/blockly')}>
-    <div class="card card-compact w-96 bg-base-100 shadow-xl mb-10 h-[360px] border border-neutral hover:border-white hover:-translate-y-5 
-    duration-150">
-
-    <figure><img src="https://cdn.discordapp.com/attachments/977890124912279563/1146103029741928559/image.png" alt="Shoes" /></figure>
-    <div class="card-body">
-        <h2 class="card-title">Blockly</h2>
-        <p>Use scratch-like blocks to design your very own bot!</p>
-        <div class="card-actions justify-end">
-            <!-- <button class="btn btn-primary">Create Command</button> -->
-
-        </div>
-    </div>
-    </div>
-</button>
-
-    <div class="card card-compact w-96 bg-base-100 shadow-xl mb-10 h-[360px] border border-neutral hover:border-white hover:-translate-y-5 
-    duration-150">
-        <figure><img src="https://img.freepik.com/free-vector/abstract-coming-soon-halftone-style-background-design_1017-27282.jpg" alt="Shoes" /></figure>
-        <div class="card-body">
-            <h2 class="card-title">Comming soon!</h2>
-            <p>It's a secret for now</p>
-            <div class="card-actions justify-end">
-                <!-- <button class="btn btn-primary">Create Command</button> -->
+    import NavBar from "$lib/components/NavBar.svelte";
+    import SideBar from "$lib/components/SideBar.svelte";
+    </script>
+    
+    <NavBar /> 
+    <SideBar>
+        <div class="ml-40 mt-40">
+            <h2 class="text-4xl font-bold">Home</h2>
+            <div class="flex flex-col gap-4 mt-6">
+                <a href="editor/new" class="btn btn-wide btn-primary">Create a new bot</a>
+                <button on:click={openFile} class="btn btn-wide btn-secondary">Open file</button>
+            </div>
+            <div class="mt-20 mb-2">
+                <h3 class="text-xl">Recent</h3>
+            </div>
+            <div class="flex flex-col gap-4">
+                <!-- recent should be done with github interaction, also localstorage, there is no other way -->
+                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
+                    <div>
+                        <p class="font-bold">bot name</p>
+                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
+                    </div>
+                    <div class="btn btn-primary my-auto">Edit</div>
+                </div>
+                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
+                    <div>
+                        <p class="font-bold">bot name</p>
+                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
+                    </div>
+                    <div class="btn btn-primary my-auto">Edit</div>
+                </div>
+                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
+                    <div>
+                        <p class="font-bold">bot name</p>
+                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
+                    </div>
+                    <div class="btn btn-primary my-auto">Edit</div>
+                </div>
+                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
+                    <div>
+                        <p class="font-bold">bot name</p>
+                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
+                    </div>
+                    <div class="btn btn-primary my-auto">Edit</div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
-<style>
-</style>
+    </SideBar>
+    

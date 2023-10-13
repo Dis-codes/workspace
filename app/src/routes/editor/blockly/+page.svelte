@@ -137,7 +137,7 @@
         Blockly.serialization.workspaces.load($storage, workspace);  
     } else {
         console.log("no workspace found");
-        noworkspace.showModal();
+        // noworkspace.showModal();
         //modal to choose file
 
     }

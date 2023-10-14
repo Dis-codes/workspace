@@ -1,6 +1,26 @@
 <script lang="ts">
     import NavBar from "$lib/components/NavBar.svelte";
+    import { onMount, onDestroy } from "svelte";
+    import FileTab from "./FileTab.svelte";
+    import Workspace from "./workspace.svelte";
     let sidebarOpen = true;
+    let files = ["index.dsc"]; // Array of file names
+    let activeFileIndex = 0; // Index of the active file
+
+    function setActiveFile(index) {
+    activeFileIndex = index;
+    }
+
+  function closeFile(index) {
+    files.splice(index, 1)
+    if (activeFileIndex >= index) {
+      activeFileIndex = Math.max(0, activeFileIndex - 1);
+    }
+  }
+
+  onMount(() => {
+    // Logic to set up your workspace when the component is mounted.
+  });
 </script>
 
 <div class="h-full w-full flex flex-col">
@@ -84,19 +104,25 @@
         </div>
         {/if}
         <div class="w-full h-full flex flex-col">
+            {#if files.length > 0}
             <div class="mt-16 bg-gray-700 h-10 w-full flex items-center">
-                <div class="flex flex-row">
-                    <div class="flex flex-row w-40 justify-between">
-                        <h3 class="text-2xl truncate">index.dsc</h3>
-                        <button class="btn btn-square btn-ghost btn-sm"><span class="material-symbols-outlined">close</span></button>
-                    </div>
-                    <div class="divider divider-horizontal"></div>
-                    <button class="btn btn-square btn-ghost btn-sm"><span class="material-symbols-outlined">add</span></button>
+                <div class="flex flex-row ml-5">
+                  {#each files as file, index (file)}
+                    <FileTab
+                      fileName={file}
+                      isActive={index === activeFileIndex}
+                      onClose={() => closeFile(index)}
+                    />
+                    <div class="divider divider-horizontal mx-0"></div>
+                  {/each}
+                </div>
+              </div>
+            {/if}
+            <div class="flex-1">
+                <div class="w-full {files.length > 0? "h-[54rem]" : "h-[56.5rem] mt-[4rem]"}">
+                    <Workspace />
                 </div>
             </div>
-            <div class="flex m-auto mt-96">
-                WORKSPACE
-            </div>
-        </div>
+          </div>
     </div>
 </div>

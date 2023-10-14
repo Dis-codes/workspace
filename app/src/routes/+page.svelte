@@ -9,7 +9,7 @@
             <h2 class="text-4xl font-bold">Home</h2>
             <div class="flex flex-col gap-4 mt-6">
                 <a href="editor/new" class="btn btn-wide btn-primary">Create a new bot</a>
-                <button on:click={openFile} class="btn btn-wide btn-secondary">Open file</button>
+                <a href="editor/blockly/new?open=true" class="btn btn-wide btn-secondary">Open file</a>
             </div>
             <div class="mt-20 mb-2">
                 <h3 class="text-xl">Recent</h3>

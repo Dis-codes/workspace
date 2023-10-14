@@ -5,9 +5,9 @@
     import {storageStore} from "$lib/userStore";
     let storage = storageStore("workspace")
     // Supabase - sync session
-    export let data;
-    let { supabase, session } = data;
-    $: ({ supabase, session } = data);
+    // export let data;
+    // let { supabase, session } = data;
+    // $: ({ supabase, session } = data);
 
     // Blockly
     import Blockly from "blockly/core";
@@ -19,7 +19,7 @@
     import type { Abstract } from "blockly/core/events/events_abstract";
     import javascriptGenerator from "$lib/javascript.js";
     import  {packageJson, indexJs}  from "$lib/components/defaults";
-    import "./blockRegister"
+    import "../blockRegister"
     import {test }from "$lib/components/examples";
 
     // better code export
@@ -263,70 +263,9 @@ function saveFile() {
         }
     }
 </script>
-
-<NavBar>
-    <div class="dropdown">
-        <label tabindex="0" class="btn m-1">File</label>
-        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-          <li><button on:click={openFile}>Open a file</button></li>
-          <li><button on:click={exportJS}>Export to JavaScript</button></li>
-          <li><button on:click={saveFile}>Save a file</button></li>
-          <li><button on:click={downloadFiles}>Download bot</button></li>
-          <div class="divider">Edit</div>
-          <li><button on:click={deleteUnusedBlocks}>Delete unused blocks</button></li>
-          <!-- <li><button on:click={workspace.cleanUp()}>Clean up blocks</button></li> -->
-        </ul>
-      </div>
-      <div class="dropdown">
-        <label tabindex="0" class="btn m-1">Examples</label>
-        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a href="https://www.discodes.xyz/search/marketplace" target="_blank">Shared code </a></li>
-          <div class="divider">Build-in</div>
-            <li><button on:click={()=>openExample(test)}>Test</button></li>
-        </ul>
-      </div>
-      <div class="dropdown">
-        <label tabindex="0" class="btn m-1">Links</label>
-        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-          <li><a href="https://discord.gg/TsQPMrNyBv">Discord Server</a></li>
-          <li><a href="https://github.com/Dis-codes">Github Organization</a></li>
-          <li><a href="https://www.discodes.xyz/help/">Help</a></li>
-        </ul>
-      </div>
-</NavBar>
-<div class="flex flex-col items-center justify-center h-screen">
-    <div class="mt-16 w-full h-full">
+  
+<div class="flex flex-col items-center justify-center h-full">
+    <div class="w-full h-full">
         <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
 </div>
-
-<dialog id="showjs" class="modal scroll">
-    <div class="modal-box max-w-full  h-full">
-      <h3 class="font-bold text-3xl text-white">JavaScript code of your bot</h3>
-      <div class="bg-gray-300 w-full mt-4 h-full max-h-[43rem] rounded-md p-4 overflow-auto">
-        <pre><code>
-            {@html Prism.highlight(generatedCode, Prism.languages['javascript'])}
-        </code> </pre>
-     </div>
-      <div class="modal-action">
-        <form method="dialog">
-          <button class="btn btn-primary " on:click={copyCode}>Copy Code to Clipboard</button>
-          <button class="btn">Close</button>
-        </form>
-      </div>
-    </div>
-</dialog>
-
-<!-- dialog for no workspace -->
-<dialog id="noworkspace" class="modal scroll">
-    <div class="modal-box">
-        <h3 class="font-bold text-3xl">No workspace found</h3>
-        <h2 class="font-bold text-xl">Looks like you don´t have any saved file, want to open one?</h2>
-        <div class="modal-action">
-          <form method="dialog">
-            <button class="btn btn-primary " on:click={openFile}>Open a file</button>
-            <button class="btn">Close</button>
-          </form>
-        </div>
-      </div>
-</dialog>

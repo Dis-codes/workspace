@@ -146,15 +146,8 @@
 </script>
 
 <div
-    class="root"
+    class="w-full h-full"
     bind:offsetWidth={width}
     bind:offsetHeight={height}
     use:initRoot={{ config, locale }}
 />
-
-<style>
-    .root {
-        width: 100%;
-        height: 100%;
-    }
-</style>

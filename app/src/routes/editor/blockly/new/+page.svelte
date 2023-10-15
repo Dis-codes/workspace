@@ -1,20 +1,34 @@
 <script lang="ts">
     import NavBar from "$lib/components/NavBar.svelte";
     import { onMount, onDestroy } from "svelte";
-    import FileTab from "./FileTab.svelte";
     import Workspace from "./workspace.svelte";
+    import {storageStore} from "$lib/userStore";
+    let settings = storageStore("notes");
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
     let activeFileIndex = 0; // Index of the active file
-
-    function setActiveFile(index) {
-    activeFileIndex = index;
+    let commands = ["ping.dsc", "help.dsc", "eval.dsc"]
+    //get commands from settings
+    let addCommandText = "";
+    function setActiveFile(file) {
+        if (files.includes(file)) {
+            activeFileIndex = files.indexOf(file);
+        } else {
+            files = [...files, file];
+            activeFileIndex = files.length - 1;
+        }
     }
-
   function closeFile(index) {
-    files.splice(index, 1)
+    files = files.filter((_, i) => i !== index);
     if (activeFileIndex >= index) {
       activeFileIndex = Math.max(0, activeFileIndex - 1);
+    }
+  }
+  async function addCommand() {
+    if (addCommandText.length > 0) {
+      commands = [...commands, addCommandText + ".dsc"];
+      addCommandText = "";
+      addcommand.close();
     }
   }
 
@@ -39,21 +53,21 @@
         <div class="bg-base-200 w-80 h-screen">
             <div class="flex flex-col justify-between h-full">
             <div>
-            <div class="mt-24 mb-4 px-4 flex flex-row justify-between">
+            <div class="mt-24 mb-4 px-4 flex flex-row justify-between items-center">
                 <h2 class="text-3xl font-bold">Files</h2>
-                <div>
-                    <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
-                    <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">folder</span></button>
-                    <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">menu</span></button>
+                <div class="">
+                    <button on:click={() => addcommand.showModal()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
+                    <button class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">menu</span></button>
                 </div>
             </div>
             <ul class="menu max-w-xs w-full">
-                <li><a>
+                <li><button on:click={() => setActiveFile("index.dsc")}>
                     <span class="material-symbols-outlined">
                         deployed_code
                         </span>
                   index.dsc
-                </a></li>
+                </button></li>
+                {#if commands.length > 0}
                 <li>
                   <details open>
                     <summary>
@@ -61,33 +75,36 @@
                       commands
                     </summary>
                     <ul>
-                      <li><a>
-                        <span class="material-symbols-outlined">
-                            deployed_code
-                            </span>
-                        message.dsc
-                      </a></li>
-                      <li><a>
-                        <span class="material-symbols-outlined">
-                            deployed_code
-                            </span>
-                        interaction.dsc
-                      </a></li>
+                      {#each commands as command}
+                      <li class="flex flex-row items-center justify-between"><button on:click={() => setActiveFile(command)}>
+                        <span class="material-symbols-outlined">deployed_code</span>
+                        {command}
+                      </button>
+                      <div class="dropdown btn-sm btn-square btn">
+                        <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
+                        <ul class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
+                          <li><button>Edit</button></li>
+                        <li><button>Download</button></li>
+                          <li><button class="text-red-500">Delete</button></li>
+                        </ul>
+                      </div></li>
+                      {/each}
                     </ul>
                   </details>
                 </li>
+                {/if}
                 <li><a>
                     <span class="material-symbols-outlined">
                         inventory_2
                         </span>
                   package.json
                 </a></li>
-                <li><a>
+                <li><button on:click={() => markdown.showModal()}>
                     <span class="material-symbols-outlined">
                         markdown
                         </span>
                     notes.md
-                  </a></li>
+                  </button></li>
               </ul>
               </div>
               <div class="flex flex-col">
@@ -108,11 +125,12 @@
             <div class="mt-16 bg-gray-700 h-10 w-full flex items-center">
                 <div class="flex flex-row ml-5">
                   {#each files as file, index (file)}
-                    <FileTab
-                      fileName={file}
-                      isActive={index === activeFileIndex}
-                      onClose={() => closeFile(index)}
-                    />
+                    <div class="flex flex-row w-fit max-w-[12rem] gap-2">
+                        <button on:click={() => setActiveFile(file)}><h3 class="text-2xl truncate  {index == activeFileIndex? "font-bold": ""}">{file}</h3></button>
+                        <button on:click={() => closeFile(index)} class="btn btn-square btn-ghost btn-sm">
+                          <span class="material-symbols-outlined">close</span>
+                        </button>
+                  </div>
                     <div class="divider divider-horizontal mx-0"></div>
                   {/each}
                 </div>
@@ -120,9 +138,38 @@
             {/if}
             <div class="flex-1">
                 <div class="w-full {files.length > 0? "h-[54rem]" : "h-[56.5rem] mt-[4rem]"}">
-                    <Workspace />
+                    <Workspace file={files[activeFileIndex]} />
                 </div>
             </div>
           </div>
     </div>
 </div>
+
+
+
+<dialog id="markdown" class="modal scroll">
+  <div class="modal-box max-w-full h-full">
+    <h3 class="font-bold text-3xl text-white">Your notes for your bot</h3>
+      <textarea class="mt-4  h-full w-full resize-none rounded-md p-2 overflow-auto max-h-[43rem]" placeholder="Write your notes here" bind:value={$settings["notes"]}></textarea>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="addcommand" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-3xl text-white">Give your new command a name</h3>
+    <div class="flex justify-center mt-4">
+      <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" bind:value={addCommandText} />
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-primary" on:click={() => addCommand()}>Submit</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>

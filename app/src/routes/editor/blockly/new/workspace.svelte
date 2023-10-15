@@ -3,35 +3,35 @@
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
     import {storageStore} from "$lib/userStore";
-    let storage = storageStore("workspace")
     // Supabase - sync session
     // export let data;
     // let { supabase, session } = data;
     // $: ({ supabase, session } = data);
-
+    
     // Blockly
     import Blockly from "blockly/core";
     import toolbox from "$lib/toolbox";
     import En from "blockly/msg/en";
     import "blockly/blocks";
-
+    
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
     import javascriptGenerator from "$lib/javascript.js";
     import  {packageJson, indexJs}  from "$lib/components/defaults";
     import "../blockRegister"
     import {test }from "$lib/components/examples";
-
+    
     // better code export
     import Prism from 'prismjs';
     import * as prettier from "prettier";
     import * as prettierPluginBabel from "prettier/plugins/babel";
     import * as prettierPluginEstree from "prettier/plugins/estree";
     import * as prettierPluginHtml from "prettier/plugins/html";
-
+    export let file = "index.dsc";
+    let storage = storageStore(file)
     // Other
     import JSZip from "jszip";
-
+    
     let generatedCode = ``;
     const DarkTheme = Blockly.Theme.defineTheme("a", {
         name: "true_dark",
@@ -132,23 +132,24 @@
         });
 
     
-        if ($storage?.blocks?.blocks && $storage.blocks.blocks.length > 0) {
+        if ($storage[file]?.blocks?.blocks && $storage[file]?.blocks.blocks.length > 0) {
         console.log("workspace found");
-        Blockly.serialization.workspaces.load($storage, workspace);  
+        Blockly.serialization.workspaces.load($storage[file], workspace);  
     } else {
         console.log("no workspace found");
-        // noworkspace.showModal();
-        //modal to choose file
-
     }
     function saveWorkspace() {
-    const state = Blockly.serialization.workspaces.save(workspace)
-    if (state && state?.blocks && state?.blocks?.length > 0) {
-        storage.set(state);
-        console.log("workspace saved");
-    }
+    console.log("saving workspace");
+    const state = Blockly.serialization.workspaces.save(workspace);
+    storage.update((s) => {
+        s[file] = state;
+        return s;
+    });
+    // if (state  && state?.blocks?.blocks?.length > 0) {
+    //     console.log("workspace saved");
+    // }
 }
-   // setInterval(saveWorkspace, 30000);
+  setInterval(saveWorkspace, 10000);
 });
 
 

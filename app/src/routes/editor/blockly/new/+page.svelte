@@ -93,6 +93,28 @@
     };
     input.click();
 }
+  function downloadCmd(command) {
+    const data = JSON.stringify($settings[command]);
+
+    const blob = new Blob([data], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const fileName = command;
+    
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    
+    URL.revokeObjectURL(url);
+  }
+  function deleteCmd(command) {
+    commands = commands.filter((cmd) => cmd !== command);
+    //removes from localstorage, but on refresh it comes back...
+    // storageStore(command).update((s) => {
+    //   s[command] = undefined;
+    //   return s;
+    // });
+  }
   onMount(() => {
     // check if url has open=true
     const urlParams = new URLSearchParams(window.location.search);
@@ -148,8 +170,8 @@
                         <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
                         <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
                           <li><button>Edit</button></li>
-                        <li><button>Download</button></li>
-                          <li><button class="text-red-500">Delete</button></li>
+                        <li><button on:click={() => downloadCmd(command)}>Download</button></li>
+                          <li><button class="text-red-500" on:click={() => deleteCmd(command)}>Delete</button></li>
                         </ul>
                       </div></li>
                       {/each}

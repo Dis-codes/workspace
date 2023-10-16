@@ -9,15 +9,13 @@
     // $: ({ supabase, session } = data);
     
     // Blockly
-    import Blockly from "blockly/core";
-    import toolbox from "$lib/toolbox";
-    import En from "blockly/msg/en";
     import "blockly/blocks";
     
     import BlocklyComponent from "$lib/components/Blockly.svelte";
     import type { Abstract } from "blockly/core/events/events_abstract";
     import javascriptGenerator from "$lib/javascript.js";
     import  {packageJson, indexJs}  from "$lib/components/defaults";
+    import {en, Blockly, config} from "$lib/components/defaultWorkspace";
     import "../blockRegister"
     import {test }from "$lib/components/examples";
     
@@ -27,10 +25,13 @@
     import * as prettierPluginBabel from "prettier/plugins/babel";
     import * as prettierPluginEstree from "prettier/plugins/estree";
     import * as prettierPluginHtml from "prettier/plugins/html";
+    import JSZip from "jszip";
+
     export let file = "index.dsc";
     let previousFile = file;
     let init = false;
     let storage = storageStore(file)
+    let refreshValue: any = undefined;
     $: {
         if (init) {
         if (previousFile && previousFile !== file){
@@ -48,88 +49,7 @@
     }
 }
 }
-    // Other
-    import JSZip from "jszip";
-    
     let generatedCode = ``;
-    const DarkTheme = Blockly.Theme.defineTheme("a", {
-        name: "true_dark",
-        base: Blockly.Themes.Classic,
-        componentStyles: {
-            workspaceBackgroundColour: "#0C111A",
-            toolboxBackgroundColour: "#111827",
-            toolboxForegroundColour: "#ffffff",
-            flyoutBackgroundColour: "#111827",
-            flyoutForegroundColour: "#cccccc",
-            flyoutOpacity: 0.5,
-            scrollbarColour: "#797979",
-            insertionMarkerColour: "#ffffff",
-            insertionMarkerOpacity: 0.3,
-            scrollbarOpacity: 0.01,
-            cursorColour: "#d0d0d0",
-        },
-    });
-    // For styling the categories
-    class CustomCategory extends Blockly.ToolboxCategory {
-        /**
-         * Constructor for a custom category.
-         * @override
-         */
-        constructor(categoryDef: any, toolbox: any, opt_parent: any) {
-            super(categoryDef, toolbox, opt_parent);
-        }
-        // /** @override */
-        // addColourBorder_(colour:any) {
-        //   this.rowDiv_.style.backgroundColor = colour;
-        // }
-    }
-    Blockly.registry.register(
-        Blockly.registry.Type.TOOLBOX_ITEM,
-        Blockly.ToolboxCategory.registrationName,
-        CustomCategory,
-        true
-    );
-
-    const en = {
-        rtl: false,
-        msg: {
-            ...En,
-        },
-    };
-
-    const config = {
-        theme: DarkTheme,
-        renderer: "zelos",
-        collapse: true,
-        comments: true,
-        disable: true,
-        maxBlocks: Infinity,
-        trashcan: true,
-        horizontalLayout: false,
-        rtl: false,
-        grid: {
-            spacing: 25,
-            length: 3,
-            colour: "#5c5a5a",
-            snap: true,
-        },
-        zoom: {
-            controls: true,
-            startScale: 0.9,
-            maxScale: 5,
-            minScale: 0.1,
-            scaleSpeed: 1.2,
-        },
-        toolbox,
-        move: {
-            scrollbars: {
-                horizontal: true,
-                vertical: true,
-            },
-            drag: true,
-            wheel: true,
-        },
-    };
     let workspace: Blockly.WorkspaceSvg;
     onMount(() => {
         const urlParams = new URLSearchParams(window.location.search);
@@ -141,9 +61,12 @@
             loadWorkspace();
         }
         init = true;
-        // dont close out instantly if changes were made
-        let refreshValue: any = undefined;
-        window.onbeforeunload = () => refreshValue;
+        window.onbeforeunload = (event: BeforeUnloadEvent) => {
+    if (refreshValue !== undefined) {
+        saveWorkspace(file);
+        refreshValue = undefined;
+    }
+};
         // according to blockly, event is type Abstract
         workspace.addChangeListener((event: Abstract) => {
             switch (event.type) {
@@ -175,6 +98,7 @@
         return s;
     });
     console.log("workspace saved");
+    refreshValue = undefined;
     }
 
     async function copyCode() {
@@ -195,11 +119,10 @@
                 const contents = event.target.result;
                 try {
                     const zip = await JSZip.loadAsync(contents);
-                    const workspaceFile = await zip.file("index.dsc")?.async("string");
+                    const workspaceFile = await zip.file("workspace.dsc")?.async("string");
                     if (workspaceFile) {
-                        const state = JSON.parse(workspaceFile);
-                        Blockly.serialization.workspaces.load(state, workspace);
-                        saveWorkspace("index.dsc");
+                        storage.set(JSON.parse(workspaceFile));
+                        window.location.reload();
                     }else {
                         console.error("Error loading workspace: no workspace file found");
                     }
@@ -268,12 +191,13 @@ function saveFile() {
         dialog.showModal();	
     }
     async function downloadFiles() {
+        saveWorkspace(file);
         updatePackage()
         const zip = new JSZip();
         zip.file("index.js", await generateCode());
         zip.file("package.json", JSON.stringify(packageJson, null, 2));
         zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)`");
-        zip.file("workspace.dsc", JSON.stringify(Blockly.serialization.workspaces.save(workspace), null, 2));
+        zip.file("workspace.dsc", JSON.stringify($storage, null, 2));
         const content = await zip.generateAsync({ type: "blob" });
         const url = URL.createObjectURL(content);
         const a = document.createElement("a");

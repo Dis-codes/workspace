@@ -139,7 +139,17 @@
             const contents = event.target.result;
             try {
                 const state = JSON.parse(contents);
-                Blockly.serialization.workspaces.load(state, workspace);
+                const workspaceFile = JSON.parse(contents);
+                if (workspaceFile) {
+                    console.log("workspace found", workspaceFile);
+                    storage.update((s) => {
+                        s[file.name] = workspaceFile;
+                        return s;
+                    });
+                    window.location.reload();
+                } else {
+                    console.error("Error loading workspace: no workspace file found");
+                }
             } catch (error) {
                 console.error("Error loading workspace:", error);
             }
@@ -148,7 +158,6 @@
     };
     input.click();
 }
-
 function saveFile() {
     const state = Blockly.serialization.workspaces.save(workspace);
     const data = JSON.stringify(state);

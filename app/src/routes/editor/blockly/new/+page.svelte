@@ -43,56 +43,6 @@
       addcommand.close();
     }
   }
- async function openFile() {
-    console.log("open file");
-    const input = document.createElement("input");
-    input.type = "file";
-    input.accept = ".dsc, .zip";
-    input.onchange = (event: any) => {
-        if (event.target.files[0].name.endsWith(".zip")) {
-            const file = event.target.files[0];
-            const reader = new FileReader();
-            reader.onload = async (event: any) => {
-                const contents = event.target.result;
-                try {
-                  console.log("loading zip");
-                    const zip = await JSZip.loadAsync(contents);
-                    const workspaceFile = await zip.file("index.dsc")?.async("string");
-                    console.log(workspaceFile);
-                    if (!workspaceFile) {
-                      console.log("no workspace file found");
-                      return;
-                    }
-                    const state = JSON.parse(workspaceFile);
-                    settings.update((s) => {
-                        s["index.dsc"] = state;
-                        return s;
-                    });
-                } catch (error) {
-                    console.error("Error loading workspace:", error);
-                }
-            };
-            reader.readAsArrayBuffer(file);
-            return;
-        }
-        const file = event.target.files[0];
-        const reader = new FileReader();
-        reader.onload = (event: any) => {
-            const contents = event.target.result;
-            try {
-                const state = JSON.parse(contents);
-                settings.update((s) => {
-                    s["index.dsc"] = state;
-                    return s;
-                });
-            } catch (error) {
-                console.error("Error loading workspace:", error);
-            }
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
   function downloadCmd(command) {
     const data = JSON.stringify($settings[command]);
 
@@ -108,20 +58,18 @@
     URL.revokeObjectURL(url);
   }
   function deleteCmd(command) {
-    commands = commands.filter((cmd) => cmd !== command);
-    //removes from localstorage, but on refresh it comes back...
-    // storageStore(command).update((s) => {
-    //   s[command] = undefined;
-    //   return s;
-    // });
-  }
-  onMount(() => {
-    // check if url has open=true
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get("open") === "true") {
-      openFile();
+    if (files.includes(command)) {
+      closeFile(files.indexOf(command));
     }
-  });
+    commands = commands.filter((cmd) => cmd !== command);
+      storageStore(command).update((s) => {
+      s[command] = undefined;
+      return s;
+    });
+  }
+  function openFile(){
+   alert("open single file...")
+  }
 </script>
 
 <div class="h-full w-full flex flex-col">
@@ -143,17 +91,25 @@
             <div class="mt-24 mb-4 px-4 flex flex-row justify-between items-center">
                 <h2 class="text-3xl font-bold">Files</h2>
                 <div class="">
+                  <button on:click={() => openFile()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
                     <button on:click={() => addcommand.showModal()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
                     <button class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">menu</span></button>
                 </div>
             </div>
             <ul class="menu max-w-xs w-full">
-                <li><button on:click={() => setActiveFile("index.dsc")}>
+                <li class="flex flex-row items-center justify-between"><button on:click={() => setActiveFile("index.dsc")}>
                     <span class="material-symbols-outlined">
                         deployed_code
                         </span>
                   index.dsc
-                </button></li>
+                </button><div class="dropdown btn-square btn-sm justify-center">
+                  <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
+                  <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
+                    <li><button>Edit</button></li>
+                  <li><button on:click={() => downloadCmd("index.dsc")}>Download</button></li>
+                    <li><button class="text-red-500" on:click={() => deleteCmd("index.dsc")}>Delete</button></li>
+                  </ul>
+                </div></li>
                 <li>
                   <details open>
                     <summary>

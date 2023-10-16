@@ -2,13 +2,20 @@
     import NavBar from "$lib/components/NavBar.svelte";
     import { onMount, onDestroy } from "svelte";
     import Workspace from "./workspace.svelte";
+    import JSZip from "jszip";
     import {storageStore} from "$lib/userStore";
+
     let settings = storageStore("notes");
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
     let activeFileIndex = 0; // Index of the active file
-    let commands = ["ping.dsc", "help.dsc", "eval.dsc"]
-    //get commands from settings
+    let commands = []
+    //get commands from settings all having .dsc except index.dsc
+    for (const [key, value] of Object.entries($settings)) {
+      if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
+        commands = [...commands, key];
+      }
+    }
     let addCommandText = "";
     function setActiveFile(file) {
         if (files.includes(file)) {
@@ -19,6 +26,11 @@
         }
     }
   function closeFile(index) {
+      // if (files.length === 1) {
+      //   //files = ["index.dsc"];
+      //   activeFileIndex = 0;
+      //   return;
+      // }
     files = files.filter((_, i) => i !== index);
     if (activeFileIndex >= index) {
       activeFileIndex = Math.max(0, activeFileIndex - 1);
@@ -31,9 +43,62 @@
       addcommand.close();
     }
   }
-
+ async function openFile() {
+    console.log("open file");
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".dsc, .zip";
+    input.onchange = (event: any) => {
+        if (event.target.files[0].name.endsWith(".zip")) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = async (event: any) => {
+                const contents = event.target.result;
+                try {
+                  console.log("loading zip");
+                    const zip = await JSZip.loadAsync(contents);
+                    const workspaceFile = await zip.file("index.dsc")?.async("string");
+                    console.log(workspaceFile);
+                    if (!workspaceFile) {
+                      console.log("no workspace file found");
+                      return;
+                    }
+                    const state = JSON.parse(workspaceFile);
+                    settings.update((s) => {
+                        s["index.dsc"] = state;
+                        return s;
+                    });
+                } catch (error) {
+                    console.error("Error loading workspace:", error);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            return;
+        }
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+            const contents = event.target.result;
+            try {
+                const state = JSON.parse(contents);
+                settings.update((s) => {
+                    s["index.dsc"] = state;
+                    return s;
+                });
+            } catch (error) {
+                console.error("Error loading workspace:", error);
+            }
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
   onMount(() => {
-    // Logic to set up your workspace when the component is mounted.
+    // check if url has open=true
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("open") === "true") {
+      openFile();
+    }
   });
 </script>
 
@@ -42,7 +107,7 @@
     <NavBar links={false}>
             <div class="flex flex-row gap-6 items-center">
             <button class="btn btn-square btn-neutral btn-sm" on:click={() => sidebarOpen = !sidebarOpen}><span class="material-symbols-outlined">menu</span></button>
-            <h2 class="text-3xl font-bold">Bot name</h2>
+            <h2 class="text-3xl font-bold">{$settings.settings.botName}</h2>
             <button class="btn btn-square btn-accent btn-sm"><span class="material-symbols-outlined">play_arrow</span></button>
         </div>
     </NavBar>
@@ -67,7 +132,6 @@
                         </span>
                   index.dsc
                 </button></li>
-                {#if commands.length > 0}
                 <li>
                   <details open>
                     <summary>
@@ -80,9 +144,9 @@
                         <span class="material-symbols-outlined">deployed_code</span>
                         {command}
                       </button>
-                      <div class="dropdown btn-sm btn-square btn">
+                      <div class="dropdown btn-square btn-sm justify-center">
                         <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
-                        <ul class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
+                        <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
                           <li><button>Edit</button></li>
                         <li><button>Download</button></li>
                           <li><button class="text-red-500">Delete</button></li>
@@ -92,13 +156,12 @@
                     </ul>
                   </details>
                 </li>
-                {/if}
-                <li><a>
+                <li><button>
                     <span class="material-symbols-outlined">
                         inventory_2
                         </span>
                   package.json
-                </a></li>
+                </button></li>
                 <li><button on:click={() => markdown.showModal()}>
                     <span class="material-symbols-outlined">
                         markdown

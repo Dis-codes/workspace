@@ -28,7 +28,26 @@
     import * as prettierPluginEstree from "prettier/plugins/estree";
     import * as prettierPluginHtml from "prettier/plugins/html";
     export let file = "index.dsc";
+    let previousFile = file;
+    let init = false;
     let storage = storageStore(file)
+    $: {
+        if (init) {
+        if (previousFile && previousFile !== file){
+            console.log("saving workspace", previousFile)
+            saveWorkspace(previousFile);
+        }
+        if (previousFile && file && previousFile !== file) {
+        previousFile = file;
+        if (file) {
+
+            storage = storageStore(file)
+        }
+        workspace?.clear();
+        loadWorkspace();
+    }
+}
+}
     // Other
     import JSZip from "jszip";
     
@@ -113,6 +132,15 @@
     };
     let workspace: Blockly.WorkspaceSvg;
     onMount(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get("open") === "true") {
+        openFile();
+        window.history.replaceState({}, document.title, "/" + "editor/blockly/new");
+        }
+        else {
+            loadWorkspace();
+        }
+        init = true;
         // dont close out instantly if changes were made
         let refreshValue: any = undefined;
         window.onbeforeunload = () => refreshValue;
@@ -130,28 +158,24 @@
                     break;
             }
         });
-
-    
+});
+    async function loadWorkspace () {
         if ($storage[file]?.blocks?.blocks && $storage[file]?.blocks.blocks.length > 0) {
         console.log("workspace found");
         Blockly.serialization.workspaces.load($storage[file], workspace);  
     } else {
         console.log("no workspace found");
     }
-    function saveWorkspace() {
-    console.log("saving workspace");
+    }
+    function saveWorkspace(currentFile) {
+    if (!currentFile) return;
     const state = Blockly.serialization.workspaces.save(workspace);
     storage.update((s) => {
-        s[file] = state;
+        s[currentFile] = state;
         return s;
     });
-    // if (state  && state?.blocks?.blocks?.length > 0) {
-    //     console.log("workspace saved");
-    // }
-}
-  setInterval(saveWorkspace, 10000);
-});
-
+    console.log("workspace saved");
+    }
 
     async function copyCode() {
         navigator.clipboard.writeText(await generateCode());
@@ -162,7 +186,7 @@
     function openFile() {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".dsc, .json, .zip";
+    input.accept = ".dsc, .zip";
     input.onchange = (event: any) => {
         if (event.target.files[0].name.endsWith(".zip")) {
             const file = event.target.files[0];
@@ -171,10 +195,13 @@
                 const contents = event.target.result;
                 try {
                     const zip = await JSZip.loadAsync(contents);
-                    const workspaceFile = await zip.file("workspace.dsc")?.async("string");
+                    const workspaceFile = await zip.file("index.dsc")?.async("string");
                     if (workspaceFile) {
                         const state = JSON.parse(workspaceFile);
                         Blockly.serialization.workspaces.load(state, workspace);
+                        saveWorkspace("index.dsc");
+                    }else {
+                        console.error("Error loading workspace: no workspace file found");
                     }
                 } catch (error) {
                     console.error("Error loading workspace:", error);

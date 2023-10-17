@@ -3,14 +3,52 @@
     import { onMount, onDestroy } from "svelte";
     import Workspace from "./workspace.svelte";
     import JSZip from "jszip";
-    import {storageStore} from "$lib/userStore";
-
-    let settings = storageStore("notes");
+    import {persisted} from "$lib/localstorage";
+    let settings = persisted('workspace')
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
     let activeFileIndex = 0; // Index of the active file
     let commands = []
-    //get commands from settings all having .dsc except index.dsc
+    let page = "envs"
+    let showSecrets = []
+    let changeSecret = []
+    let oldSecret = null
+    const toggleVisibility = (i) => {
+    showSecrets[i] = !showSecrets[i]
+  };
+    let secrets = JSON.stringify($settings.settings.secrets)
+    function saveSecrets(){
+      try {
+        $settings.settings.secrets = JSON.parse(secrets)
+        settings.set($settings)
+      } catch (error) {
+        alert("Invalid JSON")
+      }
+    }
+    function updateEnv(index){
+      if (index === -1){
+        changeSecret = ["", ""]
+      }
+      else changeSecret = Object.entries($settings.settings.secrets)[index]
+      oldSecret = changeSecret[0]
+      changeenv.showModal()
+    }
+    function editEnv(){
+      settings.update((s) => {
+        s.settings.secrets[changeSecret[0]] = changeSecret[1]
+         if(oldSecret !== changeSecret[0]){  delete s.settings.secrets[oldSecret]}
+        return s;
+      });
+      changeSecret = []
+      secrets = JSON.stringify($settings.settings.secrets)
+    }
+    function SecretsDelete(key){
+      settings.update((s) => {
+        delete s.settings.secrets[key]
+        return s;
+      });
+      secrets = JSON.stringify($settings.settings.secrets)
+    }
     for (const [key, value] of Object.entries($settings)) {
       if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
         commands = [...commands, key];
@@ -18,6 +56,7 @@
     }
     let addCommandText = "";
     function setActiveFile(file) {
+      page = undefined
         if (files.includes(file)) {
             activeFileIndex = files.indexOf(file);
         } else {
@@ -62,7 +101,7 @@
       closeFile(files.indexOf(command));
     }
     commands = commands.filter((cmd) => cmd !== command);
-      storageStore(command).update((s) => {
+      settings.update((s) => {
       s[command] = undefined;
       return s;
     });
@@ -70,6 +109,9 @@
   function openFile(){
    alert("open single file...")
   }
+  function copyText(text) {
+    navigator.clipboard.writeText(text);
+  }	
 </script>
 
 <div class="h-full w-full flex flex-col">
@@ -91,7 +133,7 @@
             <div class="mt-24 mb-4 px-4 flex flex-row justify-between items-center">
                 <h2 class="text-3xl font-bold">Files</h2>
                 <div class="">
-                  <button on:click={() => openFile()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
+                  <button on:click={() => openFile()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">attach_file_add</span></button>
                     <button on:click={() => addcommand.showModal()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
                     <button class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">menu</span></button>
                 </div>
@@ -105,15 +147,16 @@
                 </button><div class="dropdown btn-square btn-sm justify-center">
                   <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
                   <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
-                    <li><button>Edit</button></li>
                   <li><button on:click={() => downloadCmd("index.dsc")}>Download</button></li>
-                    <li><button class="text-red-500" on:click={() => deleteCmd("index.dsc")}>Delete</button></li>
+                    <li><button class="text-red-500" on:click={() => deleteCmd("index.dsc")}>Clear workspace</button></li>
                   </ul>
                 </div></li>
                 <li>
                   <details open>
                     <summary>
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg>
+                      <span class="material-symbols-outlined">
+                        folder_open
+                        </span>
                       commands
                     </summary>
                     <ul>
@@ -125,7 +168,6 @@
                       <div class="dropdown btn-square btn-sm justify-center">
                         <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
                         <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
-                          <li><button>Edit</button></li>
                         <li><button on:click={() => downloadCmd(command)}>Download</button></li>
                           <li><button class="text-red-500" on:click={() => deleteCmd(command)}>Delete</button></li>
                         </ul>
@@ -134,12 +176,12 @@
                     </ul>
                   </details>
                 </li>
-                <li><button>
+                <!-- <li><button>
                     <span class="material-symbols-outlined">
                         inventory_2
                         </span>
                   package.json
-                </button></li>
+                </button></li> -->
                 <li><button on:click={() => markdown.showModal()}>
                     <span class="material-symbols-outlined">
                         markdown
@@ -150,11 +192,11 @@
               </div>
               <div class="flex flex-col">
               <div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
-                <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
+                <button on:click={() => page = "settings"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button>
-                <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">encrypted</span></button>
+                <button on:click={() => page = "envs"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">encrypted</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button>
-                <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">data_usage</span></button>
+                <button on:click={() => page = "usage"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">data_usage</span></button>
             </div>
             <a href="https://discodes.xyz/help" class="btn">help</a>
         </div>
@@ -162,6 +204,7 @@
         </div>
         {/if}
         <div class="w-full h-full flex flex-col">
+          {#if !page}
             {#if files.length > 0}
             <div class="mt-16 bg-gray-700 h-10 w-full flex items-center">
                 <div class="flex flex-row ml-5">
@@ -182,6 +225,80 @@
                     <Workspace file={files[activeFileIndex]} />
                 </div>
             </div>
+            {:else if page === "settings"}
+            <div class=" w-full h-screen">
+              <div class="mt-16 p-10">
+                <div class="bg-gray-700 w-60 h-96 rounded-2xl p-6">
+                    <h2 class="font-bold text-xl">Bot Information</h2>
+                    <p>Bot Name: </p>
+                    <input type="text" class="input input-bordered w-full max-w-xs" bind:value={$settings.settings.botName} maxlength=20/>
+                    <p>Bot Description: </p>
+                    <!-- <input type="text" class="input input-bordered w-full max-w-xs h-20" bind:value={$settings.settings.botDescription} /> -->
+                    <textarea class="textarea textarea-bordered w-full h-52 resize-none" placeholder="Description" bind:value={$settings.settings.botDescription} maxlength=140></textarea>
+                </div>
+              </div>
+            </div>
+            {:else if page === "dashboard"}
+            <p>dashboard</p>
+            {:else if page === "envs"}
+            <div class=" w-full h-screen">
+              <div class="mt-16 p-10">
+                <div class="flex flex-row justify-between">
+                  <h3 class="font-bold text-2xl">Secrets</h3>
+                  <div class="flex gap-2">
+                    <button on:click={() => editenv.showModal()} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">data_object</span>Edit as JSON</button>
+                    <a href="https://discodes.xyz/help" class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">menu_book</span>Docs</a>
+                    <button on:click={() => updateEnv(-1)} class="btn btn-neutral bg-blue-500 text-white btn-sm"><span class="material-symbols-outlined">add</span>new Secret</button>
+                  </div>
+                </div>
+                <div class="mt-4 grid grid-cols-1 gap-2">
+                  {#if $settings?.settings?.secrets && Object.keys($settings?.settings?.secrets).length > 0}
+                  {#each Object.entries($settings?.settings?.secrets) as [key, value], index (key)}
+                  <div class="flex flex-row justify-between gap-2 items-center">
+                    <div class="flex flex-row gap-2 w-full">
+                      <div class="bg-gray-700 w-full rounded-lg p-1 flex gap-2">
+                        <button on:click={copyText(key)}><span class="material-symbols-outlined">content_copy</span></button>
+                        <p class="font-bold">{key}</p>
+                      </div>
+                      <div class="bg-gray-700 w-full rounded-lg p-1 flex gap-2 justify-between">
+                        <div class="flex gap-2">
+                          <button on:click={copyText(value)}><span class="material-symbols-outlined">content_copy</span></button>
+                          {#if showSecrets[index]}
+                          <input
+                            type="text"
+                            class="font-bold bg-gray-700"
+                            bind:value={value}
+                            disabled
+                          />
+                        {:else}
+                          <input
+                            type="password"
+                            class="font-bold bg-gray-700"
+                            bind:value={value}
+                            disabled
+                          />
+                        {/if}
+                        </div>
+                        <label for="toggle{index}"><span class="material-symbols-outlined">{showSecrets[index] ? "visibility_off" : "visibility"}</span></label>
+                        <input id="toggle{index}" class="hidden" type="checkbox" on:click={() => toggleVisibility(index)}>
+                      </div>
+                    </div>
+                    <div class="flex gap-2">
+                      <button on:click={() => updateEnv(index)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">edit</span></button>
+                      <button on:click={() => SecretsDelete(key)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">delete</span></button>
+                    </div>
+                  </div>
+                  <div class="divider divider-horizontal"></div>
+                  {/each}       
+                  {/if}     
+              </div>
+            </div>
+          </div>
+            {:else if page === "coop"}
+            <p>coop</p>
+            {:else if page === "usage"}
+            <p>usage</p>
+            {/if}
           </div>
     </div>
 </div>
@@ -191,7 +308,7 @@
 <dialog id="markdown" class="modal scroll">
   <div class="modal-box max-w-full h-full">
     <h3 class="font-bold text-3xl text-white">Your notes for your bot</h3>
-      <textarea class="mt-4  h-full w-full resize-none rounded-md p-2 overflow-auto max-h-[43rem]" placeholder="Write your notes here" bind:value={$settings["notes"]}></textarea>
+      <textarea class="mt-4  h-full w-full resize-none rounded-md p-2 overflow-auto max-h-[43rem]" placeholder="Write your notes here" bind:value={$settings["notes"]} maxlength=2000></textarea>
     <div class="modal-action">
       <form method="dialog">
         <button class="btn">Close</button>
@@ -209,6 +326,46 @@
     <div class="modal-action">
       <form method="dialog">
         <button class="btn btn-primary" on:click={() => addCommand()}>Submit</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="editenv" class="modal scroll">
+  <div class="modal-box">
+    <h3 class="font-bold text-3xl text-white">Raw Secrets Editor</h3>
+    <p>Secrets are specified in JSON. Values must be strings.</p>
+      <textarea class="mt-4 resize-none w-full rounded-md p-2 overflow-auto h-fit" placeholder="Write your envs here" bind:value={secrets}></textarea>
+    <div class="modal-action">
+      <form method="dialog">
+        <button on:click={saveSecrets} class="btn btn-primary">Save</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="changeenv" class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-3xl text-white">Change key and value of your secret</h3>
+    <div class="flex justify-center mt-4 gap-4">
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Key</span>
+        </label>
+        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs"  bind:value={changeSecret[0]}/>
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Token</span>
+        </label>
+        <input type="text" placeholder="Type here" class="input input-bordered w-full max-w-xs" bind:value={changeSecret[1]} />
+      </div>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-primary" on:click={() => editEnv()}>Submit</button>
         <button class="btn">Close</button>
       </form>
     </div>

@@ -2,7 +2,7 @@
     //Components
     import { onMount } from "svelte";
     import { NavBar, AuthCheck } from "$lib/components/Components";
-    import {storageStore} from "$lib/userStore";
+    import {persisted} from "$lib/localstorage";
     // Supabase - sync session
     // export let data;
     // let { supabase, session } = data;
@@ -30,7 +30,7 @@
     export let file = "index.dsc";
     let previousFile = file;
     let init = false;
-    let storage = storageStore(file)
+    let storage = persisted('workspace');
     let refreshValue: any = undefined;
     $: {
         if (init) {
@@ -40,10 +40,6 @@
         }
         if (previousFile && file && previousFile !== file) {
         previousFile = file;
-        if (file) {
-
-            storage = storageStore(file)
-        }
         workspace?.clear();
         loadWorkspace();
     }

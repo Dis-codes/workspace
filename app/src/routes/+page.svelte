@@ -1,8 +1,8 @@
 <script lang="ts">
     import NavBar from "$lib/components/NavBar.svelte";
     import SideBar from "$lib/components/SideBar.svelte";
-    import {storageStore} from "$lib/userStore";
-    let settings = storageStore();
+    import {persisted} from "$lib/localstorage";
+    let settings = persisted('workspace')
     function formatDate(dateString: string): string {
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
@@ -20,6 +20,14 @@
   
   return `${day} - ${hour}:${minute}`;
 }
+function checkBotExists(){
+    if ($settings["index.dsc"]?.blocks?.blocks?.length > 0){
+        botexists.showModal()
+    }
+    else {
+        window.location.href = "editor/new"
+    }
+}
     </script>
     
     <NavBar /> 
@@ -27,7 +35,7 @@
         <div class="ml-40 mt-40">
             <h2 class="text-4xl font-bold">Home</h2>
             <div class="flex flex-col gap-4 mt-6">
-                <a href="editor/new" class="btn btn-wide btn-primary">Create a new bot</a>
+                <button on:click={checkBotExists} class="btn btn-wide btn-primary">Create a new bot</button>
                 <a href="editor/blockly/new?open=true" class="btn btn-wide btn-secondary">Open file</a>
             </div>
             <div class="mt-20 mb-2">
@@ -75,3 +83,15 @@
         </div>
     </SideBar>
     
+    <dialog id="botexists" class="modal">
+        <div class="modal-box">
+          <h3 class="font-bold text-3xl text-white">You are trying to create a new bot</h3>
+            <p>You already have a bot <span class="font-bold">{$settings.settings.botName}</span> saved locally, are you sure you want to overwrite it?</p>
+          <div class="modal-action">
+            <form method="dialog">
+              <a class="btn btn-primary" href="editor/new">Yes, continue</a>
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>

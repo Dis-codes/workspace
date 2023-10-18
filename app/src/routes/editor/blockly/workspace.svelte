@@ -16,7 +16,7 @@
     import javascriptGenerator from "$lib/javascript.js";
     import  {packageJson, indexJs}  from "$lib/components/defaults";
     import {en, Blockly, config} from "$lib/components/defaultWorkspace";
-    import "../blockRegister"
+    import "./blockRegister"
     import {test }from "$lib/components/examples";
     
     // better code export
@@ -127,11 +127,10 @@ Blockly.ContextMenuRegistry.registry.register({
     onMount(() => {
         registerNewContextMenu()
         function checkUrl(){
-        console.log("checking url");
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("open") === "true") {
         openFile();
-        window.history.replaceState({}, document.title, "/" + "editor/blockly/new");
+        window.history.replaceState({}, document.title, "/" + "editor/blockly");
         }
         else {
             loadWorkspace();
@@ -168,7 +167,7 @@ Blockly.ContextMenuRegistry.registry.register({
         console.log("no workspace found");
     }
     }
-    function saveWorkspace(currentFile) {
+    async function saveWorkspace(currentFile) {
     if (!saveEnabled) return;
     if (!currentFile) return;
     const state = Blockly.serialization.workspaces.save(workspace);
@@ -295,6 +294,7 @@ function saveFile() {
         dialog.showModal();	
     }
     async function downloadFiles() {
+        await saveWorkspace(file);
         let fileBeforeDownload = file;
         saveEnabled = false;
         console.log("downloading files");
@@ -314,7 +314,10 @@ function saveFile() {
             for (const [key, value] of Object.entries($storage.settings.secrets)) {
                 env += `${key}=${value}\n`;
             }
-            zip.file(".env", env);
+            if (env) {
+                zip.file(".env", env);
+                alertEnv.showModal();
+            }
         }
         const content = await zip.generateAsync({ type: "blob" });
         const url = URL.createObjectURL(content);
@@ -348,3 +351,15 @@ function saveFile() {
         <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
 </div>
+
+<dialog id="alertEnv" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-3xl text-red-500">Your bot contains secrets!</h3>
+        <p>Please be carefull with these, as anyone can see them if you share them (even in the workspace.dsc file). If you don´t want to export secrets, remove them in the settings!</p>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>

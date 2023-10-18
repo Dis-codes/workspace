@@ -36,7 +36,7 @@ function checkBotExists(){
             <h2 class="text-4xl font-bold">Home</h2>
             <div class="flex flex-col gap-4 mt-6">
                 <button on:click={checkBotExists} class="btn btn-wide btn-primary">Create a new bot</button>
-                <a href="editor/blockly/new?open=true" class="btn btn-wide btn-secondary">Open file</a>
+                <a href="editor/blockly?open=true" class="btn btn-wide btn-secondary">Open file</a>
             </div>
             <div class="mt-20 mb-2">
                 <h3 class="text-xl">Recent</h3>
@@ -49,7 +49,7 @@ function checkBotExists(){
                         <p class="font-bold">{$settings.settings.botName}</p>
                         <p class="text-sm mt-4">updated: {formatDate($settings.settings.updatedAt)}</p>
                     </div>
-                    <a href="editor/blockly/new" class="btn btn-primary my-auto">Edit</a>
+                    <a href="editor/blockly" class="btn btn-primary my-auto">Edit</a>
                 </div>
                 {:else}
                 <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">

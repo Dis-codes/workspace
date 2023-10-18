@@ -36,10 +36,7 @@ export function persisted<T>(key: string, options?: Options<T>): Writable<T> {
         botName: "Mys Bot",
         botDescription: "My Bot Description",
         updatedAt: new Date().toISOString(),
-        secrets: {
-            token: "HELLO",
-            test: "TEST",
-        }
+        secrets: {}
     },
     notes: "",
 }

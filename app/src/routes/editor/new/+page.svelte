@@ -8,17 +8,14 @@
         botName: "Mys Bot",
         botDescription: "My Bot Description",
         updatedAt: new Date().toISOString(),
-        secrets: {
-            token: "HELLO",
-            test: "TEST",
-        }
+        secrets: {}
     },
     notes: "",
 });
 </script>
 
 <div class="flex flex-col md:flex-row justify-center items-center h-screen gap-10">
-    <button on:click={() => goto('/editor/blockly/new')}>
+    <button on:click={() => goto('/editor/blockly')}>
     <div class="card card-compact w-96 bg-base-100 shadow-xl mb-10 h-[360px] border border-neutral hover:border-white hover:-translate-y-5 
     duration-150">
 

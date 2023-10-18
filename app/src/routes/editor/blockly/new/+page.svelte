@@ -1,22 +1,70 @@
 <script lang="ts">
     import NavBar from "$lib/components/NavBar.svelte";
-    import { onMount, onDestroy } from "svelte";
     import Workspace from "./workspace.svelte";
-    import JSZip from "jszip";
     import {persisted} from "$lib/localstorage";
     let settings = persisted('workspace')
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
     let activeFileIndex = 0; // Index of the active file
     let commands = []
-    let page = "envs"
+    let page
     let showSecrets = []
     let changeSecret = []
     let oldSecret = null
+    let event
     const toggleVisibility = (i) => {
     showSecrets[i] = !showSecrets[i]
   };
+    function calculateUsage(){
+      let blocks = 0
+      let files = 0 
+      for (const [key, value] of Object.entries($settings)) {
+        if (key.endsWith(".dsc")) {
+          files += 1
+          blocks += value?.blocks?.blocks?.length || 0
+          console.log(value?.blocks?.blocks?.length)
+        }
+      }
+      return {
+        files: files,
+        blocks: blocks,
+        size: roughSizeOfObject($settings)
+      }
+    } 
     let secrets = JSON.stringify($settings.settings.secrets)
+    function roughSizeOfObject( object ) {
+
+let objectList = [];
+let stack = [ object ];
+let bytes = 0;
+
+while ( stack.length ) {
+    let value = stack.pop();
+
+    if ( typeof value === 'boolean' ) {
+        bytes += 4;
+    }
+    else if ( typeof value === 'string' ) {
+        bytes += value.length * 2;
+    }
+    else if ( typeof value === 'number' ) {
+        bytes += 8;
+    }
+    else if
+    (
+        typeof value === 'object'
+        && objectList.indexOf( value ) === -1
+    )
+    {
+        objectList.push( value );
+
+        for( let i in value ) {
+            stack.push( value[ i ] );
+        }
+    }
+}
+return (bytes / 1024).toFixed(1)
+}
     function saveSecrets(){
       try {
         $settings.settings.secrets = JSON.parse(secrets)
@@ -107,7 +155,35 @@
     });
   }
   function openFile(){
-   alert("open single file...")
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.dsc';
+    input.onchange = e => { 
+      const file = e.target.files[0]; 
+      const reader = new FileReader();
+      reader.readAsText(file,'UTF-8');
+      reader.onload = readerEvent => {
+        const content = readerEvent.target.result;
+        const json = JSON.parse(content);
+        const name = file.name
+      if (json?.settings?.botName) {
+        alert("Looks like you are trying to add workspace")
+        return
+      }
+      
+      if (commands.includes(name)) {
+        return alert("Command already exists")
+      }
+      if (!json?.blocks?.blocks?.length || json?.blocks?.blocks?.length === 0) return alert("Invalid command")
+        settings.update((s) => {
+          s[name] = json;
+          return s;
+        });
+        commands = [...commands, name];
+        setActiveFile(name)
+      }
+    }
+    input.click();
   }
   function copyText(text) {
     navigator.clipboard.writeText(text);
@@ -135,7 +211,7 @@
                 <div class="">
                   <button on:click={() => openFile()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">attach_file_add</span></button>
                     <button on:click={() => addcommand.showModal()} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">note_add</span></button>
-                    <button class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">menu</span></button>
+                    <button on:click={() => event = "save"} class="btn btn-square btn-sm btn-neutral"><span class="material-symbols-outlined">save</span></button>
                 </div>
             </div>
             <ul class="menu max-w-xs w-full">
@@ -194,9 +270,8 @@
               <div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
                 <button on:click={() => page = "settings"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button>
-                <button on:click={() => page = "envs"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">encrypted</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button>
-                <button on:click={() => page = "usage"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">data_usage</span></button>
+                <button on:click={() => event = "download"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">download</span></button>
             </div>
             <a href="https://discodes.xyz/help" class="btn">help</a>
         </div>
@@ -222,78 +297,84 @@
             {/if}
             <div class="flex-1">
                 <div class="w-full {files.length > 0? "h-[54rem]" : "h-[56.5rem] mt-[4rem]"}">
-                    <Workspace file={files[activeFileIndex]} />
+                    <Workspace file={files[activeFileIndex]} event={event} />
                 </div>
             </div>
             {:else if page === "settings"}
             <div class=" w-full h-screen">
-              <div class="mt-16 p-10">
+              <div class="flex flex-row mt-16 p-10 gap-10">
                 <div class="bg-gray-700 w-60 h-96 rounded-2xl p-6">
                     <h2 class="font-bold text-xl">Bot Information</h2>
                     <p>Bot Name: </p>
                     <input type="text" class="input input-bordered w-full max-w-xs" bind:value={$settings.settings.botName} maxlength=20/>
                     <p>Bot Description: </p>
-                    <!-- <input type="text" class="input input-bordered w-full max-w-xs h-20" bind:value={$settings.settings.botDescription} /> -->
-                    <textarea class="textarea textarea-bordered w-full h-52 resize-none" placeholder="Description" bind:value={$settings.settings.botDescription} maxlength=140></textarea>
+                    <textarea class="textarea textarea-bordered w-full h-52 resize-none overflow-auto" placeholder="Description" bind:value={$settings.settings.botDescription} maxlength=140></textarea>
                 </div>
+                <div class="bg-gray-700 w-fit h-96 rounded-2xl p-6 overflow-auto">
+                  <div class=" w-full h-full">
+                      <div class="flex flex-row justify-between">
+                        <h3 class="font-bold text-2xl">Secrets</h3>
+                        <div class="flex gap-2">
+                          <button on:click={() => editenv.showModal()} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">data_object</span>Edit as JSON</button>
+                          <a href="https://discodes.xyz/help" class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">menu_book</span>Docs</a>
+                          <button on:click={() => updateEnv(-1)} class="btn btn-neutral bg-blue-500 text-white btn-sm"><span class="material-symbols-outlined">add</span>new Secret</button>
+                        </div>
+                      </div>
+                      <div class="mt-4 grid grid-cols-1 gap-2">
+                        {#if $settings?.settings?.secrets && Object.keys($settings?.settings?.secrets).length > 0}
+                        {#each Object.entries($settings?.settings?.secrets) as [key, value], index (key)}
+                        <div class="flex flex-row justify-between gap-2 items-center">
+                          <div class="flex flex-row gap-2 w-full">
+                            <div class="w-full rounded-lg px-1 py-2 flex gap-2 bg-[#1d232a]">
+                              <button on:click={copyText(key)} class="flex items-center"><span class="material-symbols-outlined">content_copy</span></button>
+                              <p class="font-bold">{key}</p>
+                            </div>
+                            <div class=" w-full rounded-lg p-1 flex gap-2 justify-between bg-[#1d232a]">
+                              <div class="flex gap-2">
+                                <button on:click={copyText(value)} class="flex items-center"><span class="material-symbols-outlined">content_copy</span></button>
+                                {#if showSecrets[index]}
+                                <input
+                                  type="text"
+                                  class="font-bold bg-[#1d232a]"
+                                  bind:value={value}
+                                  disabled
+                                />
+                              {:else}
+                                <input
+                                  type="password"
+                                  class="font-bold bg-[#1d232a]"
+                                  bind:value={value}
+                                  disabled
+                                />
+                              {/if}
+                              </div>
+                              <label for="toggle{index}" class="flex items-center"><span class="material-symbols-outlined">{showSecrets[index] ? "visibility_off" : "visibility"}</span></label>
+                              <input id="toggle{index}" class="hidden" type="checkbox" on:click={() => toggleVisibility(index)}>
+                            </div>
+                          </div>
+                          <div class="flex gap-2">
+                            <button on:click={() => updateEnv(index)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">edit</span></button>
+                            <button on:click={() => SecretsDelete(key)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">delete</span></button>
+                          </div>
+                        </div>
+                        <div class="divider divider-horizontal"></div>
+                        {/each}       
+                        {/if}     
+                    </div>
+                </div>
+                </div>
+                {#await calculateUsage() then usage}
+                <div class="bg-gray-700 w-60 h-96 rounded-2xl p-6">
+                  <h2 class="font-bold text-2xl">Bot Usage</h2>
+                  <p>Files: {usage.files}</p>
+                  <p>Blocks: {usage.blocks}</p>
+                  <p>File size: {usage.size} KB</p>
+              </div>
+              {/await}
               </div>
             </div>
             {:else if page === "dashboard"}
             <p>dashboard</p>
-            {:else if page === "envs"}
-            <div class=" w-full h-screen">
-              <div class="mt-16 p-10">
-                <div class="flex flex-row justify-between">
-                  <h3 class="font-bold text-2xl">Secrets</h3>
-                  <div class="flex gap-2">
-                    <button on:click={() => editenv.showModal()} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">data_object</span>Edit as JSON</button>
-                    <a href="https://discodes.xyz/help" class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">menu_book</span>Docs</a>
-                    <button on:click={() => updateEnv(-1)} class="btn btn-neutral bg-blue-500 text-white btn-sm"><span class="material-symbols-outlined">add</span>new Secret</button>
-                  </div>
-                </div>
-                <div class="mt-4 grid grid-cols-1 gap-2">
-                  {#if $settings?.settings?.secrets && Object.keys($settings?.settings?.secrets).length > 0}
-                  {#each Object.entries($settings?.settings?.secrets) as [key, value], index (key)}
-                  <div class="flex flex-row justify-between gap-2 items-center">
-                    <div class="flex flex-row gap-2 w-full">
-                      <div class="bg-gray-700 w-full rounded-lg p-1 flex gap-2">
-                        <button on:click={copyText(key)}><span class="material-symbols-outlined">content_copy</span></button>
-                        <p class="font-bold">{key}</p>
-                      </div>
-                      <div class="bg-gray-700 w-full rounded-lg p-1 flex gap-2 justify-between">
-                        <div class="flex gap-2">
-                          <button on:click={copyText(value)}><span class="material-symbols-outlined">content_copy</span></button>
-                          {#if showSecrets[index]}
-                          <input
-                            type="text"
-                            class="font-bold bg-gray-700"
-                            bind:value={value}
-                            disabled
-                          />
-                        {:else}
-                          <input
-                            type="password"
-                            class="font-bold bg-gray-700"
-                            bind:value={value}
-                            disabled
-                          />
-                        {/if}
-                        </div>
-                        <label for="toggle{index}"><span class="material-symbols-outlined">{showSecrets[index] ? "visibility_off" : "visibility"}</span></label>
-                        <input id="toggle{index}" class="hidden" type="checkbox" on:click={() => toggleVisibility(index)}>
-                      </div>
-                    </div>
-                    <div class="flex gap-2">
-                      <button on:click={() => updateEnv(index)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">edit</span></button>
-                      <button on:click={() => SecretsDelete(key)} class="btn btn-neutral btn-sm"><span class="material-symbols-outlined">delete</span></button>
-                    </div>
-                  </div>
-                  <div class="divider divider-horizontal"></div>
-                  {/each}       
-                  {/if}     
-              </div>
-            </div>
-          </div>
             {:else if page === "coop"}
             <p>coop</p>
             {:else if page === "usage"}

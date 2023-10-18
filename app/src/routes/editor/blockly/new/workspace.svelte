@@ -1,8 +1,8 @@
 <script lang="ts">
     //Components
     import { onMount } from "svelte";
-    import { NavBar, AuthCheck } from "$lib/components/Components";
     import {persisted} from "$lib/localstorage";
+    import { svgToPng_, workspaceToSvg_ } from "./workspaceImage";
     // Supabase - sync session
     // export let data;
     // let { supabase, session } = data;
@@ -28,10 +28,12 @@
     import JSZip from "jszip";
 
     export let file = "index.dsc";
+    export let event = undefined
     let previousFile = file;
     let init = false;
     let storage = persisted('workspace');
     let refreshValue: any = undefined;
+    let saveEnabled = true;
     $: {
         if (init) {
         if (previousFile && previousFile !== file){
@@ -44,10 +46,88 @@
         loadWorkspace();
     }
 }
+if (event){
+    switch (event) {
+        case "open":
+            openFile();
+            break;
+        case "save":
+            saveWorkspace(file);
+            break;
+        case "export":
+            exportJS();
+            break;
+        case "download":
+            downloadFiles();
+            break;
+        case "copy":
+            copyCode();
+            break;
+        case "delete":
+            deleteUnusedBlocks();
+            break;
+        case "example":
+            openExample(test);
+            break;
+        default:
+            break;
+    }
+    event = undefined;
+}
 }
     let generatedCode = ``;
     let workspace: Blockly.WorkspaceSvg;
+
+function registerNewContextMenu(){
+    try {
+Blockly.ContextMenuRegistry.registry.register({
+    displayText: "Delete unused blocks",
+    callback: deleteUnusedBlocks,
+    weight: 100,
+    scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
+    id: "delete_unused_blocks",
+    preconditionFn: function (e) {
+        const allBlocks = workspace.getAllBlocks(true);
+        for (const block of allBlocks) {
+            if (!block.isEnabled()) {
+                return "enabled";
+            }
+        }
+    },
+})
+Blockly.ContextMenuRegistry.registry.register({
+      displayText: "Download Workspace Image",
+      preconditionFn: function () {
+       //check if workspace is empty
+         const allBlocks = workspace.getAllBlocks(true);
+        for (const block of allBlocks) {
+            if (block.isEnabled()) {
+                return "enabled";
+            }
+      }
+    },
+      callback: function () {
+      workspaceToSvg_(workspace, function (datauri) {
+        let a = document.createElement("a");
+        a.download = "screenshot.png";
+        a.target = "_self";
+        a.href = datauri;
+        document.body.appendChild(a);
+        a.click();
+        a.parentNode.removeChild(a);
+      });
+      },
+      scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
+      id: "image",
+      weight: 100,
+});
+} catch (error) {
+}
+}
     onMount(() => {
+        registerNewContextMenu()
+        function checkUrl(){
+        console.log("checking url");
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get("open") === "true") {
         openFile();
@@ -56,6 +136,8 @@
         else {
             loadWorkspace();
         }
+    }
+        checkUrl();
         init = true;
         window.onbeforeunload = (event: BeforeUnloadEvent) => {
     if (refreshValue !== undefined) {
@@ -87,6 +169,7 @@
     }
     }
     function saveWorkspace(currentFile) {
+    if (!saveEnabled) return;
     if (!currentFile) return;
     const state = Blockly.serialization.workspaces.save(workspace);
     storage.update((s) => {
@@ -134,14 +217,10 @@
         reader.onload = (event: any) => {
             const contents = event.target.result;
             try {
-                const state = JSON.parse(contents);
                 const workspaceFile = JSON.parse(contents);
                 if (workspaceFile) {
                     console.log("workspace found", workspaceFile);
-                    storage.update((s) => {
-                        s[file.name] = workspaceFile;
-                        return s;
-                    });
+                    storage.set(workspaceFile);
                     window.location.reload();
                 } else {
                     console.error("Error loading workspace: no workspace file found");
@@ -169,7 +248,7 @@ function saveFile() {
     URL.revokeObjectURL(url);
 }
 
-    function updatePackage(){
+   async function updatePackage(){
         const allBlocks = workspace.getAllBlocks();
         for (const block of allBlocks) {
             switch (block.type) {
@@ -181,8 +260,28 @@ function saveFile() {
             }
         }
     }
-    async function generateCode() {
-        let code = indexJs + javascriptGenerator.workspaceToCode(workspace);
+    async function generateCode(f = "index.dsc") {
+        file = f;
+        await loadWorkspace();
+        await updatePackage()
+        let code = "";
+        switch (f) {
+            case "index.dsc":
+                code = "//default imports\n"
+                for (const [key, value] of Object.entries($storage)) {
+                    if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
+                        code += `const ${key.slice(0, -4)} = require("./commands/${key.slice(0, -4)}.js");\n`;
+                    }
+                }
+                if (code === "default imports") {
+                    code = "";
+                }
+                code += indexJs + javascriptGenerator.workspaceToCode(workspace);
+                break;
+            default:
+                code = javascriptGenerator.workspaceToCode(workspace);
+                break;
+        }
         try {
             code = await prettier.format(code, { semi: true, parser: "babel", plugins: [prettierPluginBabel, prettierPluginEstree, prettierPluginHtml],});
         } catch (error) {
@@ -196,20 +295,36 @@ function saveFile() {
         dialog.showModal();	
     }
     async function downloadFiles() {
-        saveWorkspace(file);
-        updatePackage()
+        let fileBeforeDownload = file;
+        saveEnabled = false;
+        console.log("downloading files");
         const zip = new JSZip();
-        zip.file("index.js", await generateCode());
+        zip.file("index.js", await generateCode("index.dsc"));
+        for (const [key, value] of Object.entries($storage)) {
+      if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
+        //remove .dsc from filename and add .js
+        zip.file("commands/" + key.slice(0, -4) + ".js", await generateCode(key));
+        }
+    }
         zip.file("package.json", JSON.stringify(packageJson, null, 2));
         zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)`");
         zip.file("workspace.dsc", JSON.stringify($storage, null, 2));
+        if ($storage.settings.secrets) {
+            let env = "";
+            for (const [key, value] of Object.entries($storage.settings.secrets)) {
+                env += `${key}=${value}\n`;
+            }
+            zip.file(".env", env);
+        }
         const content = await zip.generateAsync({ type: "blob" });
         const url = URL.createObjectURL(content);
         const a = document.createElement("a");
         a.href = url;
-        a.download = "bot.zip";
+        a.download = $storage.settings.botName + ".zip";
         a.click();
         URL.revokeObjectURL(url);
+        file = fileBeforeDownload;
+        saveEnabled = true;
     }
     function deleteUnusedBlocks() {
         const allBlocks = workspace.getAllBlocks(true);
@@ -219,6 +334,13 @@ function saveFile() {
             }
         }
     }
+    //add delete unused blocks to context menu
+    // Blockly.ContextMenuRegistry.registry.register({
+    //     callback: deleteUnusedBlocks,
+    //     weight: 100,
+    //     id: "delete_unused_blocks_menu_item",
+    //     displayText: "Delete unused blocks",
+    // })
 </script>
   
 <div class="flex flex-col items-center justify-center h-full">

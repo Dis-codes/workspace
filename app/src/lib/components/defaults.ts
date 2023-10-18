@@ -32,4 +32,5 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 function copyCode() {
     navigator.clipboard.writeText(generateCode());
 }
+
 export { packageJson, indexJs, copyCode}

@@ -13,6 +13,8 @@ import requests from "./Others/requests";
 import base from "./Djs/Base";
 
 import server from "./Djs/Server"
+import message from "./Djs/Message"
+import embed from "./Djs/Embed"
 
 import coretest from "./coretest";
 
@@ -192,7 +194,7 @@ export default [
                         kind: "category",
                         name: "Get Message",
                         colour: "#509cfc",
-                        contents: []
+                        contents: message
                     },
                     {
                         id: "setmessages",
@@ -233,7 +235,7 @@ export default [
                 kind: "category",
                 name: "Embeds",
                 colour: "#40bc54",
-                contents: []
+                contents: embed
             },
             {
                 id: "interactions",

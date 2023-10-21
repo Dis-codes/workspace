@@ -5,50 +5,17 @@ import Blockly from "blockly/core";
  * List of constants for different output types.
  */
 const OutputType = {
-    /**
-     * Output type for string blocks or inputs.
-     */
     STRING: ["String", "Text"],
-
-    /**
-     * Output type for number blocks or inputs.
-     */
     NUMBER: ["Number"],
-
-    /**
-     * Output type for boolean blocks or inputs.
-     */
     BOOLEAN: ["Boolean", "Bool"],
-
-    /**
-     * Output type for array / list blocks or inputs.
-     */
     ARRAY: ["List", "Array"],
-
-    /**
-     * Output type for object / JSON blocks or inputs.
-     */
     OBJECT: ["Object", "JSON"],
-
-    /**
-     * Input type for allowing any blocks inside.
-     * Can be used by outputs if needed.
-     */
-    ANY: null,
-
-    /**
-     * Output for blocks using discord
-     */
+    ANY: null,//any block
     DISCORD: {
-        /**
-         * Output type for server blocks or inputs.
-         */
         SERVER: ["Server"],
-
-        /**
-         * Output type for channel blocks or inputs.
-         */
-        CHANNEL: ["Channel"]
+        CHANNEL: ["Channel"],
+        MESSAGE: ["Message"],
+        MEMBER: ["Member", "User"],
     },
 }
 
@@ -56,112 +23,36 @@ const OutputType = {
  * List of constants for different block shapes.
  */
 const BlockShape = {
-    /**
-     * Block shape for a statement block.
-     * Not actually required, but keeps code consistent.
-     */
-    STATEMENT: "statement",
-
-    /**
-     * Block shape for a floating block with an input inside.
-     * Can be replaced with FLOATING, but keeps code consistent.
-     */
-    EVENT: "event",
-
-    /**
-     * Block shape for a block with no blocks allowed to attach after.
-     */
-    TERMINAL: "terminal",
-
-    /**
-     * Block shape for a block that cannot have any parent blocks.
-     */
-    FLOATING: "floating",
-
-    /**
-     * Block shape for a block that cannot have any blocks attached before it.
-     */
-    TOPPER: "topper",
-
-    /**
-     * Custom block shape, can be used if "manual" is used for the block.
-     */
-    CUSTOM: "custom",
+    STATEMENT: "statement",//Block shape for a statement block. Not actually required, but keeps code consistent.
+    EVENT: "event",//Block shape for a floating block with an input inside.Can be replaced with FLOATING, but keeps code consistent.
+    TERMINAL: "terminal",//Block shape for a block with no blocks allowed to attach after.
+    FLOATING: "floating",//Block shape for a block that cannot have any parent blocks.
+    TOPPER: "topper",//Block shape for a block that cannot have any blocks attached before it.
+    CUSTOM: "custom",//Custom block shape, can be used if "manual" is used for the block.
 }
 
 /**
  * List of constants for different input shapes / fields.
  */
 const InputShape = {
-    /**
-     * Input shape for inputs that allow output blocks.
-     */
-    VALUE: "input_value",
-
-    /**
-     * Input shape for dummy inputs.
-     * Can be used for seperating content on a block by a new line.
-     */
-    DUMMY: "input_dummy",
-
-    /**
-     * Similar to DUMMY.
-     * Can be used for seperating content on a block.
-     */
-    SPACE: "input_space",
-
-    /**
-     * Not actually an input, but an image.
-     */
-    IMAGE: "field_image",
-
-    /**
-     * Angle field for directional inputs.
-     */
-    ANGLE: "field_angle",
-
-    /**
-     * Checkbox field usually for toggles.
-     */
-    CHECKBOX: "field_checkbox",
-
-    /**
-     * Color field.
-     */
-    COLOR: "field_colour",
-
-    /**
-     * Dropdown menu field with options.
-     */
-    MENU: "field_dropdown",
-
-    /**
-     * Label that serializes to the project.
-     */
-    SERIALIZABLE_LABEL: "field_label_serializable",
-
-    /**
-     * Number field. Used for restricting to certain numbers.
-     */
-    NUMBER: "field_number",
-
-    /**
-     * Text field. Used if blocks shouldnt be used here,
-     * but text can still be input here.
-     */
-    TEXT: "field_input",
-
-    /**
-     * Multi-line text field.
-     * Similar to TEXT, but new line characters are allowed.
-     */
-    MULTILINE_TEXT: "field_multilinetext",
-
-    /**
-     * Variable field.
-     * Similar to MENU, but the options are all variables.
-     */
-    VARIABLE: "field_variable"
+    VALUE: "input_value", //Input shape for inputs that allow output blocks.
+    DUMMY: "input_dummy", //Can be used for seperating content on a block by a new line.
+    SPACE: "input_space",//Similar to DUMMY.Can be used for seperating content on a block.
+    IMAGE: "field_image",//Not actually an input, but an image.
+    ANGLE: "field_angle",//Angle field for directional inputs.
+    CHECKBOX: "field_checkbox",//Checkbox field usually for toggles.
+    COLOR: "field_colour",//Color field.
+    MENU: "field_dropdown",//Dropdown menu field with options.
+    SERIALIZABLE_LABEL: "field_label_serializable",//Label that serializes to the project.
+    NUMBER: "field_number",//Number field. Used for restricting to certain numbers.
+    TEXT: "field_input",//Text field. Used if blocks shouldnt be used here,but text can still be input here.
+    MULTILINE_TEXT: "field_multilinetext",//Multi-line text field.Similar to TEXT, but new line characters are allowed.
+    VARIABLE: "field_variable",//Variable field. Similar to MENU, but the options are all variables.
+    DISCORD: {
+        SERVER: "field_server",
+        CHANNEL: "field_channel",
+        MESSAGE: "field_message"
+    }
 }
 
 class BlocklyTool {

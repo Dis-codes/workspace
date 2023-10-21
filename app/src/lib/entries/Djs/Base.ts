@@ -13,5 +13,36 @@ export default [
                 }
             },
         }
+    },
+    {
+        kind: "block",
+        type: "base_env",
+        inputs: {
+            NAME: {
+                shadow: {
+                    kind: "block",
+                    type: "text",
+                    fields: {
+                        TEXT: "name"
+                    }
+                }
+            },
+        }
+    },
+    {
+        kind: "block",
+        type: "base_bot_connected",
+    },
+    {
+        kind: "block",
+        type: "base_bot_as_member",
+    },
+    {
+        kind: "block",
+        type: "base_bot_in_server",
+    },
+    {
+        kind: "block",
+        type: "base_bot_info",
     }
 ]

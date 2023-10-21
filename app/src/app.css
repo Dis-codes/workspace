@@ -7,6 +7,28 @@
 .text-discodes{
     color: #7976e7;
 }
+.sepDark {
+	border-bottom: solid #262626 1px;
+	height: 0;
+	margin: 5px 0;
+}
+
+.blocklyTreeLabel {
+	color: white;
+	text-align: center;
+}
+
+/* Adds padding around the group of categories and separators. */
+.blocklyToolboxContents {
+	padding: 0.2em;
+}
+
+/* Adds space between the categories, rounds the corners and adds space around the label. */
+.blocklyTreeRow {
+	/* padding: 4px; */
+	margin: 0.15rem;
+	border-radius: 5px;
+}
 .material-symbols-outlined {
     font-variation-settings:
     'FILL' 0,

@@ -11,7 +11,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^3.0.3",
-		"@sveltejs/kit": "^1.22.6",
+		"@sveltejs/kit": "^1.27.7",
 		"autoprefixer": "^10.4.15",
 		"daisyui": "^3.5.1",
 		"postcss": "^8.4.31",

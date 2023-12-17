@@ -51,7 +51,7 @@ export default [
                     kind: "block",
                     type: "text",
                     fields: {
-                        TEXT: "message"
+                        TEXT: "name"
                     }
                 }
             },

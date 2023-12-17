@@ -52,7 +52,7 @@ class BaseBlocks {
                     func: "bot_status",
                     text: "Type: [TYPE] Message: [MESSAGE] Status: [STATUS] Name: [NAME]",
                     color: "#cc33ff",
-                    BlockShape: BlockShape.STATEMENT,
+                    BlockShape: BlockShape.FLOATING,
                     arguments: {
                         MESSAGE: {                    
                             type: InputShape.VALUE,

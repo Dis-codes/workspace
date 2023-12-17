@@ -307,7 +307,8 @@ function saveFile() {
         }
     }
         zip.file("package.json", JSON.stringify(packageJson, null, 2));
-        zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)`");
+        zip.file("run.bat", "npm run start");
+        zip.file("README.md", "# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## You can also use run.bat instead of using the first metheod \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)");
         zip.file("workspace.dsc", JSON.stringify($storage, null, 2));
         if ($storage.settings.secrets) {
             let env = "";

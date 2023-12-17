@@ -16,7 +16,7 @@ const packageJson = {
     }
 }
 const indexJs = `//default
-const { Client, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 

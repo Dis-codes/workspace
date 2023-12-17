@@ -35,6 +35,30 @@ export default [
     },
     {
         kind: "block",
+        type: "base_bot_status",
+        inputs: {
+            MESSAGE: {
+                shadow: {
+                    kind: "block",
+                    type: "text",
+                    fields: {
+                        TEXT: "message"
+                    }
+                }
+            },
+            NAME: {
+                shadow: {
+                    kind: "block",
+                    type: "text",
+                    fields: {
+                        TEXT: "message"
+                    }
+                }
+            },
+        }
+    },
+    {
+        kind: "block",
         type: "base_bot_as_member",
     },
     {

@@ -49,6 +49,41 @@ class BaseBlocks {
                     }
                 },
                 {
+                    func: "bot_status",
+                    text: "Type: [TYPE] Message: [MESSAGE] Status: [STATUS] Name: [NAME]",
+                    color: "#cc33ff",
+                    BlockShape: BlockShape.STATEMENT,
+                    arguments: {
+                        MESSAGE: {                    
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        },
+                        NAME: {                    
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        },
+                        TYPE: {
+                            type: InputShape.MENU,
+                            options: [
+                                ["playing", "Playing"],
+                                ["streaming", "Streaming"],
+                                ["watching", "Watching"],
+                                ["listening", "Listening"],
+                                ["custom", "Custom"]
+                            ]
+                        },
+                        STATUS: {
+                            type: InputShape.MENU,
+                            options: [
+                                ["dnd", "dnd"],
+                                ["idle", "idle"],
+                                ["online", "online"],
+                                ["invisible", "invisible"]
+                            ]
+                        }
+                    },
+                },
+                {
                     func: "bot_as_member",
                     text: "Bot as member",
                     output: OutputType.OBJECT,
@@ -115,6 +150,19 @@ class BaseBlocks {
 
     bot_as_member(args: any) {
         return `client.user`;
+    }
+
+    bot_status(args: any) {
+        return `client.on("ready", () => {
+            const status = client.user.setPresence({
+                status: '${args.STATUS}',
+                activities: [{
+                    type: ActivityType.${args.TYPE},
+                    name: ${args.MESSAGE}, // I know its confusing but it makes more sense when looking at it in discord
+                    state: ${args.NAME}
+                }]
+            })
+        });`
     }
 
     bot_in_server(args: any) {

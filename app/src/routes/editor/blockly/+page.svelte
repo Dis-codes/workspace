@@ -131,6 +131,14 @@ async function replaceWorkspace() {
   }
   input.click();
 }
+function setPage(pageName) {
+  if (page === pageName) return page = undefined
+  page = pageName
+}
+function setEvent(eventName) {
+  if (event === eventName) event = undefined
+  event = eventName
+}
 </script>
 
 <div class="h-full w-full flex flex-col">
@@ -211,10 +219,11 @@ async function replaceWorkspace() {
               </div>
               <div class="flex flex-col">
               <div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
-                <button on:click={() => page = "settings"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
+                <button on:click={() => setPage("settings")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button>
                 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button>
-                <button on:click={() => event = "download"} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">download</span></button>
+                <button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">download</span></button>
+                <button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">pen_size_2</span></button>
             </div>
             <a href="https://discodes.xyz/help" class="btn">help</a>
         </div>

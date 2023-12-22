@@ -7,29 +7,29 @@
 
     import RoleCheck from "$lib/components/RoleCheck.svelte";
 
-    export let data
-    export let isDev = import.meta.env.DEV
+    // export let data
+    export let isDev = true //import.meta.env.DEV
     const allowedUrls: Array<string> = ['/errors/permission', '/']
 
-    let { supabase, session } = data
-    $: ({ supabase, session } = data)
+    // let { supabase, session } = data
+    // $: ({ supabase, session } = data)
     
-    onMount(() => {
-        if (!session?.user) {
-            if (window.location.hostname == "workspace.discodes.xyz") {
-                window.location.href = "https://discodes.xyz/errors/session"
-            }
-        }
-        const {
-        data: { subscription },
-        } = supabase.auth.onAuthStateChange((event, _session) => {
-        if (_session?.expires_at !== session?.expires_at) {
-            invalidate('supabase:auth')
-        }
-        })
+    // onMount(() => {
+    //     if (!session?.user) {
+    //         if (window.location.hostname == "workspace.discodes.xyz") {
+    //             window.location.href = "https://discodes.xyz/errors/session"
+    //         }
+    //     }
+    //     const {
+    //     data: { subscription },
+    //     } = supabase.auth.onAuthStateChange((event, _session) => {
+    //     if (_session?.expires_at !== session?.expires_at) {
+    //         invalidate('supabase:auth')
+    //     }
+    //     })
 
-        return () => subscription.unsubscribe()
-    });
+    //     return () => subscription.unsubscribe()
+    // });
 
 </script>
 

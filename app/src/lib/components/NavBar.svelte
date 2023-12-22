@@ -8,7 +8,7 @@
 <div class="navbar bg-base-200 fixed z-10 h-16">
   <div class="flex-1">
     <a href="/" class="btn btn-square btn-ghost">
-      <img src="https://www.discodes.xyz/Images/favicon1.png" alt="Profile Picture" class="w-full h-full rounded" />
+      <img src="/Images/favicon1.png" alt="logo" class="w-full h-full rounded" />
     </a>
     <h2 class="ml-4 normal-case text-xl">DisCodes</h2>
     {#if !links}
@@ -57,7 +57,7 @@
         <a class="btn btn-ghost normal-case" href="https://www.discodes.xyz/dashboard">Dashboard</a>
         <Account />
       {:else}  
-        <a class="btn btn-ghost normal-case" href="/login">Log In</a>
+        <!-- <a class="btn btn-ghost normal-case" href="/login">Log In</a> -->
       {/if}
     </div>
   </div>

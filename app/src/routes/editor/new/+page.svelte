@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import {persisted} from "$lib/localstorage";
+    import {onMount} from "svelte";
     let storage = persisted('workspace');
     storage.set({
     "index.dsc": {},
@@ -11,6 +12,9 @@
         secrets: {}
     },
     notes: "",
+});
+onMount(() => {
+    goto("/editor/blockly");
 });
 </script>
 

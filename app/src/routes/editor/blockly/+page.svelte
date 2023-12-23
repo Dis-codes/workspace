@@ -3,6 +3,7 @@
     import Workspace from "./workspace.svelte";
     import {persisted} from "$lib/localstorage";
     import SettingsTab from "./SettingsTab.svelte";
+    import InteractionGui from "./InteractionGui.svelte";
     let settings = persisted('workspace')
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
@@ -224,6 +225,7 @@ function setEvent(eventName) {
                 <!-- <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button> -->
                 <button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">download</span></button>
                 <button on:click={() => setEvent("export")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">javascript</span></button>
+                <button on:click={() => setPage("gui")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">pen_size_2</span></button>
             </div>
             <a href="https://discodes.xyz/help" class="btn">help</a>
         </div>
@@ -256,6 +258,8 @@ function setEvent(eventName) {
             <p>dashboard</p>
             {:else if page === "coop"}
             <p>coop</p>
+            {:else if page === "gui"}
+            <InteractionGui />
             {/if}
           </div>
     </div>

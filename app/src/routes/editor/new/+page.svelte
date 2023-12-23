@@ -12,6 +12,18 @@
         secrets: {}
     },
     notes: "",
+    commands: [
+            {
+                name: "ping",
+                description: "Pong!",
+                options: [],
+            },
+            {
+                name: "help",
+                description: "Shows help",
+                options: [],
+            },
+        ],
 });
 onMount(() => {
     goto("/editor/blockly");

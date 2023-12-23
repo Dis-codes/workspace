@@ -278,7 +278,7 @@ function saveFile() {
                 code += indexJs + javascriptGenerator.workspaceToCode(workspace);
                 break;
             default:
-                code = javascriptGenerator.workspaceToCode(workspace);
+                code = `//${f}\n` + javascriptGenerator.workspaceToCode(workspace);
                 break;
         }
         try {
@@ -289,7 +289,7 @@ function saveFile() {
         return code;
     }
     async function exportJS() {
-        generatedCode = await generateCode();
+        generatedCode = await generateCode(file);
         const dialog:any = document.getElementById("showjs");
         dialog.showModal();	
     }
@@ -358,6 +358,23 @@ function saveFile() {
         <p>Please be carefull with these, as anyone can see them if you share them (even in the workspace.dsc file). If you don´t want to export secrets, remove them in the settings!</p>
       <div class="modal-action">
         <form method="dialog">
+          <button class="btn">Close</button>
+        </form>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="showjs" class="modal scroll">
+    <div class="modal-box max-w-full  h-full">
+      <h3 class="font-bold text-3xl text-white">JavaScript code of your bot</h3>
+      <div class="bg-gray-300 w-full mt-4 h-full max-h-[43rem] rounded-md p-4 overflow-auto">
+        <pre><code>
+            {@html Prism.highlight(generatedCode, Prism.languages['javascript'])}
+        </code> </pre>
+     </div>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-primary " on:click={copyCode}>Copy Code to Clipboard</button>
           <button class="btn">Close</button>
         </form>
       </div>

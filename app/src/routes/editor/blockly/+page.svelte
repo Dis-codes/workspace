@@ -152,7 +152,7 @@ function setEvent(eventName) {
     </NavBar>
 </div>
 
-<div class="flex flex-row">
+<div class="flex flex-row h-screen">
         {#if sidebarOpen}
         <div class="bg-base-200 w-80 h-screen">
             <div class="flex flex-col justify-between h-full">
@@ -172,7 +172,7 @@ function setEvent(eventName) {
                         </span>
                   index.dsc
                 </button><div class="dropdown btn-square btn-sm justify-center">
-                  <label tabindex="0"><span class="material-symbols-outlined">more_vert</span></label>
+                  <label tabindex="0"><span class="material-symbols-outlined mt-1">more_vert</span></label>
                   <ul tabindex="0" class="dropdown-content z-[99] menu p-2 shadow bg-base-100 rounded-box w-52 ml-10">
                   <li><button on:click={() => downloadCmd("index.dsc")}>Download</button></li>
                     <li><button class="text-red-500" on:click={() => deleteCmd("index.dsc")}>Clear workspace</button></li>
@@ -220,10 +220,10 @@ function setEvent(eventName) {
               <div class="flex flex-col">
               <div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
                 <button on:click={() => setPage("settings")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">settings</span></button>
-                <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button>
-                <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button>
+                <!-- <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button> -->
+                <!-- <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button> -->
                 <button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">download</span></button>
-                <button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">pen_size_2</span></button>
+                <button on:click={() => setEvent("export")} class="btn btn-square btn-neutral"><span class="material-symbols-outlined">javascript</span></button>
             </div>
             <a href="https://discodes.xyz/help" class="btn">help</a>
         </div>
@@ -247,10 +247,8 @@ function setEvent(eventName) {
                 </div>
               </div>
             {/if}
-            <div class="flex-1">
-                <div class="w-full {files.length > 0? "h-[54rem]" : "h-[56.5rem] mt-[4rem]"}">
-                    <Workspace file={files[activeFileIndex]} event={event} />
-                </div>
+            <div class="flex-1 {files.length > 0? "" : "mt-[4rem]"}">
+              <Workspace file={files[activeFileIndex]} event={event} />
             </div>
             {:else if page === "settings"}
             <SettingsTab />
@@ -258,8 +256,6 @@ function setEvent(eventName) {
             <p>dashboard</p>
             {:else if page === "coop"}
             <p>coop</p>
-            {:else if page === "usage"}
-            <p>usage</p>
             {/if}
           </div>
     </div>

@@ -1,5 +1,5 @@
 import javascriptGenerator from '$lib/javascript';
-import { OutputType, BlockShape, InputShape } from '../../utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from '../../../utils/blockRegistryTool';
 
 class TestBlocks {
     /**

@@ -72,6 +72,7 @@ function SecretsDelete(key){
       changeenv.showModal()
     }
     function editEnv(){
+      if (changeSecret[0] === "") return
       settings.update((s) => {
         s.settings.secrets[changeSecret[0]] = changeSecret[1]
          if(oldSecret !== changeSecret[0]){  delete s.settings.secrets[oldSecret]}
@@ -79,6 +80,7 @@ function SecretsDelete(key){
       });
       changeSecret = []
       secrets = JSON.stringify($settings.settings.secrets)
+      changeenv.close()
     }
     function copyText(text) {
     navigator.clipboard.writeText(text);
@@ -121,9 +123,14 @@ function SecretsDelete(key){
               {#each Object.entries($settings?.settings?.secrets) as [key, value], index (key)}
               <div class="flex flex-row justify-between gap-2 items-center">
                 <div class="flex flex-row gap-2 w-full">
-                  <div class="w-full rounded-lg px-1 py-2 flex gap-2 bg-[#1d232a]">
+                  <div class="rounded-lg px-1 py-2 flex gap-2 bg-[#1d232a]">
                     <button on:click={copyText(key)} class="flex items-center"><span class="material-symbols-outlined">content_copy</span></button>
-                    <p class="font-bold">{key}</p>
+                    <input
+                        type="text"
+                        class="font-bold bg-[#1d232a] w-24"
+                        bind:value={key}
+                        disabled
+                      />
                   </div>
                   <div class=" w-full rounded-lg p-1 flex gap-2 justify-between bg-[#1d232a]">
                     <div class="flex gap-2">
@@ -144,7 +151,7 @@ function SecretsDelete(key){
                       />
                     {/if}
                     </div>
-                    <label for="toggle{index}" class="flex items-center"><span class="material-symbols-outlined">{showSecrets[index] ? "visibility_off" : "visibility"}</span></label>
+                    <label for="toggle{index}" class="flex items-center cursor-pointer select-none"><span class="material-symbols-outlined">{showSecrets[index] ? "visibility_off" : "visibility"}</span></label>
                     <input id="toggle{index}" class="hidden" type="checkbox" on:click={() => toggleVisibility(index)}>
                   </div>
                 </div>
@@ -190,8 +197,21 @@ function SecretsDelete(key){
       </div>
       <div class="modal-action">
         <form method="dialog">
+          {#if $settings.settings.secrets[changeSecret[0]] === undefined}
           <button class="btn btn-primary" on:click={() => editEnv()}>Submit</button>
           <button class="btn">Close</button>
+          {:else}
+          <div class="flex flex-row gap-1">
+            <div class="alert alert-error h-12 flex justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <span>This secret already exists, do you want to update it?</span>
+            </div>
+            <div class="flex flex-row gap-1">
+              <button class="btn btn-primary" on:click={() => editEnv()}>Submit</button>
+              <button class="btn">Cancel</button>
+            </div>
+          </div>
+          {/if}
         </form>
       </div>
     </div>

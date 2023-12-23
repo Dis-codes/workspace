@@ -11,6 +11,7 @@ import time from "./Others/Time";
 import terminal from "./Others/others";
 import requests from "./Others/requests";
 import base from "./Djs/Base";
+import interaction from "./Djs/Interaction";
 
 import server from "./Djs/Server"
 import message from "./Djs/Message"
@@ -242,36 +243,7 @@ export default [
                 kind: "category",
                 name: "Interactions",
                 colour: "#d054fc",
-                contents: [
-                    {
-                        id: "slash",
-                        kind: "category",
-                        name: "Slash",
-                        colour: "#d054fc",
-                        contents: []
-                    },
-                    {
-                        id: "buttons",
-                        kind: "category",
-                        name: "Buttons",
-                        colour: "#d054fc",
-                        contents: []
-                    },
-                    {
-                        id: "menus",
-                        kind: "category",
-                        name: "Menus",
-                        colour: "#d054fc",
-                        contents: []
-                    },
-                    {
-                        id: "forms",
-                        kind: "category",
-                        name: "Forms",
-                        colour: "#d054fc",
-                        contents: []
-                    },
-                ]
+                contents: interaction
             },
             {
                 id: "separator",

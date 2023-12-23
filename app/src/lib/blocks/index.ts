@@ -3,7 +3,7 @@ const importBlocks = async () => {
   
     const blocks = [];
     for (const path in modules) {
-      const module = await import(path);
+      const module = await modules[path]();
       blocks.push(module.default || module);
     }
   

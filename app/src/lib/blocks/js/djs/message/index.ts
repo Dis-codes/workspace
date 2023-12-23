@@ -186,11 +186,50 @@ class MessageBlocks {
                             ]
                         },
                     }
+                },
+                {
+                    func: "builder",
+                    text: "Message builder\n",
+                    output: OutputType.MESSAGE.BUILDER,
+                    branches: 1,
+                },
+                {
+                    func: "builder_property",
+                    text: "add [DATA] to [CONTENT]\n",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        DATA: {
+                            type: InputShape.MENU,
+                            options: [
+                                ["allowed mentions", "allowedMentions"],
+                                ["components", "components"],
+                                ["content", "content"],
+                                ["embeds", "embeds"],
+                                ["ephemeral", "ephemeral"],
+                                ["fetch reply", "fetchReply"],
+                                ["files", "files"],
+                                ["flags", "flags"],
+                                ["tts", "tts"],
+                                
+                            ]
+                        },
+                        CONTENT: {
+                            type: InputShape.VALUE,
+                        }
+                    }
                 }
             ]
         };
     }
+    builder(args: any) {
+        return ""
+    }
+    builder_property(args: any) {
+        switch (args.DATA) {
 
+        }
+        return ""
+    }
     message(args: any) {
         return `await ${args.MESSAGE ?? "message"}.react(${args.REACTION})`;
     }

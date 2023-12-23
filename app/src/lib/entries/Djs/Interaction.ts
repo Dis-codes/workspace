@@ -1,5 +1,9 @@
 export default [
     {
+        kind: "label",
+        text: "Base interaction",
+    },
+    {
         kind: "block",
         type: "interaction_event", //done
     },
@@ -10,6 +14,10 @@ export default [
     {
         kind: "block",
         type: "interaction_base_properties",
+    },
+    {
+        kind: "label",
+        text: "Slash command interaction",
     },
 
 ]

@@ -84,6 +84,7 @@ class InteractionBlocks{
                         },
                     },
                 },
+
             ]
         };
     }
@@ -93,7 +94,7 @@ class InteractionBlocks{
 
 
     event(args: any) {
-        return `s4d.client.on(Discord.Events.InteractionCreate, async (interaction) => {${args.BRANCH1}})`
+        return `client.on(Discord.Events.InteractionCreate, async (interaction) => {${args.BRANCH1}})`
     }
 
     base_properties(args: any) {

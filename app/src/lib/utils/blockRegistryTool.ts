@@ -17,6 +17,9 @@ const OutputType = {
         MESSAGE: ["Message"],
         MEMBER: ["Member", "User"],
     },
+    MESSAGE: {
+        BUILDER: ["MessageBuilder"]
+    }
 }
 
 /**

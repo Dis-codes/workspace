@@ -43,4 +43,12 @@ export default [
         kind: "block",
         type: "message_remove_reaction",
     },
+    {
+        kind: "block",
+        type: "message_builder"
+    },
+    {
+        kind: "block",
+        type: "message_builder_property"
+    }
 ]

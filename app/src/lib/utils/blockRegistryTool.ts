@@ -1,6 +1,7 @@
 import javascriptGenerator from '$lib/javascript';
 import Blockly from "blockly/core";
 import BlocklyOG from "blockly"
+import Dabase from "$lib/blocks/js/dabase";
 
 /**
  * List of constants for different output types.
@@ -251,7 +252,7 @@ class BlocklyTool {
                 //     inputs.push(mutatorField.shown)
                 //
                 // }
-                let blockid = `${idPrefix}${block.func}235769`
+                let blockid = `${idPrefix}${block.func}e`
                 //second idPrefix is added for mutators only
                 Blockly.Blocks[blockid] = {
                     init: function () {

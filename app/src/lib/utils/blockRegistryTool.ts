@@ -1,5 +1,6 @@
 import javascriptGenerator from '$lib/javascript';
 import Blockly from "blockly/core";
+import BlocklyOG from "blockly"
 
 /**
  * List of constants for different output types.
@@ -18,7 +19,11 @@ const OutputType = {
         MEMBER: ["Member", "User"],
     },
     MESSAGE: {
-        BUILDER: ["MessageBuilder"]
+
+        BUILDERS: {
+            MESSAGE: ["MessageBuilder"],
+            EMBED: ["EmbedBuilder"]
+        }
     }
 }
 
@@ -63,12 +68,14 @@ class BlocklyTool {
     // because its a base block set that should be edited
     // so, just use "any" typing for now
     registerFromBlockset(blockset: any) {
+        let num=1
         const registry = blockset.getRegistry();
         const idPrefix: string = `${registry.id}_`;
         if (!registry.blocks) {
             return; // we are done here if theres no blocks
         }
         for (const block of registry.blocks) {
+            num++
             if (typeof block.manual === 'string') {
                 // manual block, dont do anything actually
                 // just run the function
@@ -144,6 +151,16 @@ class BlocklyTool {
                 // return the %1 thing blockly wants
                 return "%" + idx;
             });
+            // //get keys of each argument
+            // let keys = Object.keys(block.arguments)
+            // //loop trough add block parameter to function
+            // for (const key of keys) {
+            //     let argument = block.arguments[key]
+            //     if(argument.options && argument.options instanceof Function) {
+            //         console.log(argument)
+            //     }
+            // }
+
             // actually define the block
             Blockly.Blocks[`${idPrefix}${block.func}`] = {
                 init: function () {
@@ -153,7 +170,8 @@ class BlocklyTool {
                         inputsInline: block.inline,
                         output: block.output,
                         tooltip: block.tooltip ? block.tooltip : "",
-                        helpUrl: block.url ? block.url : ""
+                        helpUrl: block.url ? block.url : "",
+                        mutator: block.mutator ? block.mutator : "",
                     });
                     if (block.shape) {
                         // apply block shape
@@ -213,6 +231,98 @@ class BlocklyTool {
                 }
                 return returnValue;
             };
+
+            //Mutator generator
+            /*
+            There are 2 mutator types:
+            - Where you can drag blocks
+            - Where with a checked field you can show and hide a field
+            */
+            if(block.mutator) {
+
+                // console.log(block.mutator)
+                let BorderFields: string[] = ["FIELD1"]
+                let BorderTypes: string[] = ["string"]
+                let inputs: boolean[] = [true]
+
+                // for (const mutatorField of block.mutatorFields) {
+                //     BorderFields.push(mutatorField.name)
+                //     BorderTypes.push(mutatorField.type)
+                //     inputs.push(mutatorField.shown)
+                //
+                // }
+                let blockid = `${idPrefix}${block.func}235769`
+                //second idPrefix is added for mutators only
+                Blockly.Blocks[blockid] = {
+                    init: function () {
+                        // this.jsonInit(block.mutatorData)
+                        this.setColour("#CECDCE");
+                        this.setTooltip("");
+                        this.setHelpUrl("");
+                    }
+                }
+                //boilerplate code(Dont worry about it)
+                const BORDER_MUTATOR_MIXIN = {
+                    inputs_: inputs,
+
+
+                    mutationToDom: function() {
+                        if (!this.inputs_) {
+                            return null;
+                        }
+                        const container = document.createElement("mutation");
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            if (this.inputs_[i]) container.setAttribute(BorderFields[i], this.inputs_[i] as any)
+                        }
+                        return container;
+                    },
+
+                    domToMutation: function(xmlElement: any) {
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            this.inputs_[i] = xmlElement.getAttribute(BorderFields[i].toLowerCase()) == "true";
+                        }
+                        this.updateShape_();
+                    },
+
+                    decompose: function(workspace: any) {
+                        const containerBlock = workspace.newBlock(blockid);
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            containerBlock.appendDummyInput()
+                                .setAlign(Blockly.ALIGN_RIGHT)
+                                .appendField(BlocklyOG.Msg[BorderFields[i]])
+                                .appendField(new Blockly.FieldCheckbox(this.inputs_[i] ? "TRUE" : "FALSE"), BorderFields[i].toUpperCase());
+                        }
+                        containerBlock.initSvg();
+                        return containerBlock;
+                    },
+
+                    compose: function(containerBlock: any) {
+                        // Set states
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            this.inputs_[i] = (containerBlock.getFieldValue(BorderFields[i].toUpperCase()) == "TRUE");
+                        }
+                        this.updateShape_();
+                    },
+                    getInput: function (...args: any): any {},
+                    removeInput: function (...args: any): any {},
+                    appendValueInput: function (...args: any): any {},
+
+                    updateShape_: function() {
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            if (this.getInput(BorderFields[i].toUpperCase())) this.removeInput(BorderFields[i].toUpperCase());
+                        }
+                        for (let i = 0; i < this.inputs_.length; i++) {
+                            if (this.inputs_[i]) {
+                                this.appendValueInput(BorderFields[i].toUpperCase())
+                                    .setCheck(BorderTypes[i])
+                                    .setAlign(Blockly.ALIGN_RIGHT)
+                                    .appendField(BlocklyOG.Msg[BorderFields[i]]);
+                            }
+                        }
+                    }
+                };
+                Blockly.Extensions.registerMutator(blockid, BORDER_MUTATOR_MIXIN, () => {}, [""]);
+            }
         }
     }
 }

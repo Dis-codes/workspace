@@ -4,18 +4,18 @@ import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool
 class MessageBlocks {
     getRegistry () {
         return {
-            id: "embed",
+            id: "component",
             color: "#40bc54",
             blocks: [
                 {
-                    func: "create",
-                    text: "EmbedBuilder\n",
+                    func: "create_button",
+                    text: "ButtonBuilder\n",
                     branches: 1,
                     output: OutputType.MESSAGE.BUILDERS.EMBED,
                 },
                 {
                     func: "setTitle",
-                    text: "set embed title to [TITLE] with url [URL]",
+                    text: "set button title to [TITLE] with url [URL]",
                     shape: BlockShape.STATEMENT,
                     arguments: {
                         TITLE:  {
@@ -56,86 +56,86 @@ class MessageBlocks {
                             type: InputShape.VALUE,
                             check: OutputType.STRING,
                         }
-                }
-            },
-            {
-                func: "setThumbnail",
-                text: "set embed thumbnail to [THUMBNAIL]",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    THUMBNAIL: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
+                    }
+                },
+                {
+                    func: "setThumbnail",
+                    text: "set embed thumbnail to [THUMBNAIL]",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        THUMBNAIL: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        }
+                    }
+                },
+                {
+                    func: "setImage",
+                    text: "set embed image to [IMAGE]",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        IMAGE: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        }
+                    }
+                },
+                {
+                    func: "setDescription",
+                    text: "set embed description to [DESCRIPTION]",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        DESCRIPTION: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        }
+                    }
+                },
+                {
+                    func: "addField",
+                    text: "add embed field with name [NAME] and value [VALUE] and inline [INLINE]",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        NAME: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        },
+                        VALUE: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        },
+                        INLINE: {
+                            type: InputShape.VALUE,
+                            check: OutputType.BOOLEAN,
+                        }
+                    }
+                },
+                {
+                    func: "setFooter",
+                    text: "set embed footer to [FOOTER] with icon [ICON]",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        FOOTER: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        },
+                        ICON: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        }
+                    }
+                },
+                {
+                    func: "setTimestamp",
+                    text: "set embed timestamp",
+                    shape: BlockShape.STATEMENT,
+                    arguments: {
+                        TIMESTAMP: {
+                            type: InputShape.VALUE,
+                            check: OutputType.STRING,
+                        }
                     }
                 }
-            },
-            {
-                func: "setImage",
-                text: "set embed image to [IMAGE]",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    IMAGE: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    }
-                }
-            },
-            {
-                func: "setDescription",
-                text: "set embed description to [DESCRIPTION]",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    DESCRIPTION: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    }
-                }
-            },
-            {
-                func: "addField",
-                text: "add embed field with name [NAME] and value [VALUE] and inline [INLINE]",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    NAME: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    },
-                    VALUE: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    },
-                    INLINE: {
-                        type: InputShape.VALUE,
-                        check: OutputType.BOOLEAN,
-                    }
-                }
-            },
-            {
-                func: "setFooter",
-                text: "set embed footer to [FOOTER] with icon [ICON]",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    FOOTER: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    },
-                    ICON: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    }
-                }
-            },
-            {
-                func: "setTimestamp",
-                text: "set embed timestamp",
-                shape: BlockShape.STATEMENT,
-                arguments: {
-                    TIMESTAMP: {
-                        type: InputShape.VALUE,
-                        check: OutputType.STRING,
-                    }
-                }
-            }
             ]
         };
     }

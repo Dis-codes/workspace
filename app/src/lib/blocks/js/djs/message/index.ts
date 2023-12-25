@@ -1,5 +1,6 @@
 import javascriptGenerator from '$lib/javascript';
 import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+let num=1
 
 class MessageBlocks {
     getRegistry () {
@@ -190,12 +191,12 @@ class MessageBlocks {
                 {
                     func: "builder",
                     text: "Message builder\n",
-                    output: OutputType.MESSAGE.BUILDER,
+                    output: OutputType.MESSAGE.BUILDERS.MESSAGE,
                     branches: 1,
                 },
                 {
                     func: "builder_property",
-                    text: "add [DATA] to [CONTENT]\n",
+                    text: "Message: set [DATA] to [CONTENT]\n",
                     shape: BlockShape.STATEMENT,
                     arguments: {
                         DATA: {
@@ -217,9 +218,67 @@ class MessageBlocks {
                             type: InputShape.VALUE,
                         }
                     }
+                },
+                {
+                    func: "test",
+                    text: "output string block [MENU1] [MENU2]",
+                    output: OutputType.STRING,
+                    arguments: {
+                        MENU1: {
+                            type: InputShape.MENU,
+                            options: [
+                                ["option 1", "1"],
+                                ["option 2", "2"]
+                            ]
+                        },
+                        MENU2: {
+                            num: 1,
+                            type: InputShape.MENU,
+                            options: function () {
+                                // Extract the value of MENU1
+                                let dynamicOptions: string[][] = [];
+                                console.log(num, this.num)
+                                if (num === 1) {
+                                    dynamicOptions = [["no options", "1-1"]];
+                                    num=2
+                                } else if (num === 2) {
+                                    dynamicOptions = [["option 2-1", "2-1"], ["option 2-2", "2-2"]];
+                                    num=1
+                                }
+
+                                return dynamicOptions;
+                            }
+                        }
+                    }
+                },
+                {
+                    func: "test_mutator",
+                    text: "mutator test",
+                    output: OutputType.STRING,
+                    mutator: "test_mutator_mutator",
+                    mutatorData: {
+                        color: "#000000"
+                      //same as block one just for mutator
+                    },
+                    mutatorFields: [
+                        {
+                            name: "TITLE",
+                            type: OutputType.STRING,
+                            shown: true
+                        },
+                        {
+                            name: "DESCRIPTION",
+                            type: OutputType.STRING,
+                            shown: false
+                        }
+                    ]
                 }
+
             ]
         };
+    }
+    test(args: any) {
+
     }
     builder(args: any) {
         return ""

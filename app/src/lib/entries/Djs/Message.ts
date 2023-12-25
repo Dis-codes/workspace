@@ -50,5 +50,14 @@ export default [
     {
         kind: "block",
         type: "message_builder_property"
+    },
+    {
+        kind: "block",
+        type: "message_test"
+    },
+    {
+        kind: "block",
+        type: "message_test_mutator"
     }
+
 ]

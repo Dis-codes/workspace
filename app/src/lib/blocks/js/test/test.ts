@@ -1,5 +1,7 @@
 import javascriptGenerator from '$lib/javascript';
 import { OutputType, BlockShape, InputShape } from '../../../utils/blockRegistryTool';
+import type {Register} from "../../../interfaces";
+import {MutatorType} from "$lib/interfaces/mutator";
 
 class TestBlocks {
     /**
@@ -10,6 +12,37 @@ class TestBlocks {
             id: "coretest",
             color: 60,
             blocks: [
+                {
+                  func: "mutator_mutator",
+                  text: "test_block\n Bozo: [INPUT]",
+                  shape: BlockShape.EVENT,
+                    arguments: {
+                        INPUT: {
+                            type: InputShape.CHECKBOX
+                        }
+                    }
+                },
+                {
+                    func: "test_mainblock",
+                    text: "statement blockwdwdwdw",
+                    mutator: "test_mainblock_mutator",
+                    mutatorData: {
+                        type: MutatorType.CheckBox,
+                        inputs: [
+                            {
+                                text: "Title", // text for input text
+                                type: OutputType.STRING, // type for input added to the main block
+                                defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
+                            },
+                            {
+                                text: "Description",
+                                type: OutputType.STRING,
+                                defaultValue: false,
+                            }
+                        ]
+                    },
+                    shape: BlockShape.EVENT
+                },
                 {
                     func: "teststatement",
                     text: "statement block",
@@ -76,9 +109,11 @@ class TestBlocks {
                     output: OutputType.STRING
                 },
             ]
-        };
+        } as Register;
     }
-
+    test_mainblock(args: any) {
+        return `${args.Description}; ${args.DESCRIPTION}` // both of these work
+    }
     teststatement () {
         return 'void;';
     }

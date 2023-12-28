@@ -2,7 +2,16 @@ import type {BlockDefinition, MutatorInput} from "$lib/interfaces";
 import {MutatorType} from "$lib/interfaces/mutator";
 import Blockly from "blockly/core";
 
-export function CheckBoxMutator(blockData: BlockDefinition) {
+export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
+    let blockFields: string[] = []
+    let blockTypes: string[] = []
+    let blockInputs: boolean[] = []
+    for (const input of blockData.mutatorData?.inputs as MutatorInput[]) {
+        blockFields.push(input.text)
+        blockTypes.push(input.type)
+        blockInputs.push(input.defaultValue)
+    }
+
     if(blockData.mutatorData?.blockType === "") {
         Blockly.Blocks[blockData.mutator as string] = {
             init: function () {
@@ -20,14 +29,7 @@ export function CheckBoxMutator(blockData: BlockDefinition) {
             }
         }
     }
-    let blockFields: string[] = []
-    let blockTypes: string[] = []
-    let blockInputs: boolean[] = []
-    for (const input of blockData.mutatorData?.inputs as MutatorInput[]) {
-        blockFields.push(input.text)
-        blockTypes.push(input.type)
-        blockInputs.push(input.defaultValue)
-    }
+    
     Blockly.Extensions.registerMutator(
         blockData.mutator as string,
         {
@@ -35,11 +37,11 @@ export function CheckBoxMutator(blockData: BlockDefinition) {
             fields_: blockFields,
             types_: blockTypes,
             saveExtraState: function () {
-                if(!this.inputs_) return null
+                if(!this.inputs_ || this.inputs_.length === 0) return null
                 const state = Object.create(null);
                 if(this.inputs_ && this.fields_)  {
                     for (let i = 0; i<this.inputs_.length; i++) {
-                        state[this.fields_[i]] = this.inputs_[i]
+                        if(this.inputs_[i]) state[this.fields_[i]] = this.inputs_[i]
                     }
                 }
                 return state;
@@ -81,19 +83,23 @@ export function CheckBoxMutator(blockData: BlockDefinition) {
                 for (let i = 0; i < this.inputs_.length; i++) {
                     if (this.inputs_[i]) {
                         this.appendValueInput(this.fields_[i])
-                            .setCheck(this.types_[i])
+                            .setCheck(blockTypes[i])
                             .setAlign(Blockly.ALIGN_RIGHT)
                             .appendField(this.fields_[i]);
                     }
                 }
             }
         },
-        undefined,
+        function () {
+            this.inputs_ = [...blockInputs]
+            this.fields_ = [...blockFields]
+            this.types_ = [...blockTypes]
+        },
         []);
 
 }
-export function CheckMutatorType(blockData: BlockDefinition) {
+export function CheckMutatorType(blockData: BlockDefinition, id: string) {
     switch (blockData.mutatorData?.type) {
-        case MutatorType.CheckBox: if (!Blockly.Extensions.isRegistered(blockData.mutator as string)) CheckBoxMutator(blockData)
+        case MutatorType.CheckBox: if (!Blockly.Extensions.isRegistered(blockData.mutator as string)) CheckBoxMutator(blockData, id)
     }
 }

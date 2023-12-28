@@ -230,7 +230,7 @@ class BlocklyTool {
                 }
                 return returnValue;
             };
-            CheckMutatorType(block)
+            CheckMutatorType(block, idPrefix)
         }
         // let blockName = "controls_if_test"
         // let mut = "coretest_mutator_mutator"

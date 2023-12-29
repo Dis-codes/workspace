@@ -162,7 +162,7 @@ Blockly.ContextMenuRegistry.registry.register({
     async function loadWorkspace () {
         if ($storage[file]?.blocks?.blocks && $storage[file]?.blocks.blocks.length > 0) {
         console.log("workspace found");
-        Blockly.serialization.workspaces.load($storage[file], workspace);  
+        Blockly.serialization.workspaces.load($storage[file], workspace);
     } else {
         console.log("no workspace found");
     }
@@ -363,7 +363,6 @@ function saveFile() {
       </div>
     </div>
   </dialog>
-
   <dialog id="showjs" class="modal scroll">
     <div class="modal-box max-w-full  h-full">
       <h3 class="font-bold text-3xl text-white">JavaScript code of your bot</h3>

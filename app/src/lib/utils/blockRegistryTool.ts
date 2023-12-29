@@ -1,9 +1,18 @@
 import javascriptGenerator from '$lib/javascript';
 import Blockly from "blockly/core";
+import {CheckBoxMutator, CheckMutatorType} from "$lib/utils/mutators";
 
-/**
- * List of constants for different output types.
- */
+//type for defining blocks easier to develop blocks
+export {
+
+    OutputType,
+    BlockShape,
+    InputShape,
+    BlocklyTool,
+};
+
+
+
 const OutputType = {
     STRING: ["String", "Text"],
     NUMBER: ["Number"],
@@ -150,7 +159,8 @@ class BlocklyTool {
                         inputsInline: block.inline,
                         output: block.output,
                         tooltip: block.tooltip ? block.tooltip : "",
-                        helpUrl: block.url ? block.url : ""
+                        helpUrl: block.url ? block.url : "",
+                        mutator: block.mutator !== ""? block.mutator : "",
                     });
                     if (block.shape) {
                         // apply block shape
@@ -181,6 +191,7 @@ class BlocklyTool {
             // define JS gen
             javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (exportblock: Blockly.Block) {
                 const args: any = {};
+
                 for (const argument of blockDisplayContent.args0) {
                     // args0 is an array of blockly argument objects
                     // the [INPUT] -> INPUT names are saved in the "name" property
@@ -201,6 +212,15 @@ class BlocklyTool {
                             break;
                     }
                 }
+                if(exportblock.fields_.length !== 0) {
+                    for (const field of (exportblock as any).fields_ as string[]) {
+                        if(exportblock.getInput(field)) {
+                            let val = javascriptGenerator.valueToCode(exportblock, field, javascriptGenerator.ORDER_ATOMIC)
+                            args[field] = val.slice(1, val.length-1)
+                            args[field.toUpperCase()] = val.slice(1, val.length-1)
+                        }
+                    }
+                }
                 const returnValue = blockset[block.func](args);
                 // if a non-tuple was returned as an output block,
                 // we need to convert it to one
@@ -210,16 +230,62 @@ class BlocklyTool {
                 }
                 return returnValue;
             };
+            CheckMutatorType(block, idPrefix)
         }
+        // let blockName = "controls_if_test"
+        // let mut = "coretest_mutator_mutator"
+        // if(!Blockly.Blocks[blockName]) {
+        //     Blockly.Blocks[blockName] = {
+        //         init: function () {
+        //             this.jsonInit({
+        //                 'message0': 'eeee',
+        //                 'previousStatement': null,
+        //                 'nextStatement': null,
+        //                 'style': 'logic_blocks',
+        //                 'helpUrl': '',
+        //                 'mutator.ts': mut,
+        //             })
+        //         }
+        //     }
+        //
+        //
+        //     Blockly.Extensions.registerMutator(
+        //         mut,
+        //         {
+        //             saveExtraState: function () {
+        //                 return {};
+        //             },
+        //
+        //             loadExtraState: function (state: any) {
+        //
+        //                 this.updateShape_();
+        //             },
+        //             decompose: function (workspace: Blockly.Workspace) {
+        //
+        //
+        //                 const containerBlock = workspace.newBlock(mut);
+        //                 containerBlock.initSvg();
+        //
+        //                 return containerBlock;
+        //             },
+        //
+        //
+        //             compose: function (topBlock: any) {
+        //                 this.updateShape_()
+        //             },
+        //             updateShape_: function () {
+        //
+        //             }
+        //         },
+        //         undefined,
+        //         []);
+        // }
+
+
     }
 }
 
-export {
-    OutputType,
-    BlockShape,
-    InputShape,
-    BlocklyTool
-};
+
 
 // const Blockly = require("blockly/core");
 // /* eslint-disable */

@@ -337,9 +337,6 @@ function saveFile() {
             }
         }
     }
-    function WorkspaceThing() {
-
-    }
     //add delete unused blocks to context menu
     // Blockly.ContextMenuRegistry.registry.register({
     //     callback: deleteUnusedBlocks,

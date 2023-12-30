@@ -1,92 +1,30 @@
 export default [
   {
     kind: "block",
-    type: "member_get_member_by_id",
-    inputs: {
-      ID: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "id",
-          },
-        },
-      },
-    },
+    type: "member_getmemberbyid",
   },
   {
     kind: "block",
-    type: "member_get_member_by_name",
-    inputs: {
-      NAME: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "name",
-          },
-        },
-      },
-    },
+    type: "member_getmemberarraybyrole",
   },
   {
     kind: "block",
-    type: "member_get_members_by_role",
-    inputs: {
-      ROLE: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "role",
-          },
-        },
-      },
-    },
+    type: "member_exists",
   },
   {
     kind: "block",
-    type: "member_id_of_member",
-    inputs: {
-      MEMBER: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "member",
-          },
-        },
-      },
-    },
+    type: "member_getmembernickname",
   },
   {
     kind: "block",
-    type: "member_username_of_member",
-    inputs: {
-      MEMBER: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "member",
-          },
-        },
-      },
-    },
+    type: "member_getmemberjoin",
   },
   {
     kind: "block",
-    type: "member_presence_of_member",
-    inputs: {
-      MEMBER: {
-        shadow: {
-          kind: "block",
-          type: "text",
-          fields: {
-            TEXT: "member",
-          },
-        },
-      },
-    },
-  }
+    type: "member_timeout",
+  },
+  {
+    kind: "block",
+    type: "member_haspermission",
+  },
 ]

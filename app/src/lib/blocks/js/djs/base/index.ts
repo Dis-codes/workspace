@@ -50,9 +50,9 @@ class BaseBlocks {
                 },
                 {
                     func: "bot_status",
-                    text: "Type: [TYPE] Message: [MESSAGE] Status: [STATUS] Name: [NAME]",
-                    color: "#cc33ff",
-                    BlockShape: BlockShape.FLOATING,
+                    text: "Type: [TYPE] Status: [STATUS] Title: [NAME] Message: [MESSAGE]",
+                    tooltip: "Set bot status, type is the type of activity, status is the status of the bot, title is the title of the activity, and message is the message of the activity", // copilot wrote that entire tooltip lol
+                    shape: BlockShape.STATEMENT,
                     arguments: {
                         MESSAGE: {                    
                             type: InputShape.VALUE,
@@ -153,16 +153,14 @@ class BaseBlocks {
     }
 
     bot_status(args: any) {
-        return `client.on("ready", () => {
-            const status = client.user.setPresence({
-                status: '${args.STATUS}',
-                activities: [{
-                    type: ActivityType.${args.TYPE},
-                    name: ${args.MESSAGE}, // I know its confusing but it makes more sense when looking at it in discord
-                    state: ${args.NAME}
-                }]
-            })
-        });`
+        return `const status = client.user.setPresence({
+            status: '${args.STATUS}',
+            activities: [{
+                type: ActivityType.${args.TYPE},
+                name: ${args.MESSAGE}, // accidentially flipped them earlier and I won't fix because I'm lazy
+                state: ${args.NAME}
+            }]
+        })`
     }
 
     bot_in_server(args: any) {

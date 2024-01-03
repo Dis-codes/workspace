@@ -1,3 +1,4 @@
 export const MutatorType =  {
-    CheckBox: "checkbox"
+    CheckBox: "checkbox",
+    // BlockList: "blocklist" // later adding after its done
 }

@@ -78,10 +78,12 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
             },
             updateShape_: function () {
                 for (let i = 0; i < this.inputs_.length; i++) {
+
                     if (this.getInput(this.fields_[i]) && !this.inputs_[i]) this.removeInput(this.fields_[i]);
             }
                 for (let i = 0; i < this.inputs_.length; i++) {
                     if (this.inputs_[i] && !this.getInput(this.fields_[i])) {
+
                         this.appendValueInput(this.fields_[i])
                             .setCheck(blockTypes[i])
                             .setAlign(Blockly.ALIGN_RIGHT)

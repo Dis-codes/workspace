@@ -212,7 +212,9 @@ class BlocklyTool {
                             break;
                     }
                 }
+
                 if(exportblock.fields_ && exportblock.fields_.length !== 0) {
+
                     for (const field of (exportblock as any).fields_ as string[]) {
                         if(exportblock.getInput(field)) {
                             let val = javascriptGenerator.valueToCode(exportblock, field, javascriptGenerator.ORDER_ATOMIC)

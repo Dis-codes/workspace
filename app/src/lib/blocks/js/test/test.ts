@@ -31,11 +31,13 @@ class TestBlocks {
                         inputs: [
                             {
                                 text: "Title", // text for input text
+                                inputName: "Title",
                                 type: OutputType.STRING, // type for input added to the main block
                                 defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
                             },
                             {
                                 text: "Description",
+                                inputName: "", // leaving this empty will use text as inputName
                                 type: OutputType.STRING,
                                 defaultValue: false,
                             }

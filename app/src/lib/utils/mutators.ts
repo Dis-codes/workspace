@@ -5,11 +5,14 @@ import Blockly from "blockly/core";
 export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
     let blockFields: string[] = []
     let blockTypes: string[] = []
+    let blockFieldNames: string[] = []
+
     let blockInputs: boolean[] = []
     for (const input of blockData.mutatorData?.inputs as MutatorInput[]) {
         blockFields.push(input.text)
         blockTypes.push(input.type)
         blockInputs.push(input.defaultValue)
+        blockFieldNames.push(input.inputName)
     }
 
     if(blockData.mutatorData?.blockType === "") {
@@ -21,7 +24,7 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
                 }
                 this.jsonInit({
                     "message0": msg === ""? msg: "",
-                    'color': blockData.mutatorData?.color? blockData.mutatorData?.color : "#eb7734",
+                    'color': blockData.mutatorData?.color !== ""? blockData.mutatorData?.color : "#eb7734",
                     'previousStatement': null,
                     'nextStatement': null,
                 })
@@ -82,7 +85,7 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
             }
                 for (let i = 0; i < this.inputs_.length; i++) {
                     if (this.inputs_[i] && !this.getInput(this.fields_[i])) {
-                        this.appendValueInput(this.fields_[i])
+                        this.appendValueInput(blockFieldNames[i]? blockFieldNames[i] : this.fields_[i])
                             .setCheck(blockTypes[i])
                             .setAlign(Blockly.ALIGN_RIGHT)
                             .appendField(this.fields_[i]);

@@ -32,13 +32,17 @@ class TestBlocks {
                         inputs: [
                             {
                                 text: "Title", // text for input text
+
                                 inputName: "Title",
+
                                 type: OutputType.STRING, // type for input added to the main block
                                 defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
                             },
                             {
                                 text: "Description",
+
                                 inputName: "", // leaving this empty will use text as inputName
+
                                 type: OutputType.STRING,
                                 defaultValue: false,
                             }
@@ -47,6 +51,7 @@ class TestBlocks {
                     shape: BlockShape.EVENT
                 },
                 {
+
                     func: "test_sec_mut",
                     text: "statement blockwdwdwdw",
                     mutator: "test_sec_mut_mutator",
@@ -81,6 +86,7 @@ class TestBlocks {
                     shape: BlockShape.EVENT
                 },
                 {
+
                     func: "teststatement",
                     text: "statement block",
                     shape: BlockShape.STATEMENT
@@ -148,11 +154,13 @@ class TestBlocks {
             ]
         } as Register;
     }
+
     test_sec_mut(args: any) {
         return `${args.TITLE}`
     }
     test_mainblock(args: any) {
         return `${args.Description};` // both of these work
+
     }
     teststatement () {
         return 'void;';

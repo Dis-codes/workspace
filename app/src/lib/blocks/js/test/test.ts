@@ -2,6 +2,7 @@ import javascriptGenerator from '$lib/javascript';
 import { OutputType, BlockShape, InputShape } from '../../../utils/blockRegistryTool';
 import type {Register} from "../../../interfaces";
 import {MutatorType} from "$lib/interfaces/mutator";
+import Blockly from "blockly/core";
 
 class TestBlocks {
     /**
@@ -41,6 +42,40 @@ class TestBlocks {
                                 type: OutputType.STRING,
                                 defaultValue: false,
                             }
+                        ]
+                    },
+                    shape: BlockShape.EVENT
+                },
+                {
+                    func: "test_sec_mut",
+                    text: "statement blockwdwdwdw",
+                    mutator: "test_sec_mut_mutator",
+                    mutatorData: {
+                        type: MutatorType.CheckBox,
+                        inputs: [
+                            {
+                                text: "Title", // text for input text
+                                inputName: "Title",
+                                type: OutputType.STRING, // type for input added to the main block
+                                defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
+
+                                branch: true,
+
+                                //or
+
+                                modifyBlock: function (block: Blockly.Block) { // if this is present
+
+
+
+                                }
+                            },
+                            {
+                                text: "Description",
+                                inputName: "", // leaving this empty will use text as inputName
+                                type: OutputType.STRING,
+                                defaultValue: false,
+                            },
+
                         ]
                     },
                     shape: BlockShape.EVENT
@@ -113,8 +148,11 @@ class TestBlocks {
             ]
         } as Register;
     }
+    test_sec_mut(args: any) {
+        return `${args.TITLE}`
+    }
     test_mainblock(args: any) {
-        return `${args.Description}; ${args.DESCRIPTION}` // both of these work
+        return `${args.Description};` // both of these work
     }
     teststatement () {
         return 'void;';

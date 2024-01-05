@@ -6,13 +6,14 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
     let blockFields: string[] = []
     let blockTypes: string[] = []
     let blockFieldNames: string[] = []
-
     let blockInputs: boolean[] = []
+    let inputsData: MutatorInput[] = []
     for (const input of blockData.mutatorData?.inputs as MutatorInput[]) {
         blockFields.push(input.text)
         blockTypes.push(input.type)
         blockInputs.push(input.defaultValue)
         blockFieldNames.push(input.inputName)
+        inputsData.push(input)
     }
 
     if(blockData.mutatorData?.blockType === "") {
@@ -81,10 +82,16 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
             },
             updateShape_: function () {
                 for (let i = 0; i < this.inputs_.length; i++) {
-                    if (this.getInput(this.fields_[i]) && !this.inputs_[i]) this.removeInput(this.fields_[i]);
+                    if (this.getInput(this.fields_[i]) && !this.inputs_[i]) {
+                        this.removeInput(this.fields_[i]);
+                    }
             }
                 for (let i = 0; i < this.inputs_.length; i++) {
                     if (this.inputs_[i] && !this.getInput(this.fields_[i])) {
+                        if(inputsData[i].branch) {
+                            this.appendStatementInput(blockFieldNames[i]? blockFieldNames[i] : this.fields_[i]).appendField(this.fields_[i]);
+                            continue
+                        }
                         this.appendValueInput(blockFieldNames[i]? blockFieldNames[i] : this.fields_[i])
                             .setCheck(blockTypes[i])
                             .setAlign(Blockly.ALIGN_RIGHT)

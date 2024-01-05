@@ -37,7 +37,8 @@ interface MutatorData {
 interface MutatorInput {
     text: string // adding string[] type will be later when adding more mutators
     inputName?: string // used in js code generation for example `${args.inputName}`
-    type: string
+    type?: string // optional when used with branch
+    branch?: boolean //if true will add a branch instead of a input field and in that case type is optional
     defaultValue: boolean//may change later after adding more mutator.ts types
 }
 

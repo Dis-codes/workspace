@@ -1,4 +1,5 @@
-import {MutatorType} from "$lib/interfaces/mutator";
+import Blockly from "blockly/core";
+
 
 interface Register {
     id: string,
@@ -32,11 +33,20 @@ interface MutatorData {
     blockType?: string
     color?: string
     inputs: MutatorInput[]
+
+    inputModifier?: (block: Blockly.Block) => void // BlockList mutator type field
+    blockList: string[]
 }
 interface MutatorInput {
-    text: string // adding string[] type will be later when adding more mutators
-    type: string
-    defaultValue: boolean//may change later after adding more mutator.ts types
+    text?: string // adding string[] type will be later when adding more mutators
+    inputName?: string // used in js code generation for example `${args.inputName}`
+    type?: string // optional when used with branch
+    branch?: boolean //if true will add a branch instead of a input field and in that case type is optional
+    defaultValue?: boolean//may change later after adding more mutator.ts types
+
+    //fields for blocklist mutator
+    blockId?: string,
+
 }
 
 export {

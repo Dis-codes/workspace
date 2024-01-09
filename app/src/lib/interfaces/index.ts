@@ -33,13 +33,17 @@ interface MutatorData {
     color?: string
     inputs: MutatorInput[]
     inputModifier?: (block: Blockly.Block) => void // BlockList mutator type field
+    blockList: string[]
 }
 interface MutatorInput {
-    text: string // adding string[] type will be later when adding more mutators
+    text?: string // adding string[] type will be later when adding more mutators
     inputName?: string // used in js code generation for example `${args.inputName}`
     type?: string // optional when used with branch
     branch?: boolean //if true will add a branch instead of a input field and in that case type is optional
-    defaultValue: boolean//may change later after adding more mutator.ts types
+    defaultValue?: boolean//may change later after adding more mutator.ts types
+
+    //fields for blocklist mutator
+    blockId?: string,
 }
 
 export {

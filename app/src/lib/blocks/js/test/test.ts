@@ -25,7 +25,7 @@ class TestBlocks {
                 },
                 {
                     func: "test_mainblock",
-                    text: "statement blockwdwdwdw",
+                    text: "advanced mutator",
                     mutator: "test_mainblock_mutator",
                     mutatorData: {
                         type: MutatorType.CheckBox,
@@ -35,6 +35,7 @@ class TestBlocks {
                                 inputName: "Title",
                                 type: OutputType.STRING, // type for input added to the main block
                                 defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
+                                branch: true,
                             },
                             {
                                 text: "Description",
@@ -48,36 +49,37 @@ class TestBlocks {
                 },
                 {
                     func: "test_sec_mut",
-                    text: "statement blockwdwdwdw",
-                    mutator: "test_sec_mut_mutator",
-                    mutatorData: {
-                        type: MutatorType.CheckBox,
-                        inputs: [
-                            {
-                                text: "Title", // text for input text
-                                inputName: "Title",
-                                type: OutputType.STRING, // type for input added to the main block
-                                defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
-
-                                branch: true,
-
-                                //or
-
-                                modifyBlock: function (block: Blockly.Block) { // if this is present
-
-
-
-                                }
-                            },
-                            {
-                                text: "Description",
-                                inputName: "", // leaving this empty will use text as inputName
-                                type: OutputType.STRING,
-                                defaultValue: false,
-                            },
-
-                        ]
-                    },
+                    text: "statement not imp",
+                    // mutator: "test_sec_mut_mutator",
+                    // mutatorData: {
+                    //     type: MutatorType.BlockList,
+                    //     blockType: "controls_if_if",
+                    //     inputs: [
+                    //         {
+                    //             blockId: "controls_if_elseif",
+                    //             text: "else if",
+                    //             inputName: "ELSE_IF",
+                    //             type: OutputType.BOOLEAN,
+                    //             branch: false,
+                    //             //wont be made since with this also you would need to make delete input func
+                    //             modifyBlock: function (block: Blockly.Block) { // if this is present
+                    //             }
+                    //
+                    //         },
+                    //         {
+                    //             blockId: "controls_if_else",
+                    //             text: "else",
+                    //             //inputName: "ELSE", // no need for input name since `text` field is a single word
+                    //             type: OutputType.BOOLEAN,
+                    //             branch: false,
+                    //
+                    //
+                    //             modifyBlock: function (block: Blockly.Block) { // if this is present
+                    //             }
+                    //         },
+                    //
+                    //     ]
+                    // },
                     shape: BlockShape.EVENT
                 },
                 {

@@ -212,6 +212,7 @@ class BlocklyTool {
                             break;
                     }
                 }
+
                 if(exportblock.fields_.length !== 0) {
                     for (const field of (exportblock as any).fields_ as string[]) {
                         let input = exportblock.getInput(field)
@@ -222,6 +223,7 @@ class BlocklyTool {
                                 args[field.toUpperCase()] = val.slice(1, val.length-1)
                                 continue
                             }
+
                             let val = javascriptGenerator.valueToCode(exportblock, field, javascriptGenerator.ORDER_ATOMIC)
                             args[field] = val.slice(1, val.length-1)
                             args[field.toUpperCase()] = val.slice(1, val.length-1)

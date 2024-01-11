@@ -2,6 +2,7 @@ import javascriptGenerator from '$lib/javascript';
 import { OutputType, BlockShape, InputShape } from '../../../utils/blockRegistryTool';
 import type {Register} from "../../../interfaces";
 import {MutatorType} from "$lib/interfaces/mutator";
+import {WarningType} from "$lib/interfaces/warnings";
 
 class TestBlocks {
     /**
@@ -16,6 +17,23 @@ class TestBlocks {
                   func: "mutator_mutator",
                   text: "test_block\n Bozo: [INPUT]",
                   shape: BlockShape.EVENT,
+                    arguments: {
+                        INPUT: {
+                            type: InputShape.CHECKBOX
+                        }
+                    }
+                },
+                {
+                    func: "test_warning",
+                    text: "Warning parent",
+                    shape: BlockShape.STATEMENT,
+                    warnings: [
+                        {
+                            type: WarningType.RequiredParent,
+                            parentType: "coretest_testevent",
+                            message: "this block belongs under test event block!"
+                        },
+                    ],
                     arguments: {
                         INPUT: {
                             type: InputShape.CHECKBOX
@@ -110,6 +128,9 @@ class TestBlocks {
                 },
             ]
         } as Register;
+    }
+    test_warning(args: any) {
+        return "console.log('warning lol')"
     }
     test_mainblock(args: any) {
         return `${args.Description}; ${args.DESCRIPTION}` // both of these work

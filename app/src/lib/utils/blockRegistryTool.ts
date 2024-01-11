@@ -1,6 +1,9 @@
 import javascriptGenerator from '$lib/javascript';
 import Blockly from "blockly/core";
-import {CheckBoxMutator, CheckMutatorType} from "$lib/utils/mutators";
+import {CheckMutatorType} from "$lib/utils/mutators";
+import type {BlockDefinition} from "$lib/interfaces";
+import {WarningType} from "$lib/interfaces/warnings";
+import {WarningMessages} from "../../data";
 
 //type for defining blocks easier to develop blocks
 export {
@@ -150,6 +153,49 @@ class BlocklyTool {
                 // return the %1 thing blockly wants
                 return "%" + idx;
             });
+            //block with type
+            let nBlock = block as BlockDefinition
+            let warningMessages;
+            let warnings; // it is  an object that stores objects and that object stores number 1 if its null then its empty
+            //parse warning list
+            if(nBlock.warnings) {
+                warnings = Object.create(null)
+                warningMessages = Object.create(null)
+                for (const warning of nBlock.warnings) {
+                    warningMessages[warning.type] = warning.message
+                    if(!warnings[warning.type]) {
+                        let wType = Object.create(null)
+                        switch (warning.type) {
+                            case WarningType.RequiredParent:
+                                if(Array.isArray(warning.parentType)) {
+                                    for (const wPt of warning.parentType) {
+                                        wType[wPt] = warning.message
+                                    }
+                                } else {
+                                    wType[warning.parentType] = warning.message
+                                }
+                                break;
+                        }
+                        warnings[warning.type] = wType
+                    }
+                    if(warnings[warning.type]) {
+                        let wType = warnings[warning.type]
+                        switch (warning.type) {
+                            case WarningType.RequiredParent:
+                                if(Array.isArray(warning.parentType)) {
+                                    for (const wPt of warning.parentType) {
+                                        wType[wPt] = warning.message
+                                    }
+                                } else {
+                                    wType[warning.parentType] = warning.message
+                                }
+                                break;
+                        }
+                        warnings[warning.type] = wType
+                    }
+                }
+            }
+
             // actually define the block
             Blockly.Blocks[`${idPrefix}${block.func}`] = {
                 init: function () {
@@ -186,7 +232,37 @@ class BlocklyTool {
                     if (block.color) {
                         this.setColour(block.color);
                     }
-                }
+                    if(nBlock.warnings) {
+                        this.setOnChange(function(changeEvent) {
+                            if (changeEvent.type === Blockly.Events.CHANGE && changeEvent.blockId === this.id) {
+                                var topMostParent = this.getRootBlock();
+                                let wtext = ""
+                                for (const key in warnings as {}) {
+                                    switch (key) {
+                                        case WarningType.RequiredParent:
+                                            if(!warnings[key][topMostParent.type]) {
+                                                if(!WarningMessages[key]) WarningMessages[key] = Object.create(null)
+                                                WarningMessages[key][this.id] = warningMessages[key]
+                                                wtext += warningMessages[key] + "\n"
+                                            } else {
+                                                if(WarningMessages[key][this.id]) delete WarningMessages[key][this.id]
+                                            }
+                                            break
+                                    }
+                                }
+                                if(wtext !== "") {
+                                    this.setWarningText(wtext)
+                                } else {
+                                    this.setWarningText(null)
+                                }
+                                wtext = ""
+
+                            }
+                        });
+                    }
+
+                },
+
             };
             // define JS gen
             javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (exportblock: Blockly.Block) {

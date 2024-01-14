@@ -66,6 +66,12 @@ const InputShape = {
         MESSAGE: "field_message"
     }
 }
+let EventsToTriggerWarnings = {
+    [Blockly.Events.CHANGE]: 0,
+    [Blockly.Events.MOVE]: 0,
+    [Blockly.Events.FINISHED_LOADING]: 0,
+    [Blockly.Events.CREATE]: 0
+};
 
 class BlocklyTool {
     // doesnt like that the BlockSet class is missing stuff
@@ -93,6 +99,8 @@ class BlocklyTool {
             if (!block.arguments) {
                 block.arguments = {};
             }
+
+
             const blockArguments = block.arguments;
             const rawArrayText: Array<string> = Array.isArray(block.text) ? block.text : [block.text];
             // each new line is an "input_dummy" argument
@@ -234,7 +242,15 @@ class BlocklyTool {
                     }
                     if(nBlock.warnings) {
                         this.setOnChange(function(changeEvent) {
-                            if (changeEvent.type === Blockly.Events.CHANGE && changeEvent.blockId === this.id) {
+                            //doesnt work and this functionality is handled in workspace.svelte file
+                            if(changeEvent.type === Blockly.Events.DELETE && changeEvent.blockId === this.id) {
+                                let id = this.id
+                                for (const key in warnings as {}) {
+                                    delete WarningMessages[key][id]
+                                }
+                                return
+                            }
+                            if (EventsToTriggerWarnings[changeEvent.type] === 0 && changeEvent.blockId === this.id) {
                                 var topMostParent = this.getRootBlock();
                                 let wtext = ""
                                 for (const key in warnings as {}) {
@@ -308,6 +324,7 @@ class BlocklyTool {
                 }
                 return returnValue;
             };
+
             CheckMutatorType(block, idPrefix)
         }
         // let blockName = "controls_if_test"

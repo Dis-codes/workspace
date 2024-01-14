@@ -26,6 +26,8 @@
     import * as prettierPluginEstree from "prettier/plugins/estree";
     import * as prettierPluginHtml from "prettier/plugins/html";
     import JSZip from "jszip";
+    import {WarningMessages} from "../../../data";
+    import {WarningType} from "$lib/interfaces/warnings";
 
     export let file = "index.dsc";
     export let event = undefined
@@ -46,6 +48,7 @@
         loadWorkspace();
     }
 }
+
 if (event){
     switch (event) {
         case "open":
@@ -55,7 +58,8 @@ if (event){
             saveWorkspace(file);
             break;
         case "export":
-            exportJS();
+            ShowBlockErrorDialog("showjs")
+            // exportJS();
             break;
         case "download":
             downloadFiles();
@@ -181,6 +185,7 @@ Blockly.ContextMenuRegistry.registry.register({
 
     async function copyCode() {
         navigator.clipboard.writeText(await generateCode());
+
     }
     function openExample(example: any){
         Blockly.serialization.workspaces.load(example, workspace);
@@ -288,10 +293,11 @@ function saveFile() {
         }
         return code;
     }
+
     async function exportJS() {
         generatedCode = await generateCode(file);
         const dialog:any = document.getElementById("showjs");
-        dialog.showModal();	
+        dialog.showModal();
     }
     async function downloadFiles() {
         await saveWorkspace(file);
@@ -337,9 +343,79 @@ function saveFile() {
             }
         }
     }
-    function WorkspaceThing() {
-
+    function CenterOnBlock(blockId: string) {
+        let dialog = document.getElementById("blockErrors") as HTMLDialogElement;
+        dialog.close()
+        workspace.centerOnBlock(blockId)
     }
+    interface ErrMsg {
+        type: string
+        msg: string
+    }
+    let errMessages: ErrMsg[] = []
+    let actionToPerform1: string;
+    function ShowBlockErrorDialog(actionToPerform: string) {
+        actionToPerform1 = actionToPerform
+        // Reset errList to a new dl element
+        errMessages = []
+        let wMsgKeys = Object.keys(WarningMessages);
+
+        for (const wType of wMsgKeys) {
+            let typeKeys = Object.keys(WarningMessages[wType]);
+
+            for (const blockId of typeKeys) { // Use "of" instead of "in" for array iteration
+                let msg = WarningMessages[wType][blockId];
+                if(msg !== undefined || wType !== "") {
+                    if(!workspace.getBlockById(blockId)) {
+                        delete WarningMessages[wType][blockId]
+                        continue
+                    }
+                    errMessages.push({
+                        type: blockId,
+                        msg: msg,
+                    })
+                }
+
+            }
+        }
+        if (errMessages.length === 0) {
+            switch (actionToPerform) {
+                case "showjs":
+                    exportJS();
+                    // Add logic for other actions when no errors found
+                    return
+                // Add more cases if needed
+
+            }
+        }
+        // Display the error dialog
+        let dialog = document.getElementById("blockErrors") as HTMLDialogElement;
+        dialog.showModal();
+
+        // Close the dialog when the continue button is clicked
+        document.getElementById("continueButton")?.addEventListener("click", function () {
+            dialog.close()
+            switch (actionToPerform) {
+                case "showjs":
+                    exportJS();
+                    // Add logic for other actions when continue button is clicked
+                    break;
+                // Add more cases if needed
+            }
+        });
+    }
+    function ErrorContinueButton(actionToPerform: string) {
+        let dialog = document.getElementById("blockErrors") as HTMLDialogElement;
+        dialog.close();
+        switch (actionToPerform) {
+            case "showjs":
+                exportJS();
+                // Add logic for other actions when continue button is clicked
+                break;
+            // Add more cases if needed
+        }
+    }
+
     //add delete unused blocks to context menu
     // Blockly.ContextMenuRegistry.registry.register({
     //     callback: deleteUnusedBlocks,
@@ -354,7 +430,23 @@ function saveFile() {
         <BlocklyComponent {config} locale={en} bind:workspace />
     </div>
 </div>
+    <dialog id="blockErrors" class="modal scroll">
+        <div class="modal-box max-w-full  h-full">
+            <h3 class="font-bold text-3xl text-center text-red-500">Your bot's code contains some errors!</h3>
+            <div id="listOfErrors"></div>
 
+            {#each errMessages as val (val.id)}
+                <div class="flex place-items-center ">
+                    <button class="btn" on:click={() => CenterOnBlock(val.type)}>Show the block with error</button>
+                    <div class="mr-2 text-red-500">{val.msg}</div>
+                </div>
+            {/each}
+            <button  on:click={() => ErrorContinueButton(actionToPerform1)} class="btn">Continue</button>
+            <form method="dialog">
+                <button class="btn">Close</button>
+            </form>
+        </div>
+    </dialog>
 <dialog id="alertEnv" class="modal">
     <div class="modal-box">
       <h3 class="font-bold text-3xl text-red-500">Your bot contains secrets!</h3>

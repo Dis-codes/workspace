@@ -28,6 +28,7 @@
     import JSZip from "jszip";
     import {WarningMessages} from "../../../data";
     import {WarningType} from "$lib/interfaces/warnings";
+    import {Warning} from "postcss";
 
     export let file = "index.dsc";
     export let event = undefined
@@ -62,7 +63,8 @@ if (event){
             // exportJS();
             break;
         case "download":
-            downloadFiles();
+            ShowBlockErrorDialog("download")
+            // downloadFiles();
             break;
         case "copy":
             copyCode();
@@ -350,39 +352,40 @@ function saveFile() {
     }
     interface ErrMsg {
         type: string
-        msg: string
+        msg: string[]
     }
     let errMessages: ErrMsg[] = []
+
     let actionToPerform1: string;
     function ShowBlockErrorDialog(actionToPerform: string) {
         actionToPerform1 = actionToPerform
-        // Reset errList to a new dl element
-        errMessages = []
         let wMsgKeys = Object.keys(WarningMessages);
 
-        for (const wType of wMsgKeys) {
-            let typeKeys = Object.keys(WarningMessages[wType]);
-
-            for (const blockId of typeKeys) { // Use "of" instead of "in" for array iteration
-                let msg = WarningMessages[wType][blockId];
-                if(msg !== undefined || wType !== "") {
-                    if(!workspace.getBlockById(blockId)) {
-                        delete WarningMessages[wType][blockId]
-                        continue
-                    }
-                    errMessages.push({
-                        type: blockId,
-                        msg: msg,
-                    })
-                }
-
+        // Reset errList to a new dl element
+        errMessages = []
+        for(const wType of wMsgKeys) {
+            if(!Blockly.getMainWorkspace().getBlockById(wType)) {
+                delete WarningMessages[wType]
+                continue
             }
+            let text: string[] = []
+            for(const errsKey of Object.keys(WarningMessages[wType])) {
+                text.push(WarningMessages[wType][errsKey])
+            }
+            errMessages.push({
+                type: wType,
+                msg: text
+            })
         }
+
         if (errMessages.length === 0) {
             switch (actionToPerform) {
                 case "showjs":
                     exportJS();
                     // Add logic for other actions when no errors found
+                    return
+                case "download":
+                    downloadFiles()
                     return
                 // Add more cases if needed
 
@@ -401,6 +404,9 @@ function saveFile() {
                     // Add logic for other actions when continue button is clicked
                     break;
                 // Add more cases if needed
+                case "download":
+                    downloadFiles()
+                    break
             }
         });
     }
@@ -412,6 +418,9 @@ function saveFile() {
                 exportJS();
                 // Add logic for other actions when continue button is clicked
                 break;
+            case "download":
+                downloadFiles()
+                break
             // Add more cases if needed
         }
     }
@@ -432,19 +441,30 @@ function saveFile() {
 </div>
     <dialog id="blockErrors" class="modal scroll">
         <div class="modal-box max-w-full  h-full">
-            <h3 class="font-bold text-3xl text-center text-red-500">Your bot's code contains some errors!</h3>
-            <div id="listOfErrors"></div>
-
-            {#each errMessages as val (val.id)}
-                <div class="flex place-items-center ">
-                    <button class="btn" on:click={() => CenterOnBlock(val.type)}>Show the block with error</button>
-                    <div class="mr-2 text-red-500">{val.msg}</div>
+            <h3 class="font-bold text-3xl text-center mb-5">Your bot's code contains some errors!</h3>
+            <div id="listOfErrors" class="overflow-y-scroll max-h-[67vh]">
+                <div class="grid place-items-center">
+                    {#each errMessages as val}
+                        <div class="flex place-items-center border-b-2 border-[#5d646e] mb-2">
+                            <div class="mr-2 text-red-500">
+                                {#each val.msg as msg}
+                                    {msg}
+                                    <br/>
+                                {/each}
+                            </div>
+                            <button class="btn mb-2" on:click={() => CenterOnBlock(val.type)}>Show block</button>
+                        </div>
+                    {/each}
                 </div>
-            {/each}
-            <button  on:click={() => ErrorContinueButton(actionToPerform1)} class="btn">Continue</button>
-            <form method="dialog">
-                <button class="btn">Close</button>
-            </form>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 p-5 bg-white-removed flex justify-center">
+                <button on:click={() => ErrorContinueButton(actionToPerform1)} class="btn btn-error mr-4">Proceed</button>
+                <form method="dialog" class="ml-4">
+                    <button class="btn btn-success">Close</button>
+                </form>
+            </div>
+
         </div>
     </dialog>
 <dialog id="alertEnv" class="modal">

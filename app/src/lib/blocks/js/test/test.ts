@@ -25,7 +25,7 @@ class TestBlocks {
                 },
                 {
                     func: "test_warning",
-                    text: "Warning parent",
+                    text: "Warning parent\n input: [INPUT]",
                     shape: BlockShape.STATEMENT,
                     warnings: [
                         {
@@ -33,10 +33,15 @@ class TestBlocks {
                             parentType: "coretest_testevent",
                             message: "this block belongs under test event block!"
                         },
+                        {
+                            type: WarningType.EmptyInput,
+                            inputName: "INPUT",
+                            message: "Input field is empty"
+                        },
                     ],
                     arguments: {
                         INPUT: {
-                            type: InputShape.CHECKBOX
+                            type: InputShape.VALUE
                         }
                     }
                 },

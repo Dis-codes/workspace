@@ -152,8 +152,6 @@ function FindBlockAndCenter() {
 </script>
 
 <div class="h-full w-full flex flex-col">
-    <button class="text-white" onclick="() => FindBlockAndCenter() ">Center on block</button>
-
 <div>
     <NavBar links={false}>
             <div class="flex flex-row gap-6 items-center">

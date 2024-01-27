@@ -4,6 +4,7 @@ import {CheckMutatorType} from "$lib/utils/mutators";
 import type {BlockDefinition} from "$lib/interfaces";
 import {WarningType} from "$lib/interfaces/warnings";
 import {WarningMessages} from "../../data";
+import {Warning} from "postcss";
 
 //type for defining blocks easier to develop blocks
 export {
@@ -70,7 +71,7 @@ let EventsToTriggerWarnings = {
     [Blockly.Events.CHANGE]: 0,
     [Blockly.Events.MOVE]: 0,
     [Blockly.Events.FINISHED_LOADING]: 0,
-    [Blockly.Events.CREATE]: 0
+    // [Blockly.Events.CREATE]: 0,
 };
 
 class BlocklyTool {
@@ -163,44 +164,33 @@ class BlocklyTool {
             });
             //block with type
             let nBlock = block as BlockDefinition
-            let warningMessages;
-            let warnings; // it is  an object that stores objects and that object stores number 1 if its null then its empty
-            //parse warning list
+
+            let fullId = `${idPrefix}${block.func}`
+            let warningsNew = Object.create(null)
             if(nBlock.warnings) {
-                warnings = Object.create(null)
-                warningMessages = Object.create(null)
+                warningsNew[fullId] = Object.create(null)
                 for (const warning of nBlock.warnings) {
-                    warningMessages[warning.type] = warning.message
-                    if(!warnings[warning.type]) {
-                        let wType = Object.create(null)
-                        switch (warning.type) {
-                            case WarningType.RequiredParent:
-                                if(Array.isArray(warning.parentType)) {
-                                    for (const wPt of warning.parentType) {
-                                        wType[wPt] = warning.message
-                                    }
-                                } else {
-                                    wType[warning.parentType] = warning.message
-                                }
-                                break;
-                        }
-                        warnings[warning.type] = wType
+                    let defaultType: string | string[] = ""
+                    let suffix = ""
+                    switch (warning.type) {
+                        case WarningType.RequiredParent:
+                            defaultType = warning.parentType
+                            suffix = "_rp"//required_parent all suffixes require to be 3 length
+                            break
+                        case WarningType.EmptyInput:
+                            defaultType = warning.inputName
+                            suffix = "_ri" //required_input all suffixes require to be 3 length
+                            break
                     }
-                    if(warnings[warning.type]) {
-                        let wType = warnings[warning.type]
-                        switch (warning.type) {
-                            case WarningType.RequiredParent:
-                                if(Array.isArray(warning.parentType)) {
-                                    for (const wPt of warning.parentType) {
-                                        wType[wPt] = warning.message
-                                    }
-                                } else {
-                                    wType[warning.parentType] = warning.message
-                                }
-                                break;
+                    if(Array.isArray(defaultType)) {
+                        for(const t of defaultType) {
+                            warningsNew[fullId][t+suffix.slice(suffix.length-3, suffix.length)] = warning.message
                         }
-                        warnings[warning.type] = wType
+                    } else {
+                        warningsNew[fullId][defaultType+suffix.slice(suffix.length-3, suffix.length)] = warning.message
+
                     }
+
                 }
             }
 
@@ -241,37 +231,63 @@ class BlocklyTool {
                         this.setColour(block.color);
                     }
                     if(nBlock.warnings) {
+                        let tBlock = this
+
                         this.setOnChange(function(changeEvent) {
-                            //doesnt work and this functionality is handled in workspace.svelte file
-                            if(changeEvent.type === Blockly.Events.DELETE && changeEvent.blockId === this.id) {
-                                let id = this.id
-                                for (const key in warnings as {}) {
-                                    delete WarningMessages[key][id]
-                                }
-                                return
-                            }
-                            if (EventsToTriggerWarnings[changeEvent.type] === 0 && changeEvent.blockId === this.id) {
+                            /*
+                            * when tab opens make the error not be added to WarningMessages
+                            *
+                            *
+                            *
+                            * */
+                            // if(changeEvent.type == "delete") {
+                            //     if(WarningMessages[changeEvent.blockId]) delete WarningMessages[changeEvent.blockId]
+                            // }
+
+                            if ((((EventsToTriggerWarnings[changeEvent.type] === 0 && changeEvent.blockId === this.id) || changeEvent.type == "change") && !this.isInFlyout)) {
+
                                 var topMostParent = this.getRootBlock();
-                                let wtext = ""
-                                for (const key in warnings as {}) {
-                                    switch (key) {
-                                        case WarningType.RequiredParent:
-                                            if(!warnings[key][topMostParent.type]) {
-                                                if(!WarningMessages[key]) WarningMessages[key] = Object.create(null)
-                                                WarningMessages[key][this.id] = warningMessages[key]
-                                                wtext += warningMessages[key] + "\n"
+                                // let wtext = ""
+                                let nwtext = ""
+                                for(const key in warningsNew[fullId]) {
+                                    if(!WarningMessages[this.id]) {
+                                        WarningMessages[this.id] = Object.create(null)
+                                    }
+                                    switch (key.slice(key.length-3, key.length)) {
+                                        case "_rp"://required parent suffix
+                                            let parent = key.slice(0, key.length-3)
+
+                                            if(topMostParent.type !== parent) {
+                                                nwtext += warningsNew[fullId][key] + "\n"
+                                                if(WarningMessages[this.id]) WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n"
                                             } else {
-                                                if(WarningMessages[key][this.id]) delete WarningMessages[key][this.id]
+                                                if(WarningMessages[this.id]) if(WarningMessages[this.id][key]) delete WarningMessages[this.id][key]
+                                            }
+                                            break
+                                        case "_ri"://required input suffix
+                                            let input = key.slice(0, key.length-3)
+                                            if(tBlock.getInput(input).connection.targetConnection === null) {
+                                                nwtext += warningsNew[fullId][key] + "\n"
+
+                                                if(WarningMessages[this.id]) WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n"
+
+                                            } else {
+                                                if(WarningMessages[this.id]) if(WarningMessages[this.id][key]) delete WarningMessages[this.id][key]
                                             }
                                             break
                                     }
                                 }
-                                if(wtext !== "") {
-                                    this.setWarningText(wtext)
-                                } else {
-                                    this.setWarningText(null)
+                                if(WarningMessages[this.id]) {
+                                    if(Object.keys(WarningMessages[this.id]).length === 0) delete WarningMessages[this.id]
                                 }
-                                wtext = ""
+                                console.log(WarningMessages)
+                                if(nwtext === "") {
+                                    nwtext= null
+                                }
+
+                                this.setWarningText(nwtext)
+                                nwtext = ""
+
 
                             }
                         });

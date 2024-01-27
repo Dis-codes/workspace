@@ -1,6 +1,10 @@
 import javascriptGenerator from '$lib/javascript';
 import Blockly from "blockly/core";
-import {CheckBoxMutator, CheckMutatorType} from "$lib/utils/mutators";
+import {CheckMutatorType} from "$lib/utils/mutators";
+import type {BlockDefinition} from "$lib/interfaces";
+import {WarningType} from "$lib/interfaces/warnings";
+import {WarningMessages} from "../../data";
+import {Warning} from "postcss";
 
 //type for defining blocks easier to develop blocks
 export {
@@ -63,6 +67,12 @@ const InputShape = {
         MESSAGE: "field_message"
     }
 }
+let EventsToTriggerWarnings = {
+    [Blockly.Events.CHANGE]: 0,
+    [Blockly.Events.MOVE]: 0,
+    [Blockly.Events.FINISHED_LOADING]: 0,
+    // [Blockly.Events.CREATE]: 0,
+};
 
 class BlocklyTool {
     // doesnt like that the BlockSet class is missing stuff
@@ -90,6 +100,8 @@ class BlocklyTool {
             if (!block.arguments) {
                 block.arguments = {};
             }
+
+
             const blockArguments = block.arguments;
             const rawArrayText: Array<string> = Array.isArray(block.text) ? block.text : [block.text];
             // each new line is an "input_dummy" argument
@@ -150,6 +162,38 @@ class BlocklyTool {
                 // return the %1 thing blockly wants
                 return "%" + idx;
             });
+            //block with type
+            let nBlock = block as BlockDefinition
+
+            let fullId = `${idPrefix}${block.func}`
+            let warningsNew = Object.create(null)
+            if(nBlock.warnings) {
+                warningsNew[fullId] = Object.create(null)
+                for (const warning of nBlock.warnings) {
+                    let defaultType: string | string[] = ""
+                    let suffix = ""
+                    switch (warning.type) {
+                        case WarningType.RequiredParent:
+                            defaultType = warning.parentType
+                            suffix = "_rp"//required_parent all suffixes require to be 3 length
+                            break
+                        case WarningType.EmptyInput:
+                            defaultType = warning.inputName
+                            suffix = "_ri" //required_input all suffixes require to be 3 length
+                            break
+                    }
+                    if(Array.isArray(defaultType)) {
+                        for(const t of defaultType) {
+                            warningsNew[fullId][t+suffix.slice(suffix.length-3, suffix.length)] = warning.message
+                        }
+                    } else {
+                        warningsNew[fullId][defaultType+suffix.slice(suffix.length-3, suffix.length)] = warning.message
+
+                    }
+
+                }
+            }
+
             // actually define the block
             Blockly.Blocks[`${idPrefix}${block.func}`] = {
                 init: function () {
@@ -186,7 +230,71 @@ class BlocklyTool {
                     if (block.color) {
                         this.setColour(block.color);
                     }
-                }
+                    if(nBlock.warnings) {
+                        let tBlock = this
+
+                        this.setOnChange(function(changeEvent) {
+                            /*
+                            * when tab opens make the error not be added to WarningMessages
+                            *
+                            *
+                            *
+                            * */
+                            // if(changeEvent.type == "delete") {
+                            //     if(WarningMessages[changeEvent.blockId]) delete WarningMessages[changeEvent.blockId]
+                            // }
+
+                            if ((((EventsToTriggerWarnings[changeEvent.type] === 0 && changeEvent.blockId === this.id) || changeEvent.type == "change") && !this.isInFlyout)) {
+
+                                var topMostParent = this.getRootBlock();
+                                // let wtext = ""
+                                let nwtext = ""
+                                for(const key in warningsNew[fullId]) {
+                                    if(!WarningMessages[this.id]) {
+                                        WarningMessages[this.id] = Object.create(null)
+                                    }
+                                    switch (key.slice(key.length-3, key.length)) {
+                                        case "_rp"://required parent suffix
+                                            let parent = key.slice(0, key.length-3)
+
+                                            if(topMostParent.type !== parent) {
+                                                nwtext += warningsNew[fullId][key] + "\n"
+                                                if(WarningMessages[this.id]) WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n"
+                                            } else {
+                                                if(WarningMessages[this.id]) if(WarningMessages[this.id][key]) delete WarningMessages[this.id][key]
+                                            }
+                                            break
+                                        case "_ri"://required input suffix
+                                            let input = key.slice(0, key.length-3)
+                                            if(tBlock.getInput(input).connection.targetConnection === null) {
+                                                nwtext += warningsNew[fullId][key] + "\n"
+
+                                                if(WarningMessages[this.id]) WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n"
+
+                                            } else {
+                                                if(WarningMessages[this.id]) if(WarningMessages[this.id][key]) delete WarningMessages[this.id][key]
+                                            }
+                                            break
+                                    }
+                                }
+                                if(WarningMessages[this.id]) {
+                                    if(Object.keys(WarningMessages[this.id]).length === 0) delete WarningMessages[this.id]
+                                }
+                                console.log(WarningMessages)
+                                if(nwtext === "") {
+                                    nwtext= null
+                                }
+
+                                this.setWarningText(nwtext)
+                                nwtext = ""
+
+
+                            }
+                        });
+                    }
+
+                },
+
             };
             // define JS gen
             javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (exportblock: Blockly.Block) {
@@ -232,6 +340,7 @@ class BlocklyTool {
                 }
                 return returnValue;
             };
+
             CheckMutatorType(block, idPrefix)
         }
         // let blockName = "controls_if_test"

@@ -25,7 +25,7 @@ function checkBotExists(){
         botexists.showModal()
     }
     else {
-        window.location.href = "editor/new"
+        window.location.href = "editor"
     }
 }
     </script>
@@ -89,7 +89,7 @@ function checkBotExists(){
             <p>You already have a bot <span class="font-bold">{$settings.settings.botName}</span> saved locally, are you sure you want to overwrite it?</p>
           <div class="modal-action">
             <form method="dialog">
-              <a class="btn btn-primary" href="editor/new">Yes, continue</a>
+              <a class="btn btn-primary" href="editor">Yes, continue</a>
               <button class="btn">Close</button>
             </form>
           </div>

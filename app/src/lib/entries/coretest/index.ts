@@ -2,6 +2,10 @@ export default
 [
     {
         kind: "block",
+        type: "coretest_test_warning"
+    },
+      {
+        kind: "block",
         type: "coretest_test_sec_mut"
     },
     {

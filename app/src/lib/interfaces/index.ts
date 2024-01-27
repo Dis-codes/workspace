@@ -1,6 +1,6 @@
 import Blockly from "blockly/core";
-
-
+import {MutatorType} from "$lib/interfaces/mutator";
+import {WarningData} from "./warnings"
 interface Register {
     id: string,
     color: number | string,
@@ -16,6 +16,7 @@ interface BlockDefinition {
     mutatorData?: MutatorData
     arguments?: { [k: string]: Argument };
     inline?: boolean
+    warnings: WarningData[]
 }
 interface Argument {
     type: string

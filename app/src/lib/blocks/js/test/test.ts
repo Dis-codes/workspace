@@ -3,6 +3,7 @@ import { OutputType, BlockShape, InputShape } from '../../../utils/blockRegistry
 import type {Register} from "../../../interfaces";
 import {MutatorType} from "$lib/interfaces/mutator";
 import Blockly from "blockly/core";
+import {WarningType} from "$lib/interfaces/warnings";
 
 class TestBlocks {
     /**
@@ -20,6 +21,28 @@ class TestBlocks {
                     arguments: {
                         INPUT: {
                             type: InputShape.CHECKBOX
+                        }
+                    }
+                },
+                {
+                    func: "test_warning",
+                    text: "Warning parent\n input: [INPUT]",
+                    shape: BlockShape.STATEMENT,
+                    warnings: [
+                        {
+                            type: WarningType.RequiredParent,
+                            parentType: "coretest_testevent",
+                            message: "this block belongs under test event block!"
+                        },
+                        {
+                            type: WarningType.EmptyInput,
+                            inputName: "INPUT",
+                            message: "Input field is empty"
+                        },
+                    ],
+                    arguments: {
+                        INPUT: {
+                            type: InputShape.VALUE
                         }
                     }
                 },
@@ -156,9 +179,11 @@ class TestBlocks {
             ]
         } as Register;
     }
-
     test_sec_mut(args: any) {
         return `${args.TITLE}`
+    }
+    test_warning(args: any) {
+        return "console.log('warning lol')"
     }
     test_mainblock(args: any) {
         return `${args.Description};` // both of these work

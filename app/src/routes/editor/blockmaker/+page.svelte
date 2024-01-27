@@ -194,7 +194,6 @@ ${arguments_block.length == 0 ? "" : (
     }`
     )}
 }`
-console.log((generatedBlock))
         BlockRegistryTool.registerFromBlockset(new Block());
         workspace.updateToolbox(toolbox);
     }

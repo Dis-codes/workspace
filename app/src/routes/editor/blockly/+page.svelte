@@ -3,6 +3,8 @@
     import Workspace from "./workspace.svelte";
     import {persisted} from "$lib/localstorage";
     import SettingsTab from "./SettingsTab.svelte";
+    import {WarningMessages} from "../../../data";
+    import {WarningType} from "$lib/interfaces/warnings";
     let settings = persisted('workspace')
     let sidebarOpen = true;
     let files = ["index.dsc"]; // Array of file names
@@ -102,6 +104,7 @@
     }
     input.click();
   }
+
 async function replaceWorkspace() {
   const input = document.createElement('input');
   input.type = 'file';
@@ -138,6 +141,13 @@ function setPage(pageName) {
 function setEvent(eventName) {
   if (event === eventName) event = undefined
   event = eventName
+}
+function FindBlockAndCenter() {
+        let d = WarningMessages[WarningType.RequiredParent]
+    let id = ""
+    for (const dKey in d) {
+        id = d
+    }
 }
 </script>
 

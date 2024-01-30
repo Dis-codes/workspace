@@ -33,10 +33,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.10.2",
-		"@supabase/auth-ui-shared": "^0.1.6",
-		"@supabase/auth-ui-svelte": "^0.2.2",
-		"@supabase/supabase-js": "^2.32.0",
 		"blockly": "^10.1.2",
 		"discodes-utilities": "^1.0.3",
 		"jszip": "^3.10.1",

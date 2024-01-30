@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Account from "./Account.svelte";
+	// import Account from "./Account.svelte";
 	import { user } from "$lib/userStore";
 	let searchContent = "";
 	export let links: boolean = true;
@@ -77,7 +77,7 @@
 	<div class="flex-none">
 		{#if $user}
 			<a class="btn btn-ghost normal-case" href="https://www.discodes.xyz/dashboard">Dashboard</a>
-			<Account />
+			<!-- <Account /> -->
 		{:else}
 			<!-- <a class="btn btn-ghost normal-case" href="/login">Log In</a> -->
 		{/if}

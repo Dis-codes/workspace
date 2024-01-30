@@ -1,4 +1,6 @@
-<script lang="ts">
+<!-- ! DEPREC -->
+
+<!-- <script lang="ts">
 	import LogOutModal from "./LogOutModal.svelte";
 	import { user } from "../userStore";
 
@@ -45,4 +47,4 @@
 		<li class="dropdown-divider" />
 		<LogOutModal />
 	</ul>
-</details>
+</details> -->

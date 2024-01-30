@@ -1,4 +1,6 @@
-<script lang="ts">
+<!-- ! DEPREC -->
+
+<!-- <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { user } from "$lib/userStore";
 	import { onMount } from "svelte";
@@ -8,4 +10,4 @@
 	<slot />
 {:else}
 	{onMount(() => goto("/login"))}
-{/if}
+{/if} -->

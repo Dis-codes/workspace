@@ -102,7 +102,7 @@ class VariablesBlocks {
 	}
 
 	change_variable(args: any) {
-		let newName = args.NAME.replace(/'/g, "");
+		const newName = args.NAME.replace(/'/g, "");
 		switch (args.CHANGE) {
 			case "add":
 				return `${newName} += ${args.VALUE}\n`;

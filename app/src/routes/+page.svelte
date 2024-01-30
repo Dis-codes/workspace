@@ -35,7 +35,7 @@
 		<h2 class="text-4xl font-bold">Home</h2>
 		<div class="flex flex-col gap-4 mt-6">
 			<button on:click={checkBotExists} class="btn btn-wide btn-primary">Create a new bot</button>
-			<a href="editor/blockly?open=true" class="btn btn-wide btn-secondary">Open file</a>
+			<a href="editor?open=true" class="btn btn-wide btn-secondary">Open file</a>
 		</div>
 		<div class="mt-20 mb-2">
 			<h3 class="text-xl">Recent</h3>

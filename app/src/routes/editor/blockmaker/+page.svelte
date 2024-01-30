@@ -1,21 +1,14 @@
 <script lang="ts">
+	import { NavBar } from "$lib/components/Components";
 	import { onMount } from "svelte";
-	import { NavBar, AuthCheck } from "$lib/components/Components";
 
-	export let data;
-	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
-
-	import Blockly from "blockly/core";
-	import En from "blockly/msg/en";
-	import { BlocklyTool } from "$lib/utils/blockRegistryTool";
-	const BlockRegistryTool = new BlocklyTool();
 	import BlocklyComponent from "$lib/components/Blockly.svelte";
-	import type { Abstract } from "blockly/core/events/events_abstract";
 	import javascriptGenerator from "$lib/javascript.js";
+	import Blockly from "blockly/core";
+	import type { Abstract } from "blockly/core/events/events_abstract";
+	import En from "blockly/msg/en";
 
-	import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
-	import { json } from "@sveltejs/kit";
+	import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 	const DarkTheme = Blockly.Theme.defineTheme("a", {
 		name: "true_dark",

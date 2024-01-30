@@ -1,31 +1,25 @@
 <script lang="ts">
 	//Components
-	import { onMount } from "svelte";
 	import { persisted } from "$lib/localstorage";
-	import { svgToPng_, workspaceToSvg_ } from "./workspaceImage";
-	// Supabase - sync session
-	// export let data;
-	// let { supabase, session } = data;
-	// $: ({ supabase, session } = data);
-
+	import { onMount } from "svelte";
+	import { workspaceToSvg_ } from "./workspaceImage";
 	// Blockly
 	import "blockly/blocks";
 
 	import BlocklyComponent from "$lib/components/Blockly.svelte";
-	import type { Abstract } from "blockly/core/events/events_abstract";
-	import javascriptGenerator from "$lib/javascript.js";
-	import { packageJson, indexJs } from "$lib/components/defaults";
-	import { en, Blockly, config } from "$lib/components/defaultWorkspace";
-	import "./blockRegister";
+	import { Blockly, config, en } from "$lib/components/defaultWorkspace";
+	import { indexJs, packageJson } from "$lib/components/defaults";
 	import { test } from "$lib/components/examples";
-
+	import javascriptGenerator from "$lib/javascript.js";
+	import type { Abstract } from "blockly/core/events/events_abstract";
+	import "./blockRegister";
 	// better code export
-	import Prism from "prismjs";
+	import JSZip from "jszip";
 	import * as prettier from "prettier";
 	import * as prettierPluginBabel from "prettier/plugins/babel";
 	import * as prettierPluginEstree from "prettier/plugins/estree";
 	import * as prettierPluginHtml from "prettier/plugins/html";
-	import JSZip from "jszip";
+	import Prism from "prismjs";
 
 	export let file = "index.dsc";
 	export let event = undefined;

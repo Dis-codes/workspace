@@ -3,12 +3,12 @@ import { MutatorType } from "$lib/interfaces/mutator";
 import Blockly from "blockly/core";
 
 export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
-	let blockFields: string[] = [];
-	let blockTypes: string[] = [];
+	const blockFields: string[] = [];
+	const blockTypes: string[] = [];
 
-	let blockFieldNames: string[] = [];
-	let blockInputs: boolean[] = [];
-	let inputsData: MutatorInput[] = [];
+	const blockFieldNames: string[] = [];
+	const blockInputs: boolean[] = [];
+	const inputsData: MutatorInput[] = [];
 
 	for (const input of blockData.mutatorData?.inputs as MutatorInput[]) {
 		blockFields.push(input.text);
@@ -139,7 +139,7 @@ export function BlockListMutator(blockData: BlockDefinition, id: string) {
 			}
 		};
 	}
-	let blockIds = [];
+	const blockIds = [];
 	if (blockData.mutatorData?.inputs.length !== 0) {
 		for (const input of blockData.mutatorData?.inputs) {
 			blockIds.push(input.blockId);
@@ -174,7 +174,7 @@ export function BlockListMutator(blockData: BlockDefinition, id: string) {
 				} else {
 					containerBlock = workspace.newBlock(blockData.mutatorData?.blockType);
 				}
-				let connection = containerBlock.nextConnection!;
+				const connection = containerBlock.nextConnection!;
 				const elseifBlock = workspace.newBlock("controls_if_elseif");
 				elseifBlock.initSvg();
 				connection.connect(elseifBlock.previousConnection!);

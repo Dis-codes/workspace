@@ -59,7 +59,7 @@ const InputShape = {
 		MESSAGE: "field_message"
 	}
 };
-let EventsToTriggerWarnings = {
+const EventsToTriggerWarnings = {
 	[Blockly.Events.CHANGE]: 0,
 	[Blockly.Events.MOVE]: 0,
 	[Blockly.Events.FINISHED_LOADING]: 0
@@ -154,10 +154,10 @@ class BlocklyTool {
 				return "%" + idx;
 			});
 			//block with type
-			let nBlock = block as BlockDefinition;
+			const nBlock = block as BlockDefinition;
 
-			let fullId = `${idPrefix}${block.func}`;
-			let warningsNew = Object.create(null);
+			const fullId = `${idPrefix}${block.func}`;
+			const warningsNew = Object.create(null);
 			if (nBlock.warnings) {
 				warningsNew[fullId] = Object.create(null);
 				for (const warning of nBlock.warnings) {
@@ -222,7 +222,7 @@ class BlocklyTool {
 						this.setColour(block.color);
 					}
 					if (nBlock.warnings) {
-						let tBlock = this;
+						const tBlock = this;
 
 						this.setOnChange(function (changeEvent) {
 							/*
@@ -241,7 +241,7 @@ class BlocklyTool {
 									changeEvent.type == "change") &&
 								!this.isInFlyout
 							) {
-								var topMostParent = this.getRootBlock();
+								const topMostParent = this.getRootBlock();
 								// let wtext = ""
 								let nwtext = "";
 								for (const key in warningsNew[fullId]) {
@@ -250,7 +250,7 @@ class BlocklyTool {
 									}
 									switch (key.slice(key.length - 3, key.length)) {
 										case "_rp": //required parent suffix
-											let parent = key.slice(0, key.length - 3);
+											const parent = key.slice(0, key.length - 3);
 
 											if (topMostParent.type !== parent) {
 												nwtext += warningsNew[fullId][key] + "\n";
@@ -262,7 +262,7 @@ class BlocklyTool {
 											}
 											break;
 										case "_ri": //required input suffix
-											let input = key.slice(0, key.length - 3);
+											const input = key.slice(0, key.length - 3);
 											if (tBlock.getInput(input).connection.targetConnection === null) {
 												nwtext += warningsNew[fullId][key] + "\n";
 
@@ -324,17 +324,17 @@ class BlocklyTool {
 
 				if (exportblock.fields_.length !== 0) {
 					for (const field of (exportblock as any).fields_ as string[]) {
-						let input = exportblock.getInput(field);
+						const input = exportblock.getInput(field);
 						if (input) {
 							if (input.type === 3) {
 								// 3 is statement type
-								let val = javascriptGenerator.statementToCode(exportblock, field);
+								const val = javascriptGenerator.statementToCode(exportblock, field);
 								args[field] = val.slice(1, val.length - 1);
 								args[field.toUpperCase()] = val.slice(1, val.length - 1);
 								continue;
 							}
 
-							let val = javascriptGenerator.valueToCode(
+							const val = javascriptGenerator.valueToCode(
 								exportblock,
 								field,
 								javascriptGenerator.ORDER_ATOMIC

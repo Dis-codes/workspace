@@ -1,37 +1,37 @@
 export default [
 	{
-		kind: 'block',
-		type: 'requests_request',
+		kind: "block",
+		type: "requests_request",
 		inputs: {
 			URL: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'https://example.com'
+						TEXT: "https://example.com"
 					}
 				}
 			},
 			BRANCH1: {
 				block: {
-					kind: 'block',
-					type: 'requests_header',
+					kind: "block",
+					type: "requests_header",
 					inputs: {
 						NAME: {
 							shadow: {
-								kind: 'block',
-								type: 'text',
+								kind: "block",
+								type: "text",
 								fields: {
-									TEXT: 'content-type'
+									TEXT: "content-type"
 								}
 							}
 						},
 						VALUE: {
 							shadow: {
-								kind: 'block',
-								type: 'text',
+								kind: "block",
+								type: "text",
 								fields: {
-									TEXT: 'application/json'
+									TEXT: "application/json"
 								}
 							}
 						}
@@ -40,29 +40,29 @@ export default [
 			},
 			BRANCH2: {
 				block: {
-					kind: 'block',
-					type: 'requests_body',
+					kind: "block",
+					type: "requests_body",
 					inputs: {
 						BRANCH1: {
 							block: {
-								kind: 'block',
-								type: 'requests_body_data',
+								kind: "block",
+								type: "requests_body_data",
 								inputs: {
 									NAME: {
 										shadow: {
-											kind: 'block',
-											type: 'text',
+											kind: "block",
+											type: "text",
 											fields: {
-												TEXT: 'key'
+												TEXT: "key"
 											}
 										}
 									},
 									VALUE: {
 										shadow: {
-											kind: 'block',
-											type: 'text',
+											kind: "block",
+											type: "text",
 											fields: {
-												TEXT: 'value'
+												TEXT: "value"
 											}
 										}
 									}
@@ -74,13 +74,13 @@ export default [
 			},
 			BRANCH3: {
 				block: {
-					kind: 'block',
-					type: 'terminal_log',
+					kind: "block",
+					type: "terminal_log",
 					inputs: {
 						TEXT: {
 							block: {
-								kind: 'block',
-								type: 'requests_all'
+								kind: "block",
+								type: "requests_all"
 							}
 						}
 					}
@@ -88,13 +88,13 @@ export default [
 			},
 			BRANCH4: {
 				block: {
-					kind: 'block',
-					type: 'terminal_log',
+					kind: "block",
+					type: "terminal_log",
 					inputs: {
 						TEXT: {
 							block: {
-								kind: 'block',
-								type: 'terminal_error'
+								kind: "block",
+								type: "terminal_error"
 							}
 						}
 					}
@@ -103,27 +103,27 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'requests_header'
+		kind: "block",
+		type: "requests_header"
 	},
 	{
-		kind: 'block',
-		type: 'requests_body'
+		kind: "block",
+		type: "requests_body"
 	},
 	{
-		kind: 'block',
-		type: 'requests_body_data'
+		kind: "block",
+		type: "requests_body_data"
 	},
 	{
-		kind: 'block',
-		type: 'requests_response'
+		kind: "block",
+		type: "requests_response"
 	},
 	{
-		kind: 'block',
-		type: 'requests_response_status'
+		kind: "block",
+		type: "requests_response_status"
 	},
 	{
-		kind: 'block',
-		type: 'requests_all'
+		kind: "block",
+		type: "requests_all"
 	}
 ];

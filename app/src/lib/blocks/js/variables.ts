@@ -1,23 +1,23 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class VariablesBlocks {
 	getRegistry() {
 		return {
-			id: 'variables',
-			color: '%{BKY_VARIABLES_HUE}',
+			id: "variables",
+			color: "%{BKY_VARIABLES_HUE}",
 			blocks: [
 				{
-					func: 'variable',
-					text: '[VARIABLE] [NAME] = [VALUE]',
+					func: "variable",
+					text: "[VARIABLE] [NAME] = [VALUE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
 						VARIABLE: {
 							type: InputShape.MENU,
 							options: [
-								['const', 'const'],
-								['let', 'let'],
-								['var', 'var']
+								["const", "const"],
+								["let", "let"],
+								["var", "var"]
 							]
 						},
 						NAME: {
@@ -30,17 +30,17 @@ class VariablesBlocks {
 					}
 				},
 				{
-					func: 'floatingvariable',
-					text: '[VARIABLE] [NAME] = [VALUE]',
+					func: "floatingvariable",
+					text: "[VARIABLE] [NAME] = [VALUE]",
 					shape: BlockShape.FLOATING,
 					inline: true,
 					arguments: {
 						VARIABLE: {
 							type: InputShape.MENU,
 							options: [
-								['const', 'const'],
-								['let', 'let'],
-								['var', 'var']
+								["const", "const"],
+								["let", "let"],
+								["var", "var"]
 							]
 						},
 						NAME: {
@@ -53,8 +53,8 @@ class VariablesBlocks {
 					}
 				},
 				{
-					func: 'get_variable',
-					text: '‎‎‎ [NAME] ‎‎‎',
+					func: "get_variable",
+					text: "‎‎‎ [NAME] ‎‎‎",
 					output: OutputType.ANY,
 					arguments: {
 						NAME: {
@@ -63,19 +63,19 @@ class VariablesBlocks {
 					}
 				},
 				{
-					func: 'change_variable',
-					text: 'change [NAME] [CHANGE] [VALUE]',
+					func: "change_variable",
+					text: "change [NAME] [CHANGE] [VALUE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
 						CHANGE: {
 							type: InputShape.MENU,
 							options: [
-								['add', 'add'],
-								['subtract', 'subtract'],
-								['multiply by', 'multiply'],
-								['divide by', 'divide'],
-								['set to', 'set']
+								["add", "add"],
+								["subtract", "subtract"],
+								["multiply by", "multiply"],
+								["divide by", "divide"],
+								["set to", "set"]
 							]
 						},
 						NAME: {
@@ -92,30 +92,30 @@ class VariablesBlocks {
 	}
 
 	variable(args: any) {
-		return `${args.VARIABLE} ${args.NAME.replace(/'/g, '')} = ${args.VALUE}\n`;
+		return `${args.VARIABLE} ${args.NAME.replace(/'/g, "")} = ${args.VALUE}\n`;
 	}
 	floatingvariable(args: any) {
-		return `${args.VARIABLE} ${args.NAME.replace(/'/g, '')} = ${args.VALUE}`;
+		return `${args.VARIABLE} ${args.NAME.replace(/'/g, "")} = ${args.VALUE}`;
 	}
 	get_variable(args: any) {
 		return `${args.NAME}`;
 	}
 
 	change_variable(args: any) {
-		let newName = args.NAME.replace(/'/g, '');
+		let newName = args.NAME.replace(/'/g, "");
 		switch (args.CHANGE) {
-			case 'add':
+			case "add":
 				return `${newName} += ${args.VALUE}\n`;
-			case 'subtract':
+			case "subtract":
 				return `${newName} -= ${args.VALUE}\n`;
-			case 'multiply':
+			case "multiply":
 				return `${newName} *= ${args.VALUE}\n`;
-			case 'divide':
+			case "divide":
 				return `${newName} /= ${args.VALUE}\n`;
-			case 'set':
+			case "set":
 				return `${newName} = ${args.VALUE}\n`;
 			default:
-				return '';
+				return "";
 		}
 	}
 }

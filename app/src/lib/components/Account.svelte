@@ -1,9 +1,9 @@
 <script lang="ts">
-	import LogOutModal from './LogOutModal.svelte';
-	import { user } from '../userStore';
+	import LogOutModal from "./LogOutModal.svelte";
+	import { user } from "../userStore";
 
-	import { GetUserRoles } from '$lib/utils/utils';
-	import { onMount } from 'svelte';
+	import { GetUserRoles } from "$lib/utils/utils";
+	import { onMount } from "svelte";
 	let notificationCount = 2;
 </script>
 
@@ -11,7 +11,7 @@
 	<summary class="m-1 btn btn-square btn-circle">
 		<img
 			src={$user?.user_metadata?.avatar_url}
-			alt={'Profile Picture of ' + ($user ? $user.user_metadata.full_name : 'User')}
+			alt={"Profile Picture of " + ($user ? $user.user_metadata.full_name : "User")}
 			class="h-full w-full rounded-full"
 		/>
 	</summary>

@@ -1,12 +1,12 @@
 export default [
 	{
-		kind: 'block',
-		type: 'controls_repeat_ext',
+		kind: "block",
+		type: "controls_repeat_ext",
 		inputs: {
 			TIMES: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 10
 					}
@@ -15,13 +15,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'controls_whileUntil',
+		kind: "block",
+		type: "controls_whileUntil",
 		inputs: {
 			BOOL: {
 				shadow: {
-					kind: 'block',
-					type: 'logic_boolean',
+					kind: "block",
+					type: "logic_boolean",
 					fields: {
 						BOOL: true
 					}
@@ -30,12 +30,12 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'controls_for',
+		kind: "block",
+		type: "controls_for",
 		inputs: {
 			FROM: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -43,7 +43,7 @@ export default [
 			},
 			TO: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 10
 					}
@@ -51,7 +51,7 @@ export default [
 			},
 			BY: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -60,11 +60,11 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'controls_forEach'
+		kind: "block",
+		type: "controls_forEach"
 	},
 	{
-		kind: 'block',
-		type: 'controls_flow_statements'
+		kind: "block",
+		type: "controls_flow_statements"
 	}
 ];

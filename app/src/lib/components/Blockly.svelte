@@ -19,8 +19,8 @@
 </script>
 
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
-	import Blockly from 'blockly/core.js';
+	import { createEventDispatcher } from "svelte";
+	import Blockly from "blockly/core.js";
 
 	export let config: Blockly.BlocklyOptions = {};
 	export let locale: Locale;
@@ -67,7 +67,7 @@
 			}
 
 			workspace.addChangeListener(() => {
-				dispatch('change');
+				dispatch("change");
 			});
 
 			// Disable unconnected blocks

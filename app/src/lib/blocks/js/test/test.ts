@@ -1,8 +1,8 @@
-import { MutatorType } from '$lib/interfaces/mutator';
-import { WarningType } from '$lib/interfaces/warnings';
-import javascriptGenerator from '$lib/javascript';
-import type { Register } from '../../../interfaces';
-import { BlockShape, InputShape, OutputType } from '../../../utils/blockRegistryTool';
+import { MutatorType } from "$lib/interfaces/mutator";
+import { WarningType } from "$lib/interfaces/warnings";
+import javascriptGenerator from "$lib/javascript";
+import type { Register } from "../../../interfaces";
+import { BlockShape, InputShape, OutputType } from "../../../utils/blockRegistryTool";
 
 class TestBlocks {
 	/**
@@ -11,12 +11,12 @@ class TestBlocks {
 	getRegistry() {
 		//! FIX THE ERROR BELOW ASAP
 		return {
-			id: 'coretest',
+			id: "coretest",
 			color: 60,
 			blocks: [
 				{
-					func: 'mutator_mutator',
-					text: 'test_block\n Bozo: [INPUT]',
+					func: "mutator_mutator",
+					text: "test_block\n Bozo: [INPUT]",
 					shape: BlockShape.EVENT,
 					arguments: {
 						INPUT: {
@@ -25,19 +25,19 @@ class TestBlocks {
 					}
 				},
 				{
-					func: 'test_warning',
-					text: 'Warning parent\n input: [INPUT]',
+					func: "test_warning",
+					text: "Warning parent\n input: [INPUT]",
 					shape: BlockShape.STATEMENT,
 					warnings: [
 						{
 							type: WarningType.RequiredParent,
-							parentType: 'coretest_testevent',
-							message: 'this block belongs under test event block!'
+							parentType: "coretest_testevent",
+							message: "this block belongs under test event block!"
 						},
 						{
 							type: WarningType.EmptyInput,
-							inputName: 'INPUT',
-							message: 'Input field is empty'
+							inputName: "INPUT",
+							message: "Input field is empty"
 						}
 					],
 					arguments: {
@@ -47,25 +47,25 @@ class TestBlocks {
 					}
 				},
 				{
-					func: 'test_mainblock',
-					text: 'advanced mutator',
-					mutator: 'test_mainblock_mutator',
+					func: "test_mainblock",
+					text: "advanced mutator",
+					mutator: "test_mainblock_mutator",
 					mutatorData: {
 						type: MutatorType.CheckBox,
 						inputs: [
 							{
-								text: 'Title', // text for input text
+								text: "Title", // text for input text
 
-								inputName: 'Title',
+								inputName: "Title",
 
 								type: OutputType.STRING, // type for input added to the main block
 								defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
 								branch: true
 							},
 							{
-								text: 'Description',
+								text: "Description",
 
-								inputName: '', // leaving this empty will use text as inputName
+								inputName: "", // leaving this empty will use text as inputName
 
 								type: OutputType.STRING,
 								defaultValue: false
@@ -75,8 +75,8 @@ class TestBlocks {
 					shape: BlockShape.EVENT
 				},
 				{
-					func: 'test_sec_mut',
-					text: 'statement not imp',
+					func: "test_sec_mut",
+					text: "statement not imp",
 					// mutator: "test_sec_mut_mutator",
 					// mutatorData: {
 					//     type: MutatorType.BlockList,
@@ -110,35 +110,35 @@ class TestBlocks {
 					shape: BlockShape.EVENT
 				},
 				{
-					func: 'teststatement',
-					text: 'statement block',
+					func: "teststatement",
+					text: "statement block",
 					shape: BlockShape.STATEMENT
 				},
 				{
-					func: 'testoutput',
-					text: 'output string block',
+					func: "testoutput",
+					text: "output string block",
 					output: OutputType.STRING
 				},
 				{
-					func: 'testevent',
-					text: 'event\n',
+					func: "testevent",
+					text: "event\n",
 					shape: BlockShape.EVENT,
 					branches: 1
 				},
 				{
-					func: 'testbranch',
-					text: ['branch\n', 'with more stuff\n', 'and text here'],
+					func: "testbranch",
+					text: ["branch\n", "with more stuff\n", "and text here"],
 					shape: BlockShape.STATEMENT,
 					branches: 2
 				},
 				{
-					func: 'testterminal',
-					text: 'terminal block',
+					func: "testterminal",
+					text: "terminal block",
 					shape: BlockShape.TERMINAL
 				},
 				{
-					func: 'testinput',
-					text: 'block with an [INPUT]',
+					func: "testinput",
+					text: "block with an [INPUT]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						INPUT: {
@@ -147,27 +147,27 @@ class TestBlocks {
 					}
 				},
 				{
-					func: 'testfield',
-					text: 'block with a [FIELD] and an [IMAGE]',
+					func: "testfield",
+					text: "block with a [FIELD] and an [IMAGE]",
 					output: OutputType.STRING,
 					arguments: {
 						FIELD: {
 							type: InputShape.TEXT,
-							text: 'field',
+							text: "field",
 							spellcheck: true
 						},
 						IMAGE: {
 							type: InputShape.IMAGE,
-							src: 'https://www.discodes.xyz/Images/favicon1.png',
+							src: "https://www.discodes.xyz/Images/favicon1.png",
 							width: 32,
 							height: 32,
-							alt: 'logo'
+							alt: "logo"
 						}
 					}
 				},
 				{
-					func: 'testnontupleoutput',
-					text: 'output string block (returns non-tuple)',
+					func: "testnontupleoutput",
+					text: "output string block (returns non-tuple)",
 					output: OutputType.STRING
 				}
 			]
@@ -183,7 +183,7 @@ class TestBlocks {
 		return `${args.Description};`; // both of these work
 	}
 	teststatement() {
-		return 'void;';
+		return "void;";
 	}
 	testoutput() {
 		return ['"abc"', javascriptGenerator.ORDER_NONE];

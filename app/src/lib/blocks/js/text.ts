@@ -1,14 +1,14 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class TextBlocks {
 	getRegistry() {
 		return {
-			id: 'text',
-			color: '%{BKY_TEXTS_HUE}',
+			id: "text",
+			color: "%{BKY_TEXTS_HUE}",
 			blocks: [
 				{
-					func: 'startsEndsWith',
-					text: '[TEXT] [OPTION] [OTHERTEXT]',
+					func: "startsEndsWith",
+					text: "[TEXT] [OPTION] [OTHERTEXT]",
 					output: OutputType.BOOLEAN,
 					inline: true,
 					arguments: {
@@ -19,9 +19,9 @@ class TextBlocks {
 						OPTION: {
 							type: InputShape.MENU,
 							options: [
-								['starts with', 'startsWith'],
-								['ends with', 'endsWith'],
-								['includes', 'includes']
+								["starts with", "startsWith"],
+								["ends with", "endsWith"],
+								["includes", "includes"]
 							]
 						},
 						OTHERTEXT: {
@@ -31,13 +31,13 @@ class TextBlocks {
 					}
 				},
 				{
-					func: 'newline',
-					text: 'new line',
+					func: "newline",
+					text: "new line",
 					output: OutputType.STRING
 				},
 				{
-					func: 'containsNumber',
-					text: '[TEXT] contains numbers ?',
+					func: "containsNumber",
+					text: "[TEXT] contains numbers ?",
 					output: OutputType.BOOLEAN,
 					inline: true,
 					arguments: {
@@ -48,8 +48,8 @@ class TextBlocks {
 					}
 				},
 				{
-					func: 'forEach',
-					text: 'for each [SELECT] in [TEXT]',
+					func: "forEach",
+					text: "for each [SELECT] in [TEXT]",
 					shape: BlockShape.STATEMENT,
 					branches: 1,
 					inline: true,
@@ -61,23 +61,23 @@ class TextBlocks {
 						SELECT: {
 							type: InputShape.MENU,
 							options: [
-								['character', 'char'],
-								['word', 'word']
+								["character", "char"],
+								["word", "word"]
 							]
 						}
 					}
 				},
 				{
-					func: 'character',
-					text: '[SELECT]',
+					func: "character",
+					text: "[SELECT]",
 					output: OutputType.STRING,
 					inline: true,
 					arguments: {
 						SELECT: {
 							type: InputShape.MENU,
 							options: [
-								['character', 'char'],
-								['word', 'word']
+								["character", "char"],
+								["word", "word"]
 							]
 						}
 					}
@@ -100,23 +100,23 @@ class TextBlocks {
 
 	forEach(args: any) {
 		switch (args.SELECT) {
-			case 'char':
+			case "char":
 				return `for (let char_i = 0; char_i < String(${args.TEXT}).length; char_i++){\nlet char_i_char = String(${args.TEXT})[char_i] ${args.BRANCH1}}`;
-			case 'word':
+			case "word":
 				return `for (let word_i = 0; word_i < String(${args.TEXT}).split(' ').length; word_i++){\nlet word_i_word = String(${args.TEXT}).split(' ')[word_i] ${args.BRANCH1}}}`;
 			default:
-				return '';
+				return "";
 		}
 	}
 
 	character(args: any) {
 		switch (args.SELECT) {
-			case 'char':
+			case "char":
 				return `char_i_char`;
-			case 'word':
+			case "word":
 				return `word_i_word`;
 			default:
-				return '';
+				return "";
 		}
 	}
 }

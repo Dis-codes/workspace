@@ -1,15 +1,15 @@
 <script lang="ts">
-	import '../app.css';
-	import { invalidate } from '$app/navigation';
-	import { onMount } from 'svelte';
-	import { user } from '$lib/userStore';
-	import { page } from '$app/stores';
+	import "../app.css";
+	import { invalidate } from "$app/navigation";
+	import { onMount } from "svelte";
+	import { user } from "$lib/userStore";
+	import { page } from "$app/stores";
 
-	import RoleCheck from '$lib/components/RoleCheck.svelte';
+	import RoleCheck from "$lib/components/RoleCheck.svelte";
 
 	// export let data
 	export let isDev = true; //import.meta.env.DEV
-	const allowedUrls: Array<string> = ['/errors/permission', '/'];
+	const allowedUrls: Array<string> = ["/errors/permission", "/"];
 
 	// let { supabase, session } = data
 	// $: ({ supabase, session } = data)
@@ -39,7 +39,7 @@
 {#if $page.url.pathname == allowedUrls[0] || $page.url.pathname == allowedUrls[1] || isDev}
 	<slot />
 {:else}
-	<RoleCheck roleID={'1144641299748769864'} userID={$user?.user_metadata.provider_id}>
+	<RoleCheck roleID={"1144641299748769864"} userID={$user?.user_metadata.provider_id}>
 		<div class="min-h-screen flex flex-col">
 			<slot />
 		</div>

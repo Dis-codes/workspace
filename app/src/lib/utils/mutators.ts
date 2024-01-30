@@ -1,6 +1,6 @@
-import type { BlockDefinition, MutatorInput } from '$lib/interfaces';
-import { MutatorType } from '$lib/interfaces/mutator';
-import Blockly from 'blockly/core';
+import type { BlockDefinition, MutatorInput } from "$lib/interfaces";
+import { MutatorType } from "$lib/interfaces/mutator";
+import Blockly from "blockly/core";
 
 export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 	let blockFields: string[] = [];
@@ -19,16 +19,16 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 		inputsData.push(input);
 	}
 
-	if (blockData.mutatorData?.blockType === '') {
+	if (blockData.mutatorData?.blockType === "") {
 		Blockly.Blocks[blockData.mutator as string] = {
 			init: function () {
-				let msg: string = '';
+				let msg: string = "";
 				if (blockData.mutatorData?.inputs.length !== 0) {
-					msg = 'No inputs detected';
+					msg = "No inputs detected";
 				}
 				this.jsonInit({
-					message0: msg === '' ? msg : '',
-					color: blockData.mutatorData?.color !== '' ? blockData.mutatorData?.color : '#eb7734',
+					message0: msg === "" ? msg : "",
+					color: blockData.mutatorData?.color !== "" ? blockData.mutatorData?.color : "#eb7734",
 					previousStatement: null,
 					nextStatement: null
 				});
@@ -61,7 +61,7 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 			},
 			decompose: function (workspace: Blockly.Workspace) {
 				const containerBlock = workspace.newBlock(
-					blockData.mutatorData.blockType !== ''
+					blockData.mutatorData.blockType !== ""
 						? blockData.mutatorData.blockType
 						: blockData.mutator
 				);
@@ -71,7 +71,7 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 						.setAlign(Blockly.ALIGN_RIGHT)
 						.appendField(this.fields_[i])
 						.appendField(
-							new Blockly.FieldCheckbox(this.inputs_[i] ? 'TRUE' : 'FALSE'),
+							new Blockly.FieldCheckbox(this.inputs_[i] ? "TRUE" : "FALSE"),
 							this.fields_[i]
 						);
 				}
@@ -83,7 +83,7 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 
 			compose: function (topBlock: any) {
 				for (let i = 0; i < this.inputs_.length; i++) {
-					this.inputs_[i] = topBlock.getFieldValue(this.fields_[i]) == 'TRUE';
+					this.inputs_[i] = topBlock.getFieldValue(this.fields_[i]) == "TRUE";
 				}
 				this.updateShape_();
 			},
@@ -123,16 +123,16 @@ export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 id: block id group
 */
 export function BlockListMutator(blockData: BlockDefinition, id: string) {
-	if (blockData.mutatorData?.blockType === '') {
+	if (blockData.mutatorData?.blockType === "") {
 		Blockly.Blocks[blockData.mutator as string] = {
 			init: function () {
-				let msg: string = '';
+				let msg: string = "";
 				if (blockData.mutatorData?.inputs.length !== 0) {
-					msg = 'No inputs detected';
+					msg = "No inputs detected";
 				}
 				this.jsonInit({
-					message0: msg === '' ? msg : '',
-					color: blockData.mutatorData?.color !== '' ? blockData.mutatorData?.color : '#eb7734',
+					message0: msg === "" ? msg : "",
+					color: blockData.mutatorData?.color !== "" ? blockData.mutatorData?.color : "#eb7734",
 					previousStatement: null,
 					nextStatement: null
 				});
@@ -169,13 +169,13 @@ export function BlockListMutator(blockData: BlockDefinition, id: string) {
 
 			decompose: function (workspace: Blockly.Workspace) {
 				let containerBlock: Blockly.Block;
-				if (blockData.mutatorData?.blockType === '') {
+				if (blockData.mutatorData?.blockType === "") {
 					containerBlock = workspace.newBlock(blockData.mutator);
 				} else {
 					containerBlock = workspace.newBlock(blockData.mutatorData?.blockType);
 				}
 				let connection = containerBlock.nextConnection!;
-				const elseifBlock = workspace.newBlock('controls_if_elseif');
+				const elseifBlock = workspace.newBlock("controls_if_elseif");
 				elseifBlock.initSvg();
 				connection.connect(elseifBlock.previousConnection!);
 				containerBlock.initSvg();

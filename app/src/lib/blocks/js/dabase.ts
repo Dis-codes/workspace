@@ -1,14 +1,14 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class databaseBlocks {
 	getRegistry() {
 		return {
-			id: 'database',
-			color: '#5aa48d',
+			id: "database",
+			color: "#5aa48d",
 			blocks: [
 				{
-					func: 'get',
-					text: 'get [NAME] from [DATABASE]',
+					func: "get",
+					text: "get [NAME] from [DATABASE]",
 					output: OutputType.ANY,
 					inline: true,
 					arguments: {
@@ -23,8 +23,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'set',
-					text: 'set [NAME] as [VALUE] in [DATABASE]',
+					func: "set",
+					text: "set [NAME] as [VALUE] in [DATABASE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -42,8 +42,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'exists',
-					text: '[NAME] exists in [DATABASE]',
+					func: "exists",
+					text: "[NAME] exists in [DATABASE]",
 					output: OutputType.BOOLEAN,
 					inline: true,
 					arguments: {
@@ -58,8 +58,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'delete',
-					text: 'delete [NAME] from [DATABASE]',
+					func: "delete",
+					text: "delete [NAME] from [DATABASE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -74,8 +74,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'all',
-					text: 'get all data from [DATABASE]',
+					func: "all",
+					text: "get all data from [DATABASE]",
 					output: OutputType.ANY,
 					inline: true,
 					arguments: {
@@ -86,8 +86,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'clear',
-					text: 'delete all data in [DATABASE]',
+					func: "clear",
+					text: "delete all data in [DATABASE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -98,8 +98,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'push',
-					text: 'push [VALUE] to [NAME] in [DATABASE]',
+					func: "push",
+					text: "push [VALUE] to [NAME] in [DATABASE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -117,16 +117,16 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'addsubstract',
-					text: '[A] [VALUE] to [NAME] in [DATABASE]',
+					func: "addsubstract",
+					text: "[A] [VALUE] to [NAME] in [DATABASE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
 						A: {
 							type: InputShape.MENU,
 							options: [
-								['add', 'add'],
-								['subtract', 'subtract']
+								["add", "add"],
+								["subtract", "subtract"]
 							]
 						},
 						VALUE: {
@@ -143,8 +143,8 @@ class databaseBlocks {
 					}
 				},
 				{
-					func: 'create_new',
-					text: 'create new database with name [NAME]',
+					func: "create_new",
+					text: "create new database with name [NAME]",
 					shape: BlockShape.FLOATING,
 					inline: true,
 					arguments: {
@@ -192,12 +192,12 @@ class databaseBlocks {
 
 	addsubstract(args: any) {
 		switch (args.A) {
-			case 'add':
+			case "add":
 				return `${args.DATABASE}.add(String(${args.NAME}), ${args.VALUE})`;
-			case 'subtract':
+			case "subtract":
 				return `${args.DATABASE}.subtract(String(${args.NAME}), ${args.VALUE})`;
 			default:
-				return '';
+				return "";
 		}
 	}
 }

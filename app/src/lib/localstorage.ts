@@ -1,9 +1,8 @@
-import { writable as internal, type Writable } from 'svelte/store';
+import { writable as internal, type Writable } from "svelte/store";
 
 declare type Updater<T> = (value: T) => T;
 declare type StoreDict<T> = { [key: string]: Writable<T> };
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Stores {
 	local: StoreDict<any>;
 	session: StoreDict<any>;
@@ -19,7 +18,7 @@ interface Serializer<T> {
 	stringify(object: T): string;
 }
 
-type StorageType = 'local' | 'session';
+type StorageType = "local" | "session";
 
 interface Options<T> {
 	serializer?: Serializer<T>;
@@ -27,22 +26,22 @@ interface Options<T> {
 }
 
 function getStorage(type: StorageType) {
-	return type === 'local' ? localStorage : sessionStorage;
+	return type === "local" ? localStorage : sessionStorage;
 }
 export function persisted<T>(key: string, options?: Options<T>): Writable<T> {
 	const initialValue = {
-		'index.dsc': {},
+		"index.dsc": {},
 		settings: {
-			botName: 'My Bot',
-			botDescription: 'My Bot Description',
+			botName: "My Bot",
+			botDescription: "My Bot Description",
 			updatedAt: new Date().toISOString(),
 			secrets: {}
 		},
-		notes: ''
+		notes: ""
 	};
 	const serializer = options?.serializer ?? JSON;
-	const storageType = options?.storage ?? 'local';
-	const browser = typeof window !== 'undefined' && typeof document !== 'undefined';
+	const storageType = options?.storage ?? "local";
+	const browser = typeof window !== "undefined" && typeof document !== "undefined";
 	const storage = browser ? getStorage(storageType) : null;
 	if (!storage?.getItem(key)) {
 		storage?.setItem(key, serializer.stringify(initialValue));
@@ -59,14 +58,14 @@ export function persisted<T>(key: string, options?: Options<T>): Writable<T> {
 				set(<T>serializer.parse(json));
 			}
 
-			if (browser && storageType == 'local') {
+			if (browser && storageType == "local") {
 				const handleStorage = (event: StorageEvent) => {
 					if (event.key === key) set(event.newValue ? serializer.parse(event.newValue) : null);
 				};
 
-				window.addEventListener('storage', handleStorage);
+				window.addEventListener("storage", handleStorage);
 
-				return () => window.removeEventListener('storage', handleStorage);
+				return () => window.removeEventListener("storage", handleStorage);
 			}
 		});
 

@@ -1,16 +1,16 @@
 export default [
 	{
-		kind: 'block',
-		type: 'math_number'
+		kind: "block",
+		type: "math_number"
 	},
 	{
-		kind: 'block',
-		type: 'math_arithmetic',
+		kind: "block",
+		type: "math_arithmetic",
 		inputs: {
 			A: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -18,8 +18,8 @@ export default [
 			},
 			B: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -28,13 +28,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_single',
+		kind: "block",
+		type: "math_single",
 		inputs: {
 			NUM: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 9
 					}
@@ -43,13 +43,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_trig',
+		kind: "block",
+		type: "math_trig",
 		inputs: {
 			NUM: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 45
 					}
@@ -58,17 +58,17 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_constant'
+		kind: "block",
+		type: "math_constant"
 	},
 	{
-		kind: 'block',
-		type: 'math_number_property',
+		kind: "block",
+		type: "math_number_property",
 		inputs: {
 			NUMBER_TO_CHECK: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 0
 					}
@@ -77,13 +77,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_round',
+		kind: "block",
+		type: "math_round",
 		inputs: {
 			NUM: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 3.1
 					}
@@ -92,17 +92,17 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_on_list'
+		kind: "block",
+		type: "math_on_list"
 	},
 	{
-		kind: 'block',
-		type: 'math_modulo',
+		kind: "block",
+		type: "math_modulo",
 		inputs: {
 			DIVIDEND: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 64
 					}
@@ -110,8 +110,8 @@ export default [
 			},
 			DIVISOR: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 10
 					}
@@ -120,13 +120,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_constrain',
+		kind: "block",
+		type: "math_constrain",
 		inputs: {
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 50
 					}
@@ -134,8 +134,8 @@ export default [
 			},
 			LOW: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -143,8 +143,8 @@ export default [
 			},
 			HIGH: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 100
 					}
@@ -153,13 +153,13 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_random_int',
+		kind: "block",
+		type: "math_random_int",
 		inputs: {
 			FROM: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -167,8 +167,8 @@ export default [
 			},
 			TO: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 100
 					}
@@ -177,19 +177,19 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'math_random_float'
+		kind: "block",
+		type: "math_random_float"
 	},
 	{
-		kind: 'block',
-		type: 'math_convert_to_number',
+		kind: "block",
+		type: "math_convert_to_number",
 		inputs: {
 			A: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: '1'
+						TEXT: "1"
 					}
 				}
 			}

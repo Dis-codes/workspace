@@ -1,5 +1,5 @@
-import type Blockly from 'blockly/core';
-import type { WarningData } from './warnings';
+import type Blockly from "blockly/core";
+import type { WarningData } from "./warnings";
 interface Register {
 	id: string;
 	color: number | string;

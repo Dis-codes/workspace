@@ -1,14 +1,14 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class LogicBlocks {
 	getRegistry() {
 		return {
-			id: 'logic',
-			color: '%{BKY_LOGIC_HUE}',
+			id: "logic",
+			color: "%{BKY_LOGIC_HUE}",
 			blocks: [
 				{
-					func: 'isEqual',
-					text: '[A] value and type = [B]',
+					func: "isEqual",
+					text: "[A] value and type = [B]",
 					inline: true,
 					output: OutputType.BOOLEAN,
 					arguments: {
@@ -21,8 +21,8 @@ class LogicBlocks {
 					}
 				},
 				{
-					func: 'typeof',
-					text: 'type of [A]',
+					func: "typeof",
+					text: "type of [A]",
 					output: OutputType.STRING,
 					arguments: {
 						A: {
@@ -31,8 +31,8 @@ class LogicBlocks {
 					}
 				},
 				{
-					func: 'isOneOfType',
-					text: 'type of [A] is [TYPES]?',
+					func: "isOneOfType",
+					text: "type of [A] is [TYPES]?",
 					output: OutputType.BOOLEAN,
 					inline: true,
 					arguments: {
@@ -42,21 +42,21 @@ class LogicBlocks {
 						TYPES: {
 							type: InputShape.MENU,
 							options: [
-								['Number', 'number'],
-								['String', 'string'],
-								['Boolean', 'boolean'],
-								['Object', 'object'],
-								['List', 'array'],
-								['Function', 'function'],
-								['Undefined', 'undefined'],
-								['Null', 'null']
+								["Number", "number"],
+								["String", "string"],
+								["Boolean", "boolean"],
+								["Object", "object"],
+								["List", "array"],
+								["Function", "function"],
+								["Undefined", "undefined"],
+								["Null", "null"]
 							]
 						}
 					}
 				},
 				{
-					func: 'switchStatement',
-					text: ['Check for [A]', 'If no check\n'],
+					func: "switchStatement",
+					text: ["Check for [A]", "If no check\n"],
 					shape: BlockShape.STATEMENT,
 					color: 280,
 					branches: 2,
@@ -67,8 +67,8 @@ class LogicBlocks {
 					}
 				},
 				{
-					func: 'caseStatement',
-					text: '[CASE] [CONDITION]',
+					func: "caseStatement",
+					text: "[CASE] [CONDITION]",
 					shape: BlockShape.STATEMENT,
 					color: 280,
 					branches: 1,
@@ -76,8 +76,8 @@ class LogicBlocks {
 						CASE: {
 							type: InputShape.MENU,
 							options: [
-								['Try', 'case'],
-								['Try or', 'nobreak']
+								["Try", "case"],
+								["Try or", "nobreak"]
 							]
 						},
 						CONDITION: {
@@ -89,8 +89,8 @@ class LogicBlocks {
 					}
 				},
 				{
-					func: 'stopScript',
-					text: 'Stop script',
+					func: "stopScript",
+					text: "Stop script",
 					shape: BlockShape.TERMINAL,
 					color: 310
 				}
@@ -116,12 +116,12 @@ class LogicBlocks {
 
 	caseStatement(args: any) {
 		switch (args.CASE) {
-			case 'case':
+			case "case":
 				return `case ${args.CONDITION}:\n${args.BRANCH1}break\n`;
-			case 'nobreak':
+			case "nobreak":
 				return `case ${args.CONDITION}:\n${args.BRANCH1}`;
 			default:
-				return '';
+				return "";
 		}
 	}
 

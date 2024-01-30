@@ -1,43 +1,43 @@
 <script lang="ts">
 	//Components
-	import { onMount } from 'svelte';
-	import { persisted } from '$lib/localstorage';
-	import { svgToPng_, workspaceToSvg_ } from './workspaceImage';
+	import { onMount } from "svelte";
+	import { persisted } from "$lib/localstorage";
+	import { svgToPng_, workspaceToSvg_ } from "./workspaceImage";
 	// Supabase - sync session
 	// export let data;
 	// let { supabase, session } = data;
 	// $: ({ supabase, session } = data);
 
 	// Blockly
-	import 'blockly/blocks';
+	import "blockly/blocks";
 
-	import BlocklyComponent from '$lib/components/Blockly.svelte';
-	import type { Abstract } from 'blockly/core/events/events_abstract';
-	import javascriptGenerator from '$lib/javascript.js';
-	import { packageJson, indexJs } from '$lib/components/defaults';
-	import { en, Blockly, config } from '$lib/components/defaultWorkspace';
-	import './blockRegister';
-	import { test } from '$lib/components/examples';
+	import BlocklyComponent from "$lib/components/Blockly.svelte";
+	import type { Abstract } from "blockly/core/events/events_abstract";
+	import javascriptGenerator from "$lib/javascript.js";
+	import { packageJson, indexJs } from "$lib/components/defaults";
+	import { en, Blockly, config } from "$lib/components/defaultWorkspace";
+	import "./blockRegister";
+	import { test } from "$lib/components/examples";
 
 	// better code export
-	import Prism from 'prismjs';
-	import * as prettier from 'prettier';
-	import * as prettierPluginBabel from 'prettier/plugins/babel';
-	import * as prettierPluginEstree from 'prettier/plugins/estree';
-	import * as prettierPluginHtml from 'prettier/plugins/html';
-	import JSZip from 'jszip';
+	import Prism from "prismjs";
+	import * as prettier from "prettier";
+	import * as prettierPluginBabel from "prettier/plugins/babel";
+	import * as prettierPluginEstree from "prettier/plugins/estree";
+	import * as prettierPluginHtml from "prettier/plugins/html";
+	import JSZip from "jszip";
 
-	export let file = 'index.dsc';
+	export let file = "index.dsc";
 	export let event = undefined;
 	let previousFile = file;
 	let init = false;
-	let storage = persisted('workspace');
+	let storage = persisted("workspace");
 	let refreshValue: any = undefined;
 	let saveEnabled = true;
 	$: {
 		if (init) {
 			if (previousFile && previousFile !== file) {
-				console.log('saving workspace', previousFile);
+				console.log("saving workspace", previousFile);
 				saveWorkspace(previousFile);
 			}
 			if (previousFile && file && previousFile !== file) {
@@ -48,25 +48,25 @@
 		}
 		if (event) {
 			switch (event) {
-				case 'open':
+				case "open":
 					openFile();
 					break;
-				case 'save':
+				case "save":
 					saveWorkspace(file);
 					break;
-				case 'export':
+				case "export":
 					exportJS();
 					break;
-				case 'download':
+				case "download":
 					downloadFiles();
 					break;
-				case 'copy':
+				case "copy":
 					copyCode();
 					break;
-				case 'delete':
+				case "delete":
 					deleteUnusedBlocks();
 					break;
-				case 'example':
+				case "example":
 					openExample(test);
 					break;
 				default:
@@ -81,36 +81,36 @@
 	function registerNewContextMenu() {
 		try {
 			Blockly.ContextMenuRegistry.registry.register({
-				displayText: 'Delete unused blocks',
+				displayText: "Delete unused blocks",
 				callback: deleteUnusedBlocks,
 				weight: 100,
 				scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
-				id: 'delete_unused_blocks',
+				id: "delete_unused_blocks",
 				preconditionFn: function (e) {
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
 						if (!block.isEnabled()) {
-							return 'enabled';
+							return "enabled";
 						}
 					}
 				}
 			});
 			Blockly.ContextMenuRegistry.registry.register({
-				displayText: 'Download Workspace Image',
+				displayText: "Download Workspace Image",
 				preconditionFn: function () {
 					//check if workspace is empty
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
 						if (block.isEnabled()) {
-							return 'enabled';
+							return "enabled";
 						}
 					}
 				},
 				callback: function () {
 					workspaceToSvg_(workspace, function (datauri) {
-						let a = document.createElement('a');
-						a.download = 'screenshot.png';
-						a.target = '_self';
+						let a = document.createElement("a");
+						a.download = "screenshot.png";
+						a.target = "_self";
 						a.href = datauri;
 						document.body.appendChild(a);
 						a.click();
@@ -118,7 +118,7 @@
 					});
 				},
 				scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
-				id: 'image',
+				id: "image",
 				weight: 100
 			});
 		} catch (error) {}
@@ -127,9 +127,9 @@
 		registerNewContextMenu();
 		function checkUrl() {
 			const urlParams = new URLSearchParams(window.location.search);
-			if (urlParams.get('open') === 'true') {
+			if (urlParams.get("open") === "true") {
 				openFile();
-				window.history.replaceState({}, document.title, '/' + 'editor/blockly');
+				window.history.replaceState({}, document.title, "/" + "editor/blockly");
 			} else {
 				loadWorkspace();
 			}
@@ -152,17 +152,17 @@
 				case Blockly.Events.BLOCK_DRAG:
 				case Blockly.Events.BLOCK_MOVE:
 					// empty string disables reloading
-					refreshValue = '';
+					refreshValue = "";
 					break;
 			}
 		});
 	});
 	async function loadWorkspace() {
 		if ($storage[file]?.blocks?.blocks && $storage[file]?.blocks.blocks.length > 0) {
-			console.log('workspace found');
+			console.log("workspace found");
 			Blockly.serialization.workspaces.load($storage[file], workspace);
 		} else {
-			console.log('no workspace found');
+			console.log("no workspace found");
 		}
 	}
 	async function saveWorkspace(currentFile) {
@@ -173,7 +173,7 @@
 			s[currentFile] = state;
 			return s;
 		});
-		console.log('workspace saved');
+		console.log("workspace saved");
 		refreshValue = undefined;
 	}
 
@@ -184,26 +184,26 @@
 		Blockly.serialization.workspaces.load(example, workspace);
 	}
 	function openFile() {
-		const input = document.createElement('input');
-		input.type = 'file';
-		input.accept = '.dsc, .zip';
+		const input = document.createElement("input");
+		input.type = "file";
+		input.accept = ".dsc, .zip";
 		input.onchange = (event: any) => {
-			if (event.target.files[0].name.endsWith('.zip')) {
+			if (event.target.files[0].name.endsWith(".zip")) {
 				const file = event.target.files[0];
 				const reader = new FileReader();
 				reader.onload = async (event: any) => {
 					const contents = event.target.result;
 					try {
 						const zip = await JSZip.loadAsync(contents);
-						const workspaceFile = await zip.file('workspace.dsc')?.async('string');
+						const workspaceFile = await zip.file("workspace.dsc")?.async("string");
 						if (workspaceFile) {
 							storage.set(JSON.parse(workspaceFile));
 							window.location.reload();
 						} else {
-							console.error('Error loading workspace: no workspace file found');
+							console.error("Error loading workspace: no workspace file found");
 						}
 					} catch (error) {
-						console.error('Error loading workspace:', error);
+						console.error("Error loading workspace:", error);
 					}
 				};
 				reader.readAsArrayBuffer(file);
@@ -216,14 +216,14 @@
 				try {
 					const workspaceFile = JSON.parse(contents);
 					if (workspaceFile) {
-						console.log('workspace found', workspaceFile);
+						console.log("workspace found", workspaceFile);
 						storage.set(workspaceFile);
 						window.location.reload();
 					} else {
-						console.error('Error loading workspace: no workspace file found');
+						console.error("Error loading workspace: no workspace file found");
 					}
 				} catch (error) {
-					console.error('Error loading workspace:', error);
+					console.error("Error loading workspace:", error);
 				}
 			};
 			reader.readAsText(file);
@@ -233,11 +233,11 @@
 	function saveFile() {
 		const state = Blockly.serialization.workspaces.save(workspace);
 		const data = JSON.stringify(state);
-		const blob = new Blob([data], { type: 'application/json' });
+		const blob = new Blob([data], { type: "application/json" });
 		const url = URL.createObjectURL(blob);
-		const fileName = 'workspace.dsc';
+		const fileName = "workspace.dsc";
 
-		const a = document.createElement('a');
+		const a = document.createElement("a");
 		a.href = url;
 		a.download = fileName;
 		a.click();
@@ -249,29 +249,29 @@
 		const allBlocks = workspace.getAllBlocks();
 		for (const block of allBlocks) {
 			switch (block.type) {
-				case 'blockname':
-					packageJson.dependencies['moment'] = '^2.29.1';
+				case "blockname":
+					packageJson.dependencies["moment"] = "^2.29.1";
 					continue;
 				default:
 					continue;
 			}
 		}
 	}
-	async function generateCode(f = 'index.dsc') {
+	async function generateCode(f = "index.dsc") {
 		file = f;
 		await loadWorkspace();
 		await updatePackage();
-		let code = '';
+		let code = "";
 		switch (f) {
-			case 'index.dsc':
-				code = '//default imports\n';
+			case "index.dsc":
+				code = "//default imports\n";
 				for (const [key, value] of Object.entries($storage)) {
-					if (key && key !== 'index.dsc' && key.endsWith('.dsc')) {
+					if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
 						code += `const ${key.slice(0, -4)} = require("./commands/${key.slice(0, -4)}.js");\n`;
 					}
 				}
-				if (code === 'default imports') {
-					code = '';
+				if (code === "default imports") {
+					code = "";
 				}
 				code += indexJs + javascriptGenerator.workspaceToCode(workspace);
 				break;
@@ -282,7 +282,7 @@
 		try {
 			code = await prettier.format(code, {
 				semi: true,
-				parser: 'babel',
+				parser: "babel",
 				plugins: [prettierPluginBabel, prettierPluginEstree, prettierPluginHtml]
 			});
 		} catch (error) {
@@ -292,43 +292,43 @@
 	}
 	async function exportJS() {
 		generatedCode = await generateCode(file);
-		const dialog: any = document.getElementById('showjs');
+		const dialog: any = document.getElementById("showjs");
 		dialog.showModal();
 	}
 	async function downloadFiles() {
 		await saveWorkspace(file);
 		let fileBeforeDownload = file;
 		saveEnabled = false;
-		console.log('downloading files');
+		console.log("downloading files");
 		const zip = new JSZip();
-		zip.file('index.js', await generateCode('index.dsc'));
+		zip.file("index.js", await generateCode("index.dsc"));
 		for (const [key, value] of Object.entries($storage)) {
-			if (key && key !== 'index.dsc' && key.endsWith('.dsc')) {
+			if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
 				//remove .dsc from filename and add .js
-				zip.file('commands/' + key.slice(0, -4) + '.js', await generateCode(key));
+				zip.file("commands/" + key.slice(0, -4) + ".js", await generateCode(key));
 			}
 		}
-		zip.file('package.json', JSON.stringify(packageJson, null, 2));
+		zip.file("package.json", JSON.stringify(packageJson, null, 2));
 		zip.file(
-			'README.md',
-			'# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## You can also use run.bat instead of using the first metheod \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)'
+			"README.md",
+			"# Bot created with DisCodes Blockly\n ## How to use\n 1. Install the dependencies with `npm install`\n 2. Run the bot with `node index \n ## You can also use run.bat instead of using the first metheod \n ## Help \n If you need help, join our [Discord server](https://discord.gg/TsQPMrNyBv)\n ## Credits \n This bot was created with [DisCodes](https://www.discodes.xyz)"
 		);
-		zip.file('workspace.dsc', JSON.stringify($storage, null, 2));
+		zip.file("workspace.dsc", JSON.stringify($storage, null, 2));
 		if ($storage.settings.secrets) {
-			let env = '';
+			let env = "";
 			for (const [key, value] of Object.entries($storage.settings.secrets)) {
 				env += `${key}=${value}\n`;
 			}
 			if (env) {
-				zip.file('.env', env);
+				zip.file(".env", env);
 				alertEnv.showModal();
 			}
 		}
-		const content = await zip.generateAsync({ type: 'blob' });
+		const content = await zip.generateAsync({ type: "blob" });
 		const url = URL.createObjectURL(content);
-		const a = document.createElement('a');
+		const a = document.createElement("a");
 		a.href = url;
-		a.download = $storage.settings.botName + '.zip';
+		a.download = $storage.settings.botName + ".zip";
 		a.click();
 		URL.revokeObjectURL(url);
 		file = fileBeforeDownload;
@@ -377,7 +377,7 @@
 		<h3 class="font-bold text-3xl text-white">JavaScript code of your bot</h3>
 		<div class="bg-gray-300 w-full mt-4 h-full max-h-[43rem] rounded-md p-4 overflow-auto">
 			<pre><code>
-            {@html Prism.highlight(generatedCode, Prism.languages['javascript'])}
+            {@html Prism.highlight(generatedCode, Prism.languages["javascript"])}
         </code> </pre>
 		</div>
 		<div class="modal-action">

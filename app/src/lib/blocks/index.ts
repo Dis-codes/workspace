@@ -1,5 +1,5 @@
 const importBlocks = async () => {
-	const modules = import.meta.glob('./js/**/**/*.ts');
+	const modules = import.meta.glob("./js/**/**/*.ts");
 
 	const blocks = [];
 	for (const path in modules) {

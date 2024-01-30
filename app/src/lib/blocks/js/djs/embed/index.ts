@@ -1,14 +1,14 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class MessageBlocks {
 	getRegistry() {
 		return {
-			id: 'embed',
-			color: '#40bc54',
+			id: "embed",
+			color: "#40bc54",
 			blocks: [
 				{
-					func: 'create',
-					text: 'create an embed with name [NAME]\n',
+					func: "create",
+					text: "create an embed with name [NAME]\n",
 					branches: 1,
 					shape: BlockShape.STATEMENT,
 					arguments: {
@@ -19,8 +19,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setTitle',
-					text: 'set embed title to [TITLE] with url [URL]',
+					func: "setTitle",
+					text: "set embed title to [TITLE] with url [URL]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						TITLE: {
@@ -34,8 +34,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setColor',
-					text: 'set embed color to [COLOR]',
+					func: "setColor",
+					text: "set embed color to [COLOR]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						COLOR: {
@@ -45,8 +45,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setAuthor',
-					text: 'set embed author to [AUTHOR] with url [URL] and icon [ICON]',
+					func: "setAuthor",
+					text: "set embed author to [AUTHOR] with url [URL] and icon [ICON]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						AUTHOR: {
@@ -64,8 +64,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setThumbnail',
-					text: 'set embed thumbnail to [THUMBNAIL]',
+					func: "setThumbnail",
+					text: "set embed thumbnail to [THUMBNAIL]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						THUMBNAIL: {
@@ -75,8 +75,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setImage',
-					text: 'set embed image to [IMAGE]',
+					func: "setImage",
+					text: "set embed image to [IMAGE]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						IMAGE: {
@@ -86,8 +86,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setDescription',
-					text: 'set embed description to [DESCRIPTION]',
+					func: "setDescription",
+					text: "set embed description to [DESCRIPTION]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						DESCRIPTION: {
@@ -97,8 +97,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'addField',
-					text: 'add embed field with name [NAME] and value [VALUE] and inline [INLINE]',
+					func: "addField",
+					text: "add embed field with name [NAME] and value [VALUE] and inline [INLINE]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						NAME: {
@@ -116,8 +116,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setFooter',
-					text: 'set embed footer to [FOOTER] with icon [ICON]',
+					func: "setFooter",
+					text: "set embed footer to [FOOTER] with icon [ICON]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						FOOTER: {
@@ -131,8 +131,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'setTimestamp',
-					text: 'set embed timestamp',
+					func: "setTimestamp",
+					text: "set embed timestamp",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						TIMESTAMP: {
@@ -145,11 +145,11 @@ class MessageBlocks {
 		};
 	}
 	create(args: any) {
-		return `const ${args.NAME ?? 'embed'} = new EmbedBuilder()`;
+		return `const ${args.NAME ?? "embed"} = new EmbedBuilder()`;
 	}
 
 	setTitle(args: any) {
-		return `.setTitle(${args.TITLE})${args.URL ? '\nurl: ' + args.URL + ')' : ''}`;
+		return `.setTitle(${args.TITLE})${args.URL ? "\nurl: " + args.URL + ")" : ""}`;
 	}
 
 	setColor(args: any) {
@@ -157,8 +157,8 @@ class MessageBlocks {
 	}
 
 	setAuthor(args: any) {
-		return `.setAuthor({name: ${args.AUTHOR}${args.URL ? ', url: ' + args.URL : ''}${
-			args.ICON ? ', icon: ' + args.ICON : ''
+		return `.setAuthor({name: ${args.AUTHOR}${args.URL ? ", url: " + args.URL : ""}${
+			args.ICON ? ", icon: " + args.ICON : ""
 		}})`;
 	}
 
@@ -179,7 +179,7 @@ class MessageBlocks {
 	}
 
 	setFooter(args: any) {
-		return `.setFooter({text: ${args.FOOTER}${args.ICON ? ', icon: ' + args.ICON : ''}})`;
+		return `.setFooter({text: ${args.FOOTER}${args.ICON ? ", icon: " + args.ICON : ""}})`;
 	}
 
 	setTimestamp(args: any) {

@@ -1,72 +1,72 @@
 export default [
 	{
-		kind: 'block',
-		type: 'base_token',
+		kind: "block",
+		type: "base_token",
 		inputs: {
 			TOKEN: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'token'
+						TEXT: "token"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'base_env',
+		kind: "block",
+		type: "base_env",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'name'
+						TEXT: "name"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'base_bot_connected'
+		kind: "block",
+		type: "base_bot_connected"
 	},
 	{
-		kind: 'block',
-		type: 'base_bot_status',
+		kind: "block",
+		type: "base_bot_status",
 		inputs: {
 			MESSAGE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'message'
+						TEXT: "message"
 					}
 				}
 			},
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'title'
+						TEXT: "title"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'base_bot_as_member'
+		kind: "block",
+		type: "base_bot_as_member"
 	},
 	{
-		kind: 'block',
-		type: 'base_bot_in_server'
+		kind: "block",
+		type: "base_bot_in_server"
 	},
 	{
-		kind: 'block',
-		type: 'base_bot_info'
+		kind: "block",
+		type: "base_bot_info"
 	}
 ];

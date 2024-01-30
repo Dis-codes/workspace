@@ -1,21 +1,21 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class ObjectBlocks {
 	getRegistry() {
 		return {
-			id: 'objects',
-			color: '#bc4c94',
+			id: "objects",
+			color: "#bc4c94",
 			blocks: [
 				{
-					func: 'create',
-					text: 'create object with\n',
+					func: "create",
+					text: "create object with\n",
 					branches: 1,
 					output: OutputType.OBJECT,
 					inline: true
 				},
 				{
-					func: 'add_to_object',
-					text: 'add [NAME] with value [VALUE]',
+					func: "add_to_object",
+					text: "add [NAME] with value [VALUE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -28,13 +28,13 @@ class ObjectBlocks {
 					}
 				},
 				{
-					func: 'create_empty',
-					text: 'create empty object',
+					func: "create_empty",
+					text: "create empty object",
 					output: OutputType.OBJECT
 				},
 				{
-					func: 'add',
-					text: 'add [NAME] with value [VALUE] to [OBJECT]',
+					func: "add",
+					text: "add [NAME] with value [VALUE] to [OBJECT]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -51,8 +51,8 @@ class ObjectBlocks {
 					}
 				},
 				{
-					func: 'set',
-					text: 'set [NAME] to [VALUE] in [OBJECT]',
+					func: "set",
+					text: "set [NAME] to [VALUE] in [OBJECT]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -69,8 +69,8 @@ class ObjectBlocks {
 					}
 				},
 				{
-					func: 'get',
-					text: 'get [NAME] from [OBJECT]',
+					func: "get",
+					text: "get [NAME] from [OBJECT]",
 					output: OutputType.ANY,
 					inline: true,
 					arguments: {
@@ -84,8 +84,8 @@ class ObjectBlocks {
 					}
 				},
 				{
-					func: 'has',
-					text: '[OBJECT] has [NAME]?',
+					func: "has",
+					text: "[OBJECT] has [NAME]?",
 					output: OutputType.BOOLEAN,
 					inline: true,
 					arguments: {
@@ -99,8 +99,8 @@ class ObjectBlocks {
 					}
 				},
 				{
-					func: 'delete',
-					text: 'delete [NAME] from [OBJECT]',
+					func: "delete",
+					text: "delete [NAME] from [OBJECT]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {

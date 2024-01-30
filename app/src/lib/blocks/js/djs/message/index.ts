@@ -1,14 +1,14 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class MessageBlocks {
 	getRegistry() {
 		return {
-			id: 'message',
-			color: '#4b9afb',
+			id: "message",
+			color: "#4b9afb",
 			blocks: [
 				{
-					func: 'react',
-					text: 'react to message [MESSAGE] with [REACTION]',
+					func: "react",
+					text: "react to message [MESSAGE] with [REACTION]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						MESSAGE: {
@@ -22,9 +22,9 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'remove_reaction',
-					text: 'remove reaction [REACTION] from message [MESSAGE]',
-					tooltip: 'Leave reaction blank to remove all reactions',
+					func: "remove_reaction",
+					text: "remove reaction [REACTION] from message [MESSAGE]",
+					tooltip: "Leave reaction blank to remove all reactions",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						REACTION: {
@@ -38,45 +38,45 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'received',
-					text: 'Message is received\n',
-					color: '#f8ac34',
+					func: "received",
+					text: "Message is received\n",
+					color: "#f8ac34",
 					shape: BlockShape.EVENT,
 					branches: 1
 				},
 				{
-					func: 'message',
-					text: 'Message',
-					color: '#a85c7c',
+					func: "message",
+					text: "Message",
+					color: "#a85c7c",
 					output: OutputType.DISCORD.MESSAGE
 				},
 				{
-					func: 'info',
-					text: 'Message info [INFO]',
+					func: "info",
+					text: "Message info [INFO]",
 					output: OutputType.ANY,
 					arguments: {
 						INFO: {
 							type: InputShape.MENU,
 							options: [
-								['content', 'content'],
-								['channel', 'channel'],
-								['channel category', 'channel_category'],
-								['server', 'guild'],
-								['message id', 'id'],
-								['message timestamp', 'timestamp'],
-								['author', 'author'],
-								['mentioned users', 'mentions_users'],
-								['mentioned roles', 'mentions_roles'],
-								['mentioned channels', 'mentions_channels'],
-								['replied user', 'replied_user'],
-								['attachments', 'attachments']
+								["content", "content"],
+								["channel", "channel"],
+								["channel category", "channel_category"],
+								["server", "guild"],
+								["message id", "id"],
+								["message timestamp", "timestamp"],
+								["author", "author"],
+								["mentioned users", "mentions_users"],
+								["mentioned roles", "mentions_roles"],
+								["mentioned channels", "mentions_channels"],
+								["replied user", "replied_user"],
+								["attachments", "attachments"]
 							]
 						}
 					}
 				},
 				{
-					func: 'delete',
-					text: 'Delete message [MESSAGE]',
+					func: "delete",
+					text: "Delete message [MESSAGE]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						MESSAGE: {
@@ -86,8 +86,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'get',
-					text: 'Get message with ID [MESSAGE] from channel [CHANNEL]',
+					func: "get",
+					text: "Get message with ID [MESSAGE] from channel [CHANNEL]",
 					output: OutputType.DISCORD.MESSAGE,
 					arguments: {
 						MESSAGE: {
@@ -101,8 +101,8 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'crosspost',
-					text: 'Crosspost message [MESSAGE]',
+					func: "crosspost",
+					text: "Crosspost message [MESSAGE]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						MESSAGE: {
@@ -112,15 +112,15 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'pin',
-					text: '[OPTION] message [MESSAGE]',
+					func: "pin",
+					text: "[OPTION] message [MESSAGE]",
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						OPTION: {
 							type: InputShape.MENU,
 							options: [
-								['pin', 'pin'],
-								['unpin', 'unpin']
+								["pin", "pin"],
+								["unpin", "unpin"]
 							]
 						},
 						MESSAGE: {
@@ -130,39 +130,39 @@ class MessageBlocks {
 					}
 				},
 				{
-					func: 'details',
-					text: 'Message details [DETAIL]',
+					func: "details",
+					text: "Message details [DETAIL]",
 					output: OutputType.ANY,
 					arguments: {
 						DETAIL: {
 							type: InputShape.MENU,
 							options: [
-								['mentions everyone', 'mentions_everyone'],
-								['mentions user', 'mentions_user'],
-								['mentions role', 'mentions_role'],
-								['mentions channel', 'mentions_channel'],
-								['system message', 'system'],
-								['pinned', 'pinned'],
-								['tts', 'tts'],
-								['edited', 'edited'],
-								['is webhook', 'webhook'],
-								['is reply', 'is_reply'],
-								['has embeds', 'has_embeds'],
-								['has attachments', 'has_attachments'],
-								['has buttons', 'has_buttons'],
-								['has sticker', 'has_sticker'],
-								['has thread', 'has_thread'],
-								['can be deleted by bot', 'deletable_by_bot'],
-								['can be crossposted', 'crosspostable'],
-								['can be edited by bot', 'editable_by_bot'],
-								['can be pinned', 'pinnable']
+								["mentions everyone", "mentions_everyone"],
+								["mentions user", "mentions_user"],
+								["mentions role", "mentions_role"],
+								["mentions channel", "mentions_channel"],
+								["system message", "system"],
+								["pinned", "pinned"],
+								["tts", "tts"],
+								["edited", "edited"],
+								["is webhook", "webhook"],
+								["is reply", "is_reply"],
+								["has embeds", "has_embeds"],
+								["has attachments", "has_attachments"],
+								["has buttons", "has_buttons"],
+								["has sticker", "has_sticker"],
+								["has thread", "has_thread"],
+								["can be deleted by bot", "deletable_by_bot"],
+								["can be crossposted", "crosspostable"],
+								["can be edited by bot", "editable_by_bot"],
+								["can be pinned", "pinnable"]
 							]
 						}
 					}
 				},
 				{
-					func: 'embed_on_message',
-					text: 'Embed on message [MESSAGE] info [INFO]',
+					func: "embed_on_message",
+					text: "Embed on message [MESSAGE] info [INFO]",
 					output: OutputType.ANY,
 					arguments: {
 						MESSAGE: {
@@ -172,15 +172,15 @@ class MessageBlocks {
 						INFO: {
 							type: InputShape.MENU,
 							options: [
-								['title', 'title'],
-								['description', 'description'],
-								['color', 'color'],
-								['author', 'author'],
-								['thumbnail', 'thumbnail'],
-								['footer', 'footer'],
-								['image', 'image'],
-								['timestamp', 'timestamp'],
-								['url', 'url']
+								["title", "title"],
+								["description", "description"],
+								["color", "color"],
+								["author", "author"],
+								["thumbnail", "thumbnail"],
+								["footer", "footer"],
+								["image", "image"],
+								["timestamp", "timestamp"],
+								["url", "url"]
 							]
 						}
 					}
@@ -190,14 +190,14 @@ class MessageBlocks {
 	}
 
 	message(args: any) {
-		return `await ${args.MESSAGE ?? 'message'}.react(${args.REACTION})`;
+		return `await ${args.MESSAGE ?? "message"}.react(${args.REACTION})`;
 	}
 
 	remove_reaction(args: any) {
 		if (!args.REACTION) {
-			return `await ${args.MESSAGE ?? 'message'}.reactions.removeAll()`;
+			return `await ${args.MESSAGE ?? "message"}.reactions.removeAll()`;
 		}
-		return `await ${args.MESSAGE ?? 'message'}.reactions.cache.get(${args.REACTION}).remove()`;
+		return `await ${args.MESSAGE ?? "message"}.reactions.cache.get(${args.REACTION}).remove()`;
 	}
 
 	received(args: any) {
@@ -207,35 +207,35 @@ class MessageBlocks {
 	}
 
 	info(args: any) {
-		return `${args.MESSAGE ?? 'message'}.${args.INFO}`;
+		return `${args.MESSAGE ?? "message"}.${args.INFO}`;
 	}
 
 	delete(args: any) {
-		return `${args.MESSAGE ?? 'message'}.delete()`;
+		return `${args.MESSAGE ?? "message"}.delete()`;
 	}
 
 	get(args: any) {
-		return `await ${args.CHANNEL ?? 'channel'}.messages.fetch(${args.MESSAGE ?? 'message'})`;
+		return `await ${args.CHANNEL ?? "channel"}.messages.fetch(${args.MESSAGE ?? "message"})`;
 	}
 
 	crosspost(args: any) {
-		return `${args.MESSAGE ?? 'message'}.crosspost()`;
+		return `${args.MESSAGE ?? "message"}.crosspost()`;
 	}
 
 	pin(args: any) {
-		return `${args.MESSAGE ?? 'message'}.${args.OPTION}()`;
+		return `${args.MESSAGE ?? "message"}.${args.OPTION}()`;
 	}
 
 	details(args: any) {
-		return `${args.MESSAGE ?? 'message'}.${args.DETAIL}`;
+		return `${args.MESSAGE ?? "message"}.${args.DETAIL}`;
 	}
 
 	embed_on_message(args: any) {
-		return `${args.MESSAGE ?? 'message'}.embeds[0].${args.INFO}`;
+		return `${args.MESSAGE ?? "message"}.embeds[0].${args.INFO}`;
 	}
 
 	react(args: any) {
-		return `await ${args.MESSAGE ?? 'message'}.react(${args.REACTION})`;
+		return `await ${args.MESSAGE ?? "message"}.react(${args.REACTION})`;
 	}
 }
 

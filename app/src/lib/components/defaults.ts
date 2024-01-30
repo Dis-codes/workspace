@@ -1,20 +1,20 @@
 const packageJson = {
-	name: 'discodes-bot',
-	version: '1.0.0',
-	main: 'index.js',
+	name: "discodes-bot",
+	version: "1.0.0",
+	main: "index.js",
 	scripts: {
-		start: 'npm i && node index.js',
-		'node-update':
-			'npm i --save-dev node@17 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH',
-		'node-clean':
-			'rm -rf node_modules && rm package-lock.json && npm cache clear --force && npm cache clean --force && npm i'
+		start: "npm i && node index.js",
+		"node-update":
+			"npm i --save-dev node@17 && npm config set prefix=$(pwd)/node_modules/node && export PATH=$(pwd)/node_modules/node/bin:$PATH",
+		"node-clean":
+			"rm -rf node_modules && rm package-lock.json && npm cache clear --force && npm cache clean --force && npm i"
 	},
 	dependencies: {
-		'discord.js': '^14.13.0',
-		'easy-json-database': '^1.5.1'
+		"discord.js": "^14.13.0",
+		"easy-json-database": "^1.5.1"
 	},
 	devDependencies: {
-		node: '^17'
+		node: "^17"
 	}
 };
 const indexJs = `//default

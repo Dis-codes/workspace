@@ -1,192 +1,192 @@
 export default [
 	{
-		kind: 'label',
-		text: 'Create a new database (MANDATORY)'
+		kind: "label",
+		text: "Create a new database (MANDATORY)"
 	},
 	{
-		kind: 'block',
-		type: 'database_create_new',
+		kind: "block",
+		type: "database_create_new",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'label',
-		text: 'Read from a database'
+		kind: "label",
+		text: "Read from a database"
 	},
 	{
-		kind: 'block',
-		type: 'database_get',
+		kind: "block",
+		type: "database_get",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'item'
+						TEXT: "item"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_exists',
+		kind: "block",
+		type: "database_exists",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'item'
+						TEXT: "item"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_all',
+		kind: "block",
+		type: "database_all",
 		inputs: {
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'label',
-		text: 'Update a database'
+		kind: "label",
+		text: "Update a database"
 	},
 	{
-		kind: 'block',
-		type: 'database_set',
+		kind: "block",
+		type: "database_set",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'foo'
+						TEXT: "foo"
 					}
 				}
 			},
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'bar'
+						TEXT: "bar"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_delete',
+		kind: "block",
+		type: "database_delete",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'foo'
+						TEXT: "foo"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_push',
+		kind: "block",
+		type: "database_push",
 		inputs: {
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'foo'
+						TEXT: "foo"
 					}
 				}
 			},
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'bar'
+						TEXT: "bar"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_addsubstract',
+		kind: "block",
+		type: "database_addsubstract",
 		inputs: {
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -194,34 +194,34 @@ export default [
 			},
 			NAME: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'foo'
+						TEXT: "foo"
 					}
 				}
 			},
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'database_clear',
+		kind: "block",
+		type: "database_clear",
 		inputs: {
 			DATABASE: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'database'
+						TEXT: "database"
 					}
 				}
 			}

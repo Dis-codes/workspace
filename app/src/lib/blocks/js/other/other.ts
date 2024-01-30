@@ -1,14 +1,14 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class TerminalBlocks {
 	getRegistry() {
 		return {
-			id: 'terminal',
-			color: '#d3437b',
+			id: "terminal",
+			color: "#d3437b",
 			blocks: [
 				{
-					func: 'log',
-					text: 'log [TEXT] in console',
+					func: "log",
+					text: "log [TEXT] in console",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -18,13 +18,13 @@ class TerminalBlocks {
 					}
 				},
 				{
-					func: 'clear_console',
-					text: 'clear console',
+					func: "clear_console",
+					text: "clear console",
 					shape: BlockShape.STATEMENT
 				},
 				{
-					func: 'error',
-					text: 'error',
+					func: "error",
+					text: "error",
 					output: OutputType.BOOLEAN,
 					inline: true
 				},
@@ -65,15 +65,15 @@ class TerminalBlocks {
 				//     }
 				// },
 				{
-					func: 'try_catch',
-					text: ['try\n', 'if error\n'],
+					func: "try_catch",
+					text: ["try\n", "if error\n"],
 					branches: 2,
 					shape: BlockShape.STATEMENT,
 					inline: true
 				},
 				{
-					func: 'throw',
-					text: 'throw custom error [TEXT]',
+					func: "throw",
+					text: "throw custom error [TEXT]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -84,8 +84,8 @@ class TerminalBlocks {
 					}
 				},
 				{
-					func: 'force',
-					text: 'force [CODE]',
+					func: "force",
+					text: "force [CODE]",
 					inline: true,
 					output: OutputType.ANY,
 					arguments: {

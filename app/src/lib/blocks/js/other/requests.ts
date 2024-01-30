@@ -1,18 +1,18 @@
-import { BlockShape, InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class RequestsBlocks {
 	getRegistry() {
 		return {
-			id: 'requests',
-			color: '#4b9afb',
+			id: "requests",
+			color: "#4b9afb",
 			blocks: [
 				{
-					func: 'request',
+					func: "request",
 					text: [
-						'send request to [URL] using method [METHOD] with headers\n',
-						'data\n',
-						'response\n',
-						'on error\n'
+						"send request to [URL] using method [METHOD] with headers\n",
+						"data\n",
+						"response\n",
+						"on error\n"
 					],
 					branches: 4,
 					shape: BlockShape.STATEMENT,
@@ -25,20 +25,20 @@ class RequestsBlocks {
 						METHOD: {
 							type: InputShape.MENU,
 							options: [
-								['GET', 'GET'],
-								['POST', 'POST'],
-								['PUT', 'PUT'],
-								['DELETE', 'DELETE'],
-								['PATCH', 'PATCH'],
-								['HEAD', 'HEAD'],
-								['OPTIONS', 'OPTIONS']
+								["GET", "GET"],
+								["POST", "POST"],
+								["PUT", "PUT"],
+								["DELETE", "DELETE"],
+								["PATCH", "PATCH"],
+								["HEAD", "HEAD"],
+								["OPTIONS", "OPTIONS"]
 							]
 						}
 					}
 				},
 				{
-					func: 'header',
-					text: 'header [NAME] with value [VALUE]',
+					func: "header",
+					text: "header [NAME] with value [VALUE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -53,14 +53,14 @@ class RequestsBlocks {
 					}
 				},
 				{
-					func: 'body',
-					text: 'body data section\n',
+					func: "body",
+					text: "body data section\n",
 					shape: BlockShape.STATEMENT,
 					branches: 1
 				},
 				{
-					func: 'body_data',
-					text: 'data [NAME] with [VALUE]',
+					func: "body_data",
+					text: "data [NAME] with [VALUE]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -74,8 +74,8 @@ class RequestsBlocks {
 					}
 				},
 				{
-					func: 'response',
-					text: 'get [NAME] from response data',
+					func: "response",
+					text: "get [NAME] from response data",
 					output: OutputType.ANY,
 					inline: true,
 					arguments: {
@@ -86,14 +86,14 @@ class RequestsBlocks {
 					}
 				},
 				{
-					func: 'response_status',
-					text: 'response status code',
+					func: "response_status",
+					text: "response status code",
 					output: OutputType.NUMBER,
 					inline: true
 				},
 				{
-					func: 'all',
-					text: 'get all data from response',
+					func: "all",
+					text: "get all data from response",
 					output: OutputType.ANY,
 					inline: true
 				}

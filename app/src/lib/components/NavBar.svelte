@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Account from './Account.svelte';
-	import { user } from '$lib/userStore';
-	let searchContent = '';
+	import Account from "./Account.svelte";
+	import { user } from "$lib/userStore";
+	let searchContent = "";
 	export let links: boolean = true;
 </script>
 
@@ -38,10 +38,10 @@
 					bind:value={searchContent}
 					maxlength="32"
 					on:keydown={(event) => {
-						if (event.key === 'Enter') {
+						if (event.key === "Enter") {
 							window.location.href = `https://www.discodes.xyz/search/users?keyword=${searchContent}`;
-						} else if (event.key === 'Escape') {
-							searchContent = '';
+						} else if (event.key === "Escape") {
+							searchContent = "";
 						}
 					}}
 				/>

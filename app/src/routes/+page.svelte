@@ -1,30 +1,30 @@
 <script lang="ts">
-	import NavBar from '$lib/components/NavBar.svelte';
-	import SideBar from '$lib/components/SideBar.svelte';
-	import { persisted } from '$lib/localstorage';
-	let settings = persisted('workspace');
+	import NavBar from "$lib/components/NavBar.svelte";
+	import SideBar from "$lib/components/SideBar.svelte";
+	import { persisted } from "$lib/localstorage";
+	let settings = persisted("workspace");
 	function formatDate(dateString: string): string {
 		const options: Intl.DateTimeFormatOptions = {
-			day: '2-digit',
-			month: '2-digit',
-			year: 'numeric',
-			hour: '2-digit',
-			minute: '2-digit'
+			day: "2-digit",
+			month: "2-digit",
+			year: "numeric",
+			hour: "2-digit",
+			minute: "2-digit"
 		};
 
 		const formattedDate = new Date(dateString).toLocaleString(undefined, options);
 
-		const [date, time] = formattedDate.split(', ');
-		const [day] = date.split('.');
-		const [hour, minute] = time.split(':');
+		const [date, time] = formattedDate.split(", ");
+		const [day] = date.split(".");
+		const [hour, minute] = time.split(":");
 
 		return `${day} - ${hour}:${minute}`;
 	}
 	function checkBotExists() {
-		if ($settings['index.dsc']?.blocks?.blocks?.length > 0) {
+		if ($settings["index.dsc"]?.blocks?.blocks?.length > 0) {
 			botexists.showModal();
 		} else {
-			window.location.href = 'editor';
+			window.location.href = "editor";
 		}
 	}
 </script>
@@ -42,7 +42,7 @@
 		</div>
 		<div class="flex flex-col gap-4">
 			<!-- recent should be done with github interaction, also localstorage, there is no other way -->
-			{#if $settings['index.dsc']?.blocks?.blocks.length > 0}
+			{#if $settings["index.dsc"]?.blocks?.blocks.length > 0}
 				<div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
 					<div>
 						<p class="font-bold">{$settings.settings.botName}</p>

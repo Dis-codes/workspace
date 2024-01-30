@@ -1,4 +1,4 @@
-import { SupabaseClient, Session } from '@supabase/supabase-js';
+import { SupabaseClient, Session } from "@supabase/supabase-js";
 
 declare global {
 	namespace App {

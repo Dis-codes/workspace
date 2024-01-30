@@ -1,115 +1,115 @@
 export default [
 	{
-		kind: 'block',
-		type: 'text'
+		kind: "block",
+		type: "text"
 	},
 	{
-		kind: 'block',
-		type: 'text_join'
+		kind: "block",
+		type: "text_join"
 	},
 	{
-		kind: 'block',
-		type: 'text_replace',
+		kind: "block",
+		type: "text_replace",
 		inputs: {
 			TEXT: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'Hello World!'
+						TEXT: "Hello World!"
 					}
 				}
 			},
 			FROM: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'World'
+						TEXT: "World"
 					}
 				}
 			},
 			TO: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'Goodbye'
+						TEXT: "Goodbye"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_isEmpty'
+		kind: "block",
+		type: "text_isEmpty"
 	},
 	{
-		kind: 'block',
-		type: 'text_reverse'
+		kind: "block",
+		type: "text_reverse"
 	},
 	{
-		kind: 'block',
-		type: 'text_newline'
+		kind: "block",
+		type: "text_newline"
 	},
 	{
-		kind: 'block',
-		type: 'text_append'
+		kind: "block",
+		type: "text_append"
 	},
 	{
-		kind: 'block',
-		type: 'text_length',
+		kind: "block",
+		type: "text_length",
 		inputs: {
 			VALUE: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'abc'
+						TEXT: "abc"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_startsEndsWith'
+		kind: "block",
+		type: "text_startsEndsWith"
 	},
 	{
-		kind: 'block',
-		type: 'text_indexOf',
+		kind: "block",
+		type: "text_indexOf",
 		inputs: {
 			VALUE: {
 				block: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'text'
+						NAME: "text"
 					}
 				}
 			},
 			FIND: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'World'
+						TEXT: "World"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_charAt',
+		kind: "block",
+		type: "text_charAt",
 		inputs: {
 			VALUE: {
 				block: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'text'
+						NAME: "text"
 					}
 				}
 			},
 			AT: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -118,21 +118,21 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_getSubstring',
+		kind: "block",
+		type: "text_getSubstring",
 		inputs: {
 			STRING: {
 				block: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'text'
+						NAME: "text"
 					}
 				}
 			},
 			AT1: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -140,7 +140,7 @@ export default [
 			},
 			AT2: {
 				shadow: {
-					type: 'math_number',
+					type: "math_number",
 					fields: {
 						NUM: 5
 					}
@@ -149,14 +149,14 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_changeCase',
+		kind: "block",
+		type: "text_changeCase",
 		inputs: {
 			TEXT: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'Hello World!'
+						TEXT: "Hello World!"
 					}
 				}
 			}
@@ -164,62 +164,62 @@ export default [
 	},
 	//trim spaces
 	{
-		kind: 'block',
-		type: 'text_trim',
+		kind: "block",
+		type: "text_trim",
 		inputs: {
 			TEXT: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: ' abc '
+						TEXT: " abc "
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_count',
+		kind: "block",
+		type: "text_count",
 		inputs: {
 			TEXT: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'Hello World!'
+						TEXT: "Hello World!"
 					}
 				}
 			},
 			SUB: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'o'
+						TEXT: "o"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_containsNumber'
+		kind: "block",
+		type: "text_containsNumber"
 	},
 	//for each character in a string
 	{
-		kind: 'block',
-		type: 'text_forEach',
+		kind: "block",
+		type: "text_forEach",
 		inputs: {
 			TEXT: {
 				shadow: {
-					type: 'text',
+					type: "text",
 					fields: {
-						TEXT: 'Hello World!'
+						TEXT: "Hello World!"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'text_character'
+		kind: "block",
+		type: "text_character"
 	}
 ];

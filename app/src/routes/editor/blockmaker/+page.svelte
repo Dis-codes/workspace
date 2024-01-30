@@ -1,37 +1,37 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { NavBar, AuthCheck } from '$lib/components/Components';
+	import { onMount } from "svelte";
+	import { NavBar, AuthCheck } from "$lib/components/Components";
 
 	export let data;
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
-	import Blockly from 'blockly/core';
-	import En from 'blockly/msg/en';
-	import { BlocklyTool } from '$lib/utils/blockRegistryTool';
+	import Blockly from "blockly/core";
+	import En from "blockly/msg/en";
+	import { BlocklyTool } from "$lib/utils/blockRegistryTool";
 	const BlockRegistryTool = new BlocklyTool();
-	import BlocklyComponent from '$lib/components/Blockly.svelte';
-	import type { Abstract } from 'blockly/core/events/events_abstract';
-	import javascriptGenerator from '$lib/javascript.js';
+	import BlocklyComponent from "$lib/components/Blockly.svelte";
+	import type { Abstract } from "blockly/core/events/events_abstract";
+	import javascriptGenerator from "$lib/javascript.js";
 
-	import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
-	import { json } from '@sveltejs/kit';
+	import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
+	import { json } from "@sveltejs/kit";
 
-	const DarkTheme = Blockly.Theme.defineTheme('a', {
-		name: 'true_dark',
+	const DarkTheme = Blockly.Theme.defineTheme("a", {
+		name: "true_dark",
 		base: Blockly.Themes.Classic,
 		componentStyles: {
-			workspaceBackgroundColour: '#0C111A',
-			toolboxBackgroundColour: '#111827',
-			toolboxForegroundColour: '#ffffff',
-			flyoutBackgroundColour: '#111827',
-			flyoutForegroundColour: '#cccccc',
+			workspaceBackgroundColour: "#0C111A",
+			toolboxBackgroundColour: "#111827",
+			toolboxForegroundColour: "#ffffff",
+			flyoutBackgroundColour: "#111827",
+			flyoutForegroundColour: "#cccccc",
 			flyoutOpacity: 0.5,
-			scrollbarColour: '#797979',
-			insertionMarkerColour: '#ffffff',
+			scrollbarColour: "#797979",
+			insertionMarkerColour: "#ffffff",
 			insertionMarkerOpacity: 0.3,
 			scrollbarOpacity: 0.01,
-			cursorColour: '#d0d0d0'
+			cursorColour: "#d0d0d0"
 		}
 	});
 	// For styling the categories
@@ -61,19 +61,19 @@
 			...En
 		}
 	};
-	let functionName = 'myfunction';
+	let functionName = "myfunction";
 	const toolbox: Blockly.utils.toolbox.ToolboxDefinition = {
-		kind: 'categoryToolbox',
+		kind: "categoryToolbox",
 		contents: [
 			{
-				id: 'generated',
-				kind: 'category',
+				id: "generated",
+				kind: "category",
 				expanded: true,
-				name: 'Generated Block',
-				colour: '#5b80a5',
+				name: "Generated Block",
+				colour: "#5b80a5",
 				contents: [
 					{
-						kind: 'block',
+						kind: "block",
 						type: `test_myfunction`
 					}
 				]
@@ -82,7 +82,7 @@
 	};
 	const config = {
 		theme: DarkTheme,
-		renderer: 'zelos',
+		renderer: "zelos",
 		collapse: false,
 		disable: false,
 		maxBlocks: 1,
@@ -92,7 +92,7 @@
 		grid: {
 			spacing: 25,
 			length: 2,
-			colour: '#5c5a5a',
+			colour: "#5c5a5a",
 			snap: true
 		},
 		toolbox
@@ -113,7 +113,7 @@
 				case Blockly.Events.BLOCK_DRAG:
 				case Blockly.Events.BLOCK_MOVE:
 					// empty string disables reloading
-					refreshValue = '';
+					refreshValue = "";
 					break;
 			}
 		});
@@ -121,10 +121,10 @@
 	});
 
 	// Define variables for selector values
-	let selectedOutputType = 'none';
+	let selectedOutputType = "none";
 	let selectedBlockShape = Object.keys(BlockShape)[0];
 	let selectedInputShape = Object.keys(InputShape)[0];
-	let text = 'Hello [ARGUMENT1] World!';
+	let text = "Hello [ARGUMENT1] World!";
 	let inline = true;
 	let arguments_block = text.match(/\[(.*?)\]/g) || [];
 	let arguments_data = arguments_block.map((arg) => {
@@ -138,8 +138,8 @@
 	class Block {
 		getRegistry() {
 			return {
-				id: 'test',
-				color: '%{BKY_VARIABLES_HUE}',
+				id: "test",
+				color: "%{BKY_VARIABLES_HUE}",
 				blocks: [
 					{
 						func: functionName,
@@ -163,7 +163,7 @@
 	BlockRegistryTool.registerFromBlockset(new Block());
 
 	function GenerateCode() {
-		code = 'te';
+		code = "te";
 		code = javascriptGenerator.workspaceToCode(workspace);
 		console.log(code);
 	}
@@ -180,11 +180,11 @@
 func: "${functionName}",
 text: "${text}",
 inline: ${inline},${
-			selectedOutputType == 'none' ? '' : `\noutput: OutputType.${selectedOutputType},`
-		}${selectedBlockShape == 'none' ? '' : `\nshape: BlockShape.${selectedBlockShape},`}
+			selectedOutputType == "none" ? "" : `\noutput: OutputType.${selectedOutputType},`
+		}${selectedBlockShape == "none" ? "" : `\nshape: BlockShape.${selectedBlockShape},`}
 ${
 	arguments_block.length == 0
-		? ''
+		? ""
 		: `arguments: {
         ${arguments_block
 					.map((arg) => {
@@ -194,14 +194,14 @@ ${
             check: OutputType.${selectedOutputType}
             }}`;
 					})
-					.join(',\n')} 
+					.join(",\n")} 
     }`
 }
 }`;
 		BlockRegistryTool.registerFromBlockset(new Block());
 		workspace.updateToolbox(toolbox);
 	}
-	let code = 'e';
+	let code = "e";
 </script>
 
 <NavBar />

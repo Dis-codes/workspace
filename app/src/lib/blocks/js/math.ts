@@ -1,14 +1,14 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class Mathblocks {
 	getRegistry() {
 		return {
-			id: 'math',
-			color: '%{BKY_MATH_HUE}',
+			id: "math",
+			color: "%{BKY_MATH_HUE}",
 			blocks: [
 				{
-					func: 'convert_to_number',
-					text: 'Convert [A] to number',
+					func: "convert_to_number",
+					text: "Convert [A] to number",
 					output: OutputType.NUMBER,
 					arguments: {
 						A: {
@@ -22,12 +22,12 @@ class Mathblocks {
 
 	math_operation(args: any) {
 		switch (args.OPERATION) {
-			case 'increment':
+			case "increment":
 				return `(${args.A})++`;
-			case 'decrement':
+			case "decrement":
 				return `(${args.A})--`;
 			default:
-				return '';
+				return "";
 		}
 	}
 

@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { persisted } from '$lib/localstorage';
-	let settings = persisted('workspace');
+	import { persisted } from "$lib/localstorage";
+	let settings = persisted("workspace");
 	let showSecrets = [];
 	let secrets = JSON.stringify($settings.settings.secrets);
 	let changeSecret = [];
@@ -12,7 +12,7 @@
 		let blocks = 0;
 		let files = 0;
 		for (const [key, value] of Object.entries($settings)) {
-			if (key.endsWith('.dsc')) {
+			if (key.endsWith(".dsc")) {
 				files += 1;
 				blocks += value?.blocks?.blocks?.length || 0;
 			}
@@ -31,13 +31,13 @@
 		while (stack.length) {
 			let value = stack.pop();
 
-			if (typeof value === 'boolean') {
+			if (typeof value === "boolean") {
 				bytes += 4;
-			} else if (typeof value === 'string') {
+			} else if (typeof value === "string") {
 				bytes += value.length * 2;
-			} else if (typeof value === 'number') {
+			} else if (typeof value === "number") {
 				bytes += 8;
-			} else if (typeof value === 'object' && objectList.indexOf(value) === -1) {
+			} else if (typeof value === "object" && objectList.indexOf(value) === -1) {
 				objectList.push(value);
 
 				for (let i in value) {
@@ -56,13 +56,13 @@
 	}
 	function updateEnv(index) {
 		if (index === -1) {
-			changeSecret = ['', ''];
+			changeSecret = ["", ""];
 		} else changeSecret = Object.entries($settings.settings.secrets)[index];
 		oldSecret = changeSecret[0];
 		changeenv.showModal();
 	}
 	function editEnv() {
-		if (changeSecret[0] === '') return;
+		if (changeSecret[0] === "") return;
 		settings.update((s) => {
 			s.settings.secrets[changeSecret[0]] = changeSecret[1];
 			if (oldSecret !== changeSecret[0]) {
@@ -157,7 +157,7 @@
 										</div>
 										<label for="toggle{index}" class="flex items-center cursor-pointer select-none"
 											><span class="material-symbols-outlined"
-												>{showSecrets[index] ? 'visibility_off' : 'visibility'}</span
+												>{showSecrets[index] ? "visibility_off" : "visibility"}</span
 											></label
 										>
 										<input

@@ -1,20 +1,20 @@
 export default [
 	{
-		kind: 'block',
-		type: 'lists_create_empty'
+		kind: "block",
+		type: "lists_create_empty"
 	},
 	{
-		kind: 'block',
-		type: 'lists_create_with'
+		kind: "block",
+		type: "lists_create_with"
 	},
 	{
-		kind: 'block',
-		type: 'lists_repeat',
+		kind: "block",
+		type: "lists_repeat",
 		inputs: {
 			NUM: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 5
 					}
@@ -23,86 +23,86 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_length'
+		kind: "block",
+		type: "lists_length"
 	},
 	{
-		kind: 'block',
-		type: 'lists_isEmpty'
+		kind: "block",
+		type: "lists_isEmpty"
 	},
 	{
-		kind: 'block',
-		type: 'lists_contains',
+		kind: "block",
+		type: "lists_contains",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			ITEM: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'abc'
+						TEXT: "abc"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_sort'
+		kind: "block",
+		type: "lists_sort"
 	},
 	{
-		kind: 'block',
-		type: 'lists_reverse'
+		kind: "block",
+		type: "lists_reverse"
 	},
 	{
-		kind: 'block',
-		type: 'lists_indexOf',
+		kind: "block",
+		type: "lists_indexOf",
 		inputs: {
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			FIND: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'abc'
+						TEXT: "abc"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_getIndex',
+		kind: "block",
+		type: "lists_getIndex",
 		inputs: {
 			VALUE: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			AT: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -111,22 +111,22 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_setIndex',
+		kind: "block",
+		type: "lists_setIndex",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			AT: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -135,22 +135,22 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_getSublist',
+		kind: "block",
+		type: "lists_getSublist",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			AT1: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 1
 					}
@@ -158,8 +158,8 @@ export default [
 			},
 			AT2: {
 				shadow: {
-					kind: 'block',
-					type: 'math_number',
+					kind: "block",
+					type: "math_number",
 					fields: {
 						NUM: 2
 					}
@@ -169,111 +169,111 @@ export default [
 	},
 
 	{
-		kind: 'block',
-		type: 'lists_split',
+		kind: "block",
+		type: "lists_split",
 		inputs: {
 			DELIM: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: ','
+						TEXT: ","
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_push',
+		kind: "block",
+		type: "lists_push",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			ITEM: {
 				shadow: {
-					kind: 'block',
-					type: 'text',
+					kind: "block",
+					type: "text",
 					fields: {
-						TEXT: 'abc'
+						TEXT: "abc"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_concat',
+		kind: "block",
+		type: "lists_concat",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			ITEM: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list2'
+						NAME: "list2"
 					}
 				}
 			}
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_filter',
+		kind: "block",
+		type: "lists_filter",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			ITEM: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'item'
+						NAME: "item"
 					}
 				}
 			},
 			CONDITION: {
 				shadow: {
-					kind: 'block',
-					type: 'logic_compare',
+					kind: "block",
+					type: "logic_compare",
 					fields: {
-						OP: 'GT'
+						OP: "GT"
 					},
 					inputs: {
 						A: {
 							shadow: {
-								kind: 'block',
-								type: 'variables_get_variable',
+								kind: "block",
+								type: "variables_get_variable",
 								fields: {
-									NAME: 'item'
+									NAME: "item"
 								}
 							}
 						},
 						B: {
 							shadow: {
-								kind: 'block',
-								type: 'math_number',
+								kind: "block",
+								type: "math_number",
 								fields: {
 									NUM: 1
 								}
@@ -285,48 +285,48 @@ export default [
 		}
 	},
 	{
-		kind: 'block',
-		type: 'lists_map',
+		kind: "block",
+		type: "lists_map",
 		inputs: {
 			LIST: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'list'
+						NAME: "list"
 					}
 				}
 			},
 			ITEM: {
 				shadow: {
-					kind: 'block',
-					type: 'variables_get_variable',
+					kind: "block",
+					type: "variables_get_variable",
 					fields: {
-						NAME: 'item'
+						NAME: "item"
 					}
 				}
 			},
 			CONDITION: {
 				shadow: {
-					kind: 'block',
-					type: 'math_arithmetic',
+					kind: "block",
+					type: "math_arithmetic",
 					fields: {
-						OP: 'ADD'
+						OP: "ADD"
 					},
 					inputs: {
 						A: {
 							shadow: {
-								kind: 'block',
-								type: 'variables_get_variable',
+								kind: "block",
+								type: "variables_get_variable",
 								fields: {
-									NAME: 'item'
+									NAME: "item"
 								}
 							}
 						},
 						B: {
 							shadow: {
-								kind: 'block',
-								type: 'math_number',
+								kind: "block",
+								type: "math_number",
 								fields: {
 									NUM: 1
 								}

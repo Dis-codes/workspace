@@ -1,14 +1,14 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class ListsBlocks {
 	getRegistry() {
 		return {
-			id: 'lists',
-			color: '%{BKY_LISTS_HUE}',
+			id: "lists",
+			color: "%{BKY_LISTS_HUE}",
 			blocks: [
 				{
-					func: 'contains',
-					text: '[LIST] contains [ITEM]',
+					func: "contains",
+					text: "[LIST] contains [ITEM]",
 					inline: true,
 					output: OutputType.BOOLEAN,
 					arguments: {
@@ -22,8 +22,8 @@ class ListsBlocks {
 				},
 				//push
 				{
-					func: 'push',
-					text: 'push [ITEM] to [LIST]',
+					func: "push",
+					text: "push [ITEM] to [LIST]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -37,8 +37,8 @@ class ListsBlocks {
 				},
 				//concat
 				{
-					func: 'concat',
-					text: 'Merge [LIST] with [ITEM]',
+					func: "concat",
+					text: "Merge [LIST] with [ITEM]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -52,8 +52,8 @@ class ListsBlocks {
 				},
 				//filter
 				{
-					func: 'filter',
-					text: 'Filter [LIST] as [ITEM] with [CONDITION]',
+					func: "filter",
+					text: "Filter [LIST] as [ITEM] with [CONDITION]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {
@@ -70,8 +70,8 @@ class ListsBlocks {
 				},
 				//map
 				{
-					func: 'map',
-					text: 'Map [LIST] as [ITEM] with [CONDITION]',
+					func: "map",
+					text: "Map [LIST] as [ITEM] with [CONDITION]",
 					shape: BlockShape.STATEMENT,
 					inline: true,
 					arguments: {

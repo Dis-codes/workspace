@@ -1,6 +1,6 @@
-import Blockly from 'blockly/core';
-import En from 'blockly/msg/en';
-import toolbox from '$lib/toolbox';
+import Blockly from "blockly/core";
+import En from "blockly/msg/en";
+import toolbox from "$lib/toolbox";
 class CustomCategory extends Blockly.ToolboxCategory {
 	/**
 	 * Constructor for a custom category.
@@ -20,21 +20,21 @@ Blockly.registry.register(
 	CustomCategory,
 	true
 );
-const DarkTheme = Blockly.Theme.defineTheme('a', {
-	name: 'true_dark',
+const DarkTheme = Blockly.Theme.defineTheme("a", {
+	name: "true_dark",
 	base: Blockly.Themes.Classic,
 	componentStyles: {
-		workspaceBackgroundColour: '#0C111A',
-		toolboxBackgroundColour: '#111827',
-		toolboxForegroundColour: '#ffffff',
-		flyoutBackgroundColour: '#111827',
-		flyoutForegroundColour: '#cccccc',
+		workspaceBackgroundColour: "#0C111A",
+		toolboxBackgroundColour: "#111827",
+		toolboxForegroundColour: "#ffffff",
+		flyoutBackgroundColour: "#111827",
+		flyoutForegroundColour: "#cccccc",
 		flyoutOpacity: 0.5,
-		scrollbarColour: '#797979',
-		insertionMarkerColour: '#ffffff',
+		scrollbarColour: "#797979",
+		insertionMarkerColour: "#ffffff",
 		insertionMarkerOpacity: 0.3,
 		scrollbarOpacity: 0.01,
-		cursorColour: '#d0d0d0'
+		cursorColour: "#d0d0d0"
 	}
 });
 const en = {
@@ -45,7 +45,7 @@ const en = {
 };
 const config = {
 	theme: DarkTheme,
-	renderer: 'zelos',
+	renderer: "zelos",
 	collapse: true,
 	comments: true,
 	disable: true,
@@ -56,7 +56,7 @@ const config = {
 	grid: {
 		spacing: 25,
 		length: 3,
-		colour: '#5c5a5a',
+		colour: "#5c5a5a",
 		snap: true
 	},
 	zoom: {

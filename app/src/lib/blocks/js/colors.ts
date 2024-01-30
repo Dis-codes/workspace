@@ -1,14 +1,14 @@
-import { InputShape, OutputType } from '$lib/utils/blockRegistryTool';
+import { InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 
 class ColorsBlocks {
 	getRegistry() {
 		return {
-			id: 'colour',
-			color: '%{BKY_COLOUR_HUE}',
+			id: "colour",
+			color: "%{BKY_COLOUR_HUE}",
 			blocks: [
 				{
-					func: 'RGB',
-					text: 'Colour with Red[R] Green[G] Blue[B]',
+					func: "RGB",
+					text: "Colour with Red[R] Green[G] Blue[B]",
 					inline: false,
 					output: OutputType.STRING,
 					arguments: {
@@ -27,8 +27,8 @@ class ColorsBlocks {
 					}
 				},
 				{
-					func: 'hex',
-					text: 'Hex # [HEX]',
+					func: "hex",
+					text: "Hex # [HEX]",
 					inline: true,
 					output: OutputType.STRING,
 					arguments: {
@@ -39,8 +39,8 @@ class ColorsBlocks {
 					}
 				},
 				{
-					func: 'random',
-					text: 'Random color',
+					func: "random",
+					text: "Random color",
 					output: OutputType.STRING
 				}
 			]
@@ -52,7 +52,7 @@ class ColorsBlocks {
 	}
 
 	hex(args: any) {
-		return `"#${args.HEX.replace(/'/g, '')}"`;
+		return `"#${args.HEX.replace(/'/g, "")}"`;
 	}
 
 	random() {

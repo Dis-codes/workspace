@@ -1,26 +1,26 @@
-import javascriptGenerator from '$lib/javascript';
-import Blockly from 'blockly/core';
-import { CheckMutatorType } from '$lib/utils/mutators';
-import type { BlockDefinition } from '$lib/interfaces';
-import { WarningType } from '$lib/interfaces/warnings';
-import { WarningMessages } from '../../data';
-import { Warning } from 'postcss';
+import javascriptGenerator from "$lib/javascript";
+import Blockly from "blockly/core";
+import { CheckMutatorType } from "$lib/utils/mutators";
+import type { BlockDefinition } from "$lib/interfaces";
+import { WarningType } from "$lib/interfaces/warnings";
+import { WarningMessages } from "../../data";
+import { Warning } from "postcss";
 
 //type for defining blocks easier to develop blocks
 export { OutputType, BlockShape, InputShape, BlocklyTool };
 
 const OutputType = {
-	STRING: ['String', 'Text'],
-	NUMBER: ['Number'],
-	BOOLEAN: ['Boolean', 'Bool'],
-	ARRAY: ['List', 'Array'],
-	OBJECT: ['Object', 'JSON'],
+	STRING: ["String", "Text"],
+	NUMBER: ["Number"],
+	BOOLEAN: ["Boolean", "Bool"],
+	ARRAY: ["List", "Array"],
+	OBJECT: ["Object", "JSON"],
 	ANY: null, //any block
 	DISCORD: {
-		SERVER: ['Server'],
-		CHANNEL: ['Channel'],
-		MESSAGE: ['Message'],
-		MEMBER: ['Member', 'User']
+		SERVER: ["Server"],
+		CHANNEL: ["Channel"],
+		MESSAGE: ["Message"],
+		MEMBER: ["Member", "User"]
 	}
 };
 
@@ -28,35 +28,35 @@ const OutputType = {
  * List of constants for different block shapes.
  */
 const BlockShape = {
-	STATEMENT: 'statement', //Block shape for a statement block. Not actually required, but keeps code consistent.
-	EVENT: 'event', //Block shape for a floating block with an input inside.Can be replaced with FLOATING, but keeps code consistent.
-	TERMINAL: 'terminal', //Block shape for a block with no blocks allowed to attach after.
-	FLOATING: 'floating', //Block shape for a block that cannot have any parent blocks.
-	TOPPER: 'topper', //Block shape for a block that cannot have any blocks attached before it.
-	CUSTOM: 'custom' //Custom block shape, can be used if "manual" is used for the block.
+	STATEMENT: "statement", //Block shape for a statement block. Not actually required, but keeps code consistent.
+	EVENT: "event", //Block shape for a floating block with an input inside.Can be replaced with FLOATING, but keeps code consistent.
+	TERMINAL: "terminal", //Block shape for a block with no blocks allowed to attach after.
+	FLOATING: "floating", //Block shape for a block that cannot have any parent blocks.
+	TOPPER: "topper", //Block shape for a block that cannot have any blocks attached before it.
+	CUSTOM: "custom" //Custom block shape, can be used if "manual" is used for the block.
 };
 
 /**
  * List of constants for different input shapes / fields.
  */
 const InputShape = {
-	VALUE: 'input_value', //Input shape for inputs that allow output blocks.
-	DUMMY: 'input_dummy', //Can be used for seperating content on a block by a new line.
-	SPACE: 'input_space', //Similar to DUMMY.Can be used for seperating content on a block.
-	IMAGE: 'field_image', //Not actually an input, but an image.
-	ANGLE: 'field_angle', //Angle field for directional inputs.
-	CHECKBOX: 'field_checkbox', //Checkbox field usually for toggles.
-	COLOR: 'field_colour', //Color field.
-	MENU: 'field_dropdown', //Dropdown menu field with options.
-	SERIALIZABLE_LABEL: 'field_label_serializable', //Label that serializes to the project.
-	NUMBER: 'field_number', //Number field. Used for restricting to certain numbers.
-	TEXT: 'field_input', //Text field. Used if blocks shouldnt be used here,but text can still be input here.
-	MULTILINE_TEXT: 'field_multilinetext', //Multi-line text field.Similar to TEXT, but new line characters are allowed.
-	VARIABLE: 'field_variable', //Variable field. Similar to MENU, but the options are all variables.
+	VALUE: "input_value", //Input shape for inputs that allow output blocks.
+	DUMMY: "input_dummy", //Can be used for seperating content on a block by a new line.
+	SPACE: "input_space", //Similar to DUMMY.Can be used for seperating content on a block.
+	IMAGE: "field_image", //Not actually an input, but an image.
+	ANGLE: "field_angle", //Angle field for directional inputs.
+	CHECKBOX: "field_checkbox", //Checkbox field usually for toggles.
+	COLOR: "field_colour", //Color field.
+	MENU: "field_dropdown", //Dropdown menu field with options.
+	SERIALIZABLE_LABEL: "field_label_serializable", //Label that serializes to the project.
+	NUMBER: "field_number", //Number field. Used for restricting to certain numbers.
+	TEXT: "field_input", //Text field. Used if blocks shouldnt be used here,but text can still be input here.
+	MULTILINE_TEXT: "field_multilinetext", //Multi-line text field.Similar to TEXT, but new line characters are allowed.
+	VARIABLE: "field_variable", //Variable field. Similar to MENU, but the options are all variables.
 	DISCORD: {
-		SERVER: 'field_server',
-		CHANNEL: 'field_channel',
-		MESSAGE: 'field_message'
+		SERVER: "field_server",
+		CHANNEL: "field_channel",
+		MESSAGE: "field_message"
 	}
 };
 let EventsToTriggerWarnings = {
@@ -77,7 +77,7 @@ class BlocklyTool {
 			return; // we are done here if theres no blocks
 		}
 		for (const block of registry.blocks) {
-			if (typeof block.manual === 'string') {
+			if (typeof block.manual === "string") {
 				// manual block, dont do anything actually
 				// just run the function
 				blockset[block.manual](Blockly, javascriptGenerator);
@@ -85,7 +85,7 @@ class BlocklyTool {
 			}
 			// extract inputs from the block
 			const blockDisplayContent: any = {
-				message0: '',
+				message0: "",
 				args0: []
 			};
 			// set block arguments if its non existent
@@ -104,11 +104,11 @@ class BlocklyTool {
 					const id = `DUMMYNEWLINE_${currentIdx}`;
 					// add to arguments
 					blockArguments[id] = {
-						type: 'input_dummy'
+						type: "input_dummy"
 					};
 					idxa++;
 					// replaces the first entry
-					return match.replace('\n', `[${id}]`);
+					return match.replace("\n", `[${id}]`);
 				});
 				return newText;
 			});
@@ -118,7 +118,7 @@ class BlocklyTool {
 					const id = `BRANCH${idx + 1}`;
 					// add to arguments
 					blockArguments[id] = {
-						type: 'input_statement'
+						type: "input_statement"
 					};
 				}
 				// now add them to arrayText
@@ -131,19 +131,19 @@ class BlocklyTool {
 				}
 			}
 			// now parse this and add to message0 and args0
-			const blockMessage = arrayText.join(' ');
+			const blockMessage = arrayText.join(" ");
 			let idx = 0;
 			// parse blockMessage and add it to message0
 			blockDisplayContent.message0 = String(blockMessage).replace(/(\[\S+\])+/gim, (match) => {
 				idx++;
 				// reads the text inside of the brackets
-				const inputName: string = String(match).replace(/[\[\]]*/gim, '');
+				const inputName: string = String(match).replace(/[\[\]]*/gim, "");
 				// add to arguments
 				// get the argument data
 				const realArgument = block.arguments[inputName]
 					? block.arguments[inputName]
 					: // if not defined, default to blank input_value
-					  { type: 'input_value' };
+						{ type: "input_value" };
 				blockDisplayContent.args0.push({
 					// adds all argument data like type
 					...realArgument,
@@ -151,7 +151,7 @@ class BlocklyTool {
 					name: inputName
 				});
 				// return the %1 thing blockly wants
-				return '%' + idx;
+				return "%" + idx;
 			});
 			//block with type
 			let nBlock = block as BlockDefinition;
@@ -161,16 +161,16 @@ class BlocklyTool {
 			if (nBlock.warnings) {
 				warningsNew[fullId] = Object.create(null);
 				for (const warning of nBlock.warnings) {
-					let defaultType: string | string[] = '';
-					let suffix = '';
+					let defaultType: string | string[] = "";
+					let suffix = "";
 					switch (warning.type) {
 						case WarningType.RequiredParent:
 							defaultType = warning.parentType;
-							suffix = '_rp'; //required_parent all suffixes require to be 3 length
+							suffix = "_rp"; //required_parent all suffixes require to be 3 length
 							break;
 						case WarningType.EmptyInput:
 							defaultType = warning.inputName;
-							suffix = '_ri'; //required_input all suffixes require to be 3 length
+							suffix = "_ri"; //required_input all suffixes require to be 3 length
 							break;
 					}
 					if (Array.isArray(defaultType)) {
@@ -193,9 +193,9 @@ class BlocklyTool {
 						args0: blockDisplayContent.args0,
 						inputsInline: block.inline,
 						output: block.output,
-						tooltip: block.tooltip ? block.tooltip : '',
-						helpUrl: block.url ? block.url : '',
-						mutator: block.mutator !== '' ? block.mutator : ''
+						tooltip: block.tooltip ? block.tooltip : "",
+						helpUrl: block.url ? block.url : "",
+						mutator: block.mutator !== "" ? block.mutator : ""
 					});
 					if (block.shape) {
 						// apply block shape
@@ -238,36 +238,36 @@ class BlocklyTool {
 							if (
 								((EventsToTriggerWarnings[changeEvent.type] === 0 &&
 									changeEvent.blockId === this.id) ||
-									changeEvent.type == 'change') &&
+									changeEvent.type == "change") &&
 								!this.isInFlyout
 							) {
 								var topMostParent = this.getRootBlock();
 								// let wtext = ""
-								let nwtext = '';
+								let nwtext = "";
 								for (const key in warningsNew[fullId]) {
 									if (!WarningMessages[this.id]) {
 										WarningMessages[this.id] = Object.create(null);
 									}
 									switch (key.slice(key.length - 3, key.length)) {
-										case '_rp': //required parent suffix
+										case "_rp": //required parent suffix
 											let parent = key.slice(0, key.length - 3);
 
 											if (topMostParent.type !== parent) {
-												nwtext += warningsNew[fullId][key] + '\n';
+												nwtext += warningsNew[fullId][key] + "\n";
 												if (WarningMessages[this.id])
-													WarningMessages[this.id][key] = warningsNew[fullId][key] + '\n';
+													WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n";
 											} else {
 												if (WarningMessages[this.id])
 													if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];
 											}
 											break;
-										case '_ri': //required input suffix
+										case "_ri": //required input suffix
 											let input = key.slice(0, key.length - 3);
 											if (tBlock.getInput(input).connection.targetConnection === null) {
-												nwtext += warningsNew[fullId][key] + '\n';
+												nwtext += warningsNew[fullId][key] + "\n";
 
 												if (WarningMessages[this.id])
-													WarningMessages[this.id][key] = warningsNew[fullId][key] + '\n';
+													WarningMessages[this.id][key] = warningsNew[fullId][key] + "\n";
 											} else {
 												if (WarningMessages[this.id])
 													if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];
@@ -280,12 +280,12 @@ class BlocklyTool {
 										delete WarningMessages[this.id];
 								}
 								console.log(WarningMessages);
-								if (nwtext === '') {
+								if (nwtext === "") {
 									nwtext = null;
 								}
 
 								this.setWarningText(nwtext);
-								nwtext = '';
+								nwtext = "";
 							}
 						});
 					}
@@ -302,19 +302,19 @@ class BlocklyTool {
 					// the [INPUT] -> INPUT names are saved in the "name" property
 					const argName = argument.name;
 					switch (argument.type) {
-						case 'input_value':
+						case "input_value":
 							args[argName] = javascriptGenerator.valueToCode(
 								exportblock,
 								argName,
 								javascriptGenerator.ORDER_ATOMIC
 							);
 							break;
-						case 'input_statement':
+						case "input_statement":
 							args[argName] = javascriptGenerator.statementToCode(exportblock, argName);
 							break;
-						case 'input_dummy':
-						case 'input_space':
-							args[argName] = '';
+						case "input_dummy":
+						case "input_space":
+							args[argName] = "";
 							break;
 						default:
 							args[argName] = exportblock.getFieldValue(argName);
@@ -347,7 +347,7 @@ class BlocklyTool {
 				const returnValue = blockset[block.func](args);
 				// if a non-tuple was returned as an output block,
 				// we need to convert it to one
-				if (typeof block.output !== 'undefined' && !Array.isArray(returnValue)) {
+				if (typeof block.output !== "undefined" && !Array.isArray(returnValue)) {
 					// default is ORDER_NONE, meaning () around the whole thing
 					return [returnValue, javascriptGenerator.ORDER_NONE];
 				}

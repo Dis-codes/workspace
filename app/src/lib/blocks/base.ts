@@ -5,7 +5,7 @@ class BlockSet {
 	 */
 	getRegistry() {
 		return {
-			id: 'base', // prefix for all block IDs in this blockset
+			id: "base", // prefix for all block IDs in this blockset
 			color: 60, // color for all blocks in this blockset (unless the block overwrites it)
 			/**
 			 * Array of blocks.

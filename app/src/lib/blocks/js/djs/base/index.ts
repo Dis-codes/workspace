@@ -1,14 +1,14 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
 
 class BaseBlocks {
 	getRegistry() {
 		return {
-			id: 'base',
-			color: '#3844fc',
+			id: "base",
+			color: "#3844fc",
 			blocks: [
 				{
-					func: 'token',
-					text: 'Connect to bot using [TOKEN]',
+					func: "token",
+					text: "Connect to bot using [TOKEN]",
 					blockShape: BlockShape.FLOATING,
 					arguments: [
 						{
@@ -18,8 +18,8 @@ class BaseBlocks {
 					]
 				},
 				{
-					func: 'env',
-					text: 'Get environment variable [NAME]',
+					func: "env",
+					text: "Get environment variable [NAME]",
 					output: OutputType.STRING,
 					arguments: [
 						{
@@ -29,26 +29,26 @@ class BaseBlocks {
 					]
 				},
 				{
-					func: 'bot_connected',
-					text: ' [INFO] \n',
-					color: '#ffab19',
+					func: "bot_connected",
+					text: " [INFO] \n",
+					color: "#ffab19",
 					branches: 1,
 					BlockShape: BlockShape.EVENT,
 					arguments: {
 						INFO: {
 							type: InputShape.MENU,
 							options: [
-								['bot is connected', 'bot_connected'],
-								['Insert code', 'insert_code']
+								["bot is connected", "bot_connected"],
+								["Insert code", "insert_code"]
 							]
 						}
 					}
 				},
 				{
-					func: 'bot_status',
-					text: 'Type: [TYPE] Status: [STATUS] Title: [NAME] Message: [MESSAGE]',
+					func: "bot_status",
+					text: "Type: [TYPE] Status: [STATUS] Title: [NAME] Message: [MESSAGE]",
 					tooltip:
-						'Set bot status, type is the type of activity, status is the status of the bot, title is the title of the activity, and message is the message of the activity', // copilot wrote that entire tooltip lol
+						"Set bot status, type is the type of activity, status is the status of the bot, title is the title of the activity, and message is the message of the activity", // copilot wrote that entire tooltip lol
 					shape: BlockShape.STATEMENT,
 					arguments: {
 						MESSAGE: {
@@ -62,34 +62,34 @@ class BaseBlocks {
 						TYPE: {
 							type: InputShape.MENU,
 							options: [
-								['playing', 'Playing'],
-								['streaming', 'Streaming'],
-								['watching', 'Watching'],
-								['listening', 'Listening'],
-								['custom', 'Custom']
+								["playing", "Playing"],
+								["streaming", "Streaming"],
+								["watching", "Watching"],
+								["listening", "Listening"],
+								["custom", "Custom"]
 							]
 						},
 						STATUS: {
 							type: InputShape.MENU,
 							options: [
-								['dnd', 'dnd'],
-								['idle', 'idle'],
-								['online', 'online'],
-								['invisible', 'invisible']
+								["dnd", "dnd"],
+								["idle", "idle"],
+								["online", "online"],
+								["invisible", "invisible"]
 							]
 						}
 					}
 				},
 				{
-					func: 'bot_as_member',
-					text: 'Bot as member',
+					func: "bot_as_member",
+					text: "Bot as member",
 					output: OutputType.OBJECT,
-					color: '#187494'
+					color: "#187494"
 				},
 				{
-					func: 'bot_in_server',
-					text: 'Bot as member in server [SERVER]',
-					color: '#187494',
+					func: "bot_in_server",
+					text: "Bot as member in server [SERVER]",
+					color: "#187494",
 					output: OutputType.OBJECT,
 					arguments: {
 						SERVER: {
@@ -99,20 +99,20 @@ class BaseBlocks {
 					}
 				},
 				{
-					func: 'bot_info',
-					text: 'get bot info [INFO]',
-					color: '#4fa7c7',
+					func: "bot_info",
+					text: "get bot info [INFO]",
+					color: "#4fa7c7",
 					output: OutputType.ANY,
 					arguments: {
 						INFO: {
 							type: InputShape.MENU,
 							options: [
-								['startup time', 'startup_time'],
-								['ping', 'ping'],
-								['uptime', 'uptime'],
-								['user count', 'user_count'],
-								['server count', 'server_count'],
-								['channel count', 'channel_count']
+								["startup time", "startup_time"],
+								["ping", "ping"],
+								["uptime", "uptime"],
+								["user count", "user_count"],
+								["server count", "server_count"],
+								["channel count", "channel_count"]
 							]
 						}
 					}
@@ -135,11 +135,11 @@ class BaseBlocks {
 
 	bot_connected(args: any) {
 		switch (args.INFO) {
-			case 'bot_connected':
+			case "bot_connected":
 				return `client.once("ready", () => {
                     ${args.BRANCH1}
                 });`;
-			case 'insert_code':
+			case "insert_code":
 				return `${args.BRANCH1}`;
 		}
 	}
@@ -165,17 +165,17 @@ class BaseBlocks {
 
 	bot_info(args: any) {
 		switch (args.INFO) {
-			case 'startup_time':
+			case "startup_time":
 				return `client.readyAt`;
-			case 'ping':
+			case "ping":
 				return `client.ws.ping`;
-			case 'uptime':
+			case "uptime":
 				return `client.uptime`;
-			case 'user_count':
+			case "user_count":
 				return `client.users.cache.size`;
-			case 'server_count':
+			case "server_count":
 				return `client.guilds.cache.size`;
-			case 'channel_count':
+			case "channel_count":
 				return `client.channels.cache.size`;
 		}
 	}

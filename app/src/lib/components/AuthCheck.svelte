@@ -1,11 +1,11 @@
-<script lang='ts'>
-    import { goto } from "$app/navigation";
-    import { user } from "$lib/userStore";
-    import { onMount } from "svelte";
+<script lang="ts">
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/userStore';
+	import { onMount } from 'svelte';
 </script>
 
 {#if $user}
-    <slot/>
+	<slot />
 {:else}
-{onMount(() => goto('/login'))}
+	{onMount(() => goto('/login'))}
 {/if}

@@ -15,7 +15,7 @@
 
 //     const { data: { session },
 //     } = await supabase.auth.getSession();
-    
+
 //     if (session) {
 //         user.set(session.user); // Set the user data in the user store
 //     } else {

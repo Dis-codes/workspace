@@ -1,2 +1,1 @@
-
-export const WarningMessages = Object.create(null)
+export const WarningMessages = Object.create(null);

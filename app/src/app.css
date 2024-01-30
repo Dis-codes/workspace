@@ -4,8 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
-.text-discodes{
-    color: #7976e7;
+.text-discodes {
+	color: #7976e7;
 }
 .sepDark {
 	border-bottom: solid #262626 1px;
@@ -30,22 +30,18 @@
 	border-radius: 5px;
 }
 .material-symbols-outlined {
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 48
-  }
+	font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+}
 
-  ::-webkit-scrollbar {
-    width: 10px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 10px;
-  }
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
 
-  /**
+/**
  * Coldark Theme for Prism.js
  * Theme variation: Cold
  * Tested with HTML, CSS, JS, JSON, PHP, YAML, Bash script
@@ -53,11 +49,11 @@
  * @homepage https://github.com/ArmandPhilippot/coldark-prism
  * @license MIT
  */
-code[class*="language-"],
-pre[class*="language-"] {
+code[class*='language-'],
+pre[class*='language-'] {
 	color: #111b27;
 	background: none;
-	font-family: Consolas, Monaco, "Andale Mono", "Ubuntu Mono", monospace;
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	text-align: left;
 	white-space: pre;
 	word-spacing: normal;
@@ -73,34 +69,34 @@ pre[class*="language-"] {
 	hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection,
-pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection,
-code[class*="language-"] ::-moz-selection {
+pre[class*='language-']::-moz-selection,
+pre[class*='language-'] ::-moz-selection,
+code[class*='language-']::-moz-selection,
+code[class*='language-'] ::-moz-selection {
 	background: #8da1b9;
 }
 
-pre[class*="language-"]::selection,
-pre[class*="language-"] ::selection,
-code[class*="language-"]::selection,
-code[class*="language-"] ::selection {
+pre[class*='language-']::selection,
+pre[class*='language-'] ::selection,
+code[class*='language-']::selection,
+code[class*='language-'] ::selection {
 	background: #8da1b9;
 }
 
 /* Code blocks */
-pre[class*="language-"] {
+pre[class*='language-'] {
 	padding: 1em;
 	margin: 0.5em 0;
 	overflow: auto;
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+:not(pre) > code[class*='language-'],
+pre[class*='language-'] {
 	background: #e3eaf2;
 }
 
 /* Inline code */
-:not(pre) > code[class*="language-"] {
+:not(pre) > code[class*='language-'] {
 	padding: 0.1em 0.3em;
 	border-radius: 0.3em;
 	white-space: normal;
@@ -362,11 +358,11 @@ pre > code.diff-highlight .token.token.inserted:not(.prefix) {
 .command-line .command-line-prompt > span:before {
 	color: #3c526dda;
 }
-.token.operator  {
-    background: transparent;
+.token.operator {
+	background: transparent;
 }
 
 /* none grey color */
 code {
-    color: #111b27;
+	color: #111b27;
 }

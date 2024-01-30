@@ -1,6 +1,5 @@
 // import { user } from '$lib/userStore';
 
-
 // export const load = async ({ locals: { getSession } }) => {
 //     const session = await getSession();
 //     if (session) {

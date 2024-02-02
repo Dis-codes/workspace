@@ -15,6 +15,8 @@ import base from "./Djs/Base";
 import server from "./Djs/Server";
 import message from "./Djs/Message";
 import embed from "./Djs/Embed";
+import member from "./Djs/Member"
+import user from "./Djs/User"
 
 import coretest from "./coretest";
 
@@ -323,7 +325,7 @@ export default [
 						kind: "category",
 						name: "Members",
 						colour: "#187494",
-						contents: []
+						contents: member
 					},
 					{
 						id: "emojis",
@@ -375,7 +377,7 @@ export default [
 				kind: "category",
 				name: "Users",
 				colour: "#60bcec",
-				contents: []
+				contents: user
 			}
 		]
 	},

@@ -3,11 +3,13 @@
     let settings = persisted('workspace')
     let commands = $settings.commands || [{name: "yey", description: "yey"}]
     let newCommand = {name: "", description: ""}
+    let page = "home"
+    let currentCmd
     $ : newCommand.name = newCommand.name.toLowerCase()
     $ : commands = $settings.commands || [{name: "yey", description: "yey"}]
 
     function addCommand() {
-        if (newCommand.name.length < 4) return
+        if (newCommand.name.length < 3) return
         if (commands.find(c => c.name == newCommand.name)) return
         commands.push(newCommand)
         settings.update(s => {
@@ -20,11 +22,12 @@
   
   <div class=" w-full h-screen">
     <div class="mt-20">
+{#if page === "home"}
         <h2 class="font-bold text-3xl flex justify-center">Slash commands</h2>
 
         <div class="grid grid-cols-4 p-10 gap-10">
             {#each commands as command}
-                <button class="btn h-20 w-80">
+                <button on:click={()=> {page = "command"; currentCmd = command}} class="btn h-20 w-80 flex flex-col justify-between p-4">
                     <div class="font-bold">{command.name}</div>
                     <div class="text-gray-400 text-xs">{command.description}</div>
                 </button>
@@ -34,7 +37,10 @@
             <div class="text-gray-400 text-xs">click here to create a new command</div>
         </button>
     </div>
-    </div>
+    {:else if page === "command"}
+    <h3 class="font-bold text-3xl text-center">{currentCmd.name}</h3>
+    {/if}
+  </div>
 </div>
 
 <dialog id="newcmds" class="modal">
@@ -46,8 +52,10 @@
         </div>
         <input type="text" class="input input-bordered w-full" bind:value={newCommand.name} />
         <div class="label">
-            {#if newCommand.name.length < 4}
+            {#if newCommand.name.length < 3}
             <span class="label-text-alt text-red-500">Name cannot be shorter than 3 characters</span>
+           {:else if commands.find(c => c.name == newCommand.name)}
+           <span class="label-text-alt text-red-500">Already exists!</span>
             {/if}
         </div>
       </label>

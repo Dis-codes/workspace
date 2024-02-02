@@ -7,14 +7,23 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --plugin-search-dir . --check . && eslint .",
+		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-vercel": "^3.0.3",
 		"@sveltejs/kit": "^1.22.6",
+		"@types/prismjs": "^1.26.3",
+		"@typescript-eslint/eslint-plugin": "^6.20.0",
 		"autoprefixer": "^10.4.15",
 		"daisyui": "^3.5.1",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-plugin-svelte": "^2.30.0",
 		"postcss": "^8.4.31",
+		"prettier": "3.2.4",
+		"prettier-plugin-svelte": "^3.1.2",
 		"svelte": "^4.0.5",
 		"svelte-check": "^3.4.3",
 		"tailwindcss": "^3.3.3",
@@ -24,14 +33,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/auth-helpers-sveltekit": "^0.10.2",
-		"@supabase/auth-ui-shared": "^0.1.6",
-		"@supabase/auth-ui-svelte": "^0.2.2",
-		"@supabase/supabase-js": "^2.32.0",
 		"blockly": "^10.1.2",
 		"discodes-utilities": "^1.0.3",
 		"jszip": "^3.10.1",
-		"prettier": "^3.0.3",
 		"prismjs": "^1.29.0"
 	}
 }

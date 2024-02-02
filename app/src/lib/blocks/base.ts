@@ -1,18 +1,18 @@
 class BlockSet {
-    /**
-     * Details for this blockset and its blocks.
-     * View utils/blockRegistryTool.ts for more info.
-     */
-    getRegistry() {
-        return {
-            id: "base", // prefix for all block IDs in this blockset
-            color: 60, // color for all blocks in this blockset (unless the block overwrites it)
-            /**
-            * Array of blocks.
-            * This defines how the blocks will be shaped and their functionality.
-            * View blocks/base.ts for more info.
-            */
-            /*
+	/**
+	 * Details for this blockset and its blocks.
+	 * View utils/blockRegistryTool.ts for more info.
+	 */
+	getRegistry() {
+		return {
+			id: "base", // prefix for all block IDs in this blockset
+			color: 60, // color for all blocks in this blockset (unless the block overwrites it)
+			/**
+			 * Array of blocks.
+			 * This defines how the blocks will be shaped and their functionality.
+			 * View blocks/base.ts for more info.
+			 */
+			/*
                 Example:
 
                 {
@@ -67,9 +67,9 @@ class BlockSet {
                     }
                 }
             */
-            blocks: []
-        };
-    }
+			blocks: []
+		};
+	}
 }
 
 export default BlockSet;

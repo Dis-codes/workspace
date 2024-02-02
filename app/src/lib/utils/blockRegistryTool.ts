@@ -20,7 +20,8 @@ const OutputType = {
 		SERVER: ["Server"],
 		CHANNEL: ["Channel"],
 		MESSAGE: ["Message"],
-		MEMBER: ["Member", "User"]
+		MEMBER: ["Member", "User"],
+		ROLE: ["Role"]
 	}
 };
 

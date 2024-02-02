@@ -15,6 +15,7 @@ import base from "./Djs/Base";
 import server from "./Djs/Server";
 import message from "./Djs/Message";
 import embed from "./Djs/Embed";
+import role from "./Djs/Role";
 
 import coretest from "./coretest";
 
@@ -316,7 +317,7 @@ export default [
 						kind: "category",
 						name: "Roles",
 						colour: "#30b474",
-						contents: []
+						contents: role
 					},
 					{
 						id: "members",

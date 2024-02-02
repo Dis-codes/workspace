@@ -41,15 +41,15 @@ class RoleBlocks {
         }
 			]
 		};
-	},
+	}
 	get(args: any) {
 		return `${args.SERVER}.roles.cache.get(${args.ID})`;
-	},
+	}
   get_all(args: any) {
 		return `${args.VAL}.roles.cache.forEach(__DIS__Role => {
   ${args.BRANCH1}
 })`;
-	},
+	}
   get_all_value(args: any) {
 		return `__DIS__Role`;
 	}

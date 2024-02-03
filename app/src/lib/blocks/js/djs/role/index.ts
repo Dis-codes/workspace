@@ -55,6 +55,52 @@ class RoleBlocks {
               check: [OutputType.STRING, OutputType.DISCORD.ROLE].flat()
             }
           }
+        },
+        {
+          func: "property",
+          text: "Role [ROLE] [THING]",
+          output: [OutputType.STRING, OutputType.NUMBER, OutputType.DISCORD.SERVER].flat(),
+          inline: true,
+          arguments: {
+            ROLE: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.ROLE
+            },
+            THING: {
+              type: InputShape.MENU,
+              options: [
+                ["name", "name"],
+                ["id", "id"],
+                ["color", "color"],
+                ["icon", "icon"],
+                ["unicode icon", "unicodeEmoji"],
+                ["position", "rawPosition"],
+                //["permissions", "permissions"], - no permisions category or type yet
+                ["server", "guild"]
+              ]
+            }
+          }
+        },
+        {
+          func: "is",
+          text: "Is role [ROLE] [THING]",
+          output: OutputType.BOOLEAN,
+          inline: true,
+          arguments: {
+            ROLE: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.ROLE
+            },
+            THING: {
+              type: InputShape.MENU,
+              options: [
+                ["mentionable", "mentionable"],
+                ["hoisted", "hoist"],
+                ["managed", "managed"],
+                ["existent", "exist"]
+              ]
+            }
+          }
         }
       ]
     };
@@ -72,6 +118,13 @@ class RoleBlocks {
   }
   member_has(args: any) {
     return `${args.MEMBER}.roles.cache.has(${args.ROLE})`
+  }
+  property(args: any) {
+    return `${args.ROLE}.${args.THING}`
+  }
+  is(args: any) {
+    if (args.THING == "exist") return `(!!${args.ROLE})`
+    return `${args.ROLE}.${args.THING}`
   }
 }
   

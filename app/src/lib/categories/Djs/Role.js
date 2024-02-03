@@ -29,5 +29,13 @@ export default [
   {
     kind: "block",
     type: "role_member_has"
+  },
+  {
+    kind: "block",
+    type: "role_property"
+  },
+  {
+    kind: "block",
+    type: "role_is"
   }
 ];

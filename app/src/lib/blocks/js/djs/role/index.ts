@@ -30,7 +30,7 @@ class RoleBlocks {
           arguments: {
             VAL: {
               type: InputShape.VALUE,
-              check: [OutputType.DISCORD.SERVER, OutputType.DISCORD.MEMBER]
+              check: [OutputType.DISCORD.SERVER, OutputType.DISCORD.MEMBER].flat()
             }
           }
         },
@@ -52,7 +52,7 @@ class RoleBlocks {
             },
             ROLE: {
               type: InputShape.VALUE,
-              check: [OutputType.STRING, OutputType.DISCORD.ROLE]
+              check: [OutputType.STRING, OutputType.DISCORD.ROLE].flat()
             }
           }
         }

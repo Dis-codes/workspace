@@ -25,5 +25,9 @@ export default [
   {
     kind: "block",
     type: "role_get_all_value"
+  },
+  {
+    kind: "block",
+    type: "role_member_has"
   }
 ];

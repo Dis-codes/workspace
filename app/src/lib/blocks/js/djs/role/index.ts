@@ -119,13 +119,19 @@ class RoleBlocks {
             },
             COLOR: {
               type: InputShape.VALUE,
-              check: [OutputType.STRING, OutputType.NUMBER].flat()
+              check: [OutputType.STRING, OutputType.NUMBER, OutputType.COLOR].flat()
             },
             REASON: {
               type: InputShape.VALUE,
               check: OutputType.STRING
             }
           }
+        },
+        {
+          func: "created",
+          text: "Created role",
+          output: OutputType.DISCORD.ROLE,
+          inline: true
         }
       ]
     };
@@ -159,6 +165,9 @@ class RoleBlocks {
 }).then(__DIS__CreatedRole => {
   ${args.BRANCH1}
 })`
+  }
+  created(args: any) {
+    return `__DIS__CreatedRole`
   }
 }
   

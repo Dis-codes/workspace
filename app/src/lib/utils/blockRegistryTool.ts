@@ -322,7 +322,7 @@ class BlocklyTool {
 					}
 				}
 
-				if (exportblock.fields_.length !== 0) {
+				if (exportblock.fields_ && exportblock.fields_.length !== 0) {
 					for (const field of (exportblock as any).fields_ as string[]) {
 						const input = exportblock.getInput(field);
 						if (input) {
@@ -330,7 +330,7 @@ class BlocklyTool {
 								// 3 is statement type
 								const val = javascriptGenerator.statementToCode(exportblock, field);
 								args[field] = val.slice(1, val.length - 1);
-								args[field.toUpperCase()] = val.slice(1, val.length - 1);
+								args[field..toUpperCase()] = val.slice(1, val.length - 1);
 								continue;
 							}
 

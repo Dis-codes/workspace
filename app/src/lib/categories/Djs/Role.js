@@ -45,9 +45,5 @@ export default [
   {
     kind: "block",
     type: "role_create"
-  },
-  {
-    kind: "block",
-    type: "role_delete"
   }
 ];

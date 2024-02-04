@@ -9,7 +9,7 @@ export default [
     inputs: {
       ID: {
         shadow: {
-	  kind: "block",
+          kind: "block",
           type: "text",
           fields: {
             TEXT: "0"
@@ -37,5 +37,17 @@ export default [
   {
     kind: "block",
     type: "role_is"
+  },
+  {
+    kind: "label",
+    text: "Role actions"
+  },
+  {
+    kind: "block",
+    type: "role_create"
+  },
+  {
+    kind: "block",
+    type: "role_delete"
   }
 ];

@@ -104,7 +104,7 @@ class RoleBlocks {
         },
         {
           func: "create",
-          text: "Create role in server [SERVER] \n with name [NAME] \n Color [COLOR] \n Reason [REASON] \n Then",
+          text: "Create role in server [SERVER] Name [NAME] Color [COLOR] Reason [REASON] Then",
           shape: BlockShape.STATEMENT,
           branches: 1,
           inline: false,

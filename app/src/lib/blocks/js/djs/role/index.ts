@@ -101,6 +101,31 @@ class RoleBlocks {
               ]
             }
           }
+        },
+        {
+          func: "create",
+          text: "Create role in server [SERVER] \n with name [NAME] \n Color [COLOR] \n Reason [REASON] \n Then",
+          shape: BlockShape.STATEMENT,
+          branches: 1,
+          inline: false,
+          arguments: {
+            SERVER: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.SERVER
+            },
+            NAME: {
+              type: InputShape.VALUE,
+              check: OutputType.STRING
+            },
+            COLOR: {
+              type: InputShape.VALUE,
+              check: [OutputType.STRING, OutputType.NUMBER].flat()
+            },
+            REASON: {
+              type: InputShape.VALUE,
+              check: OutputType.STRING
+            }
+          }
         }
       ]
     };
@@ -125,6 +150,15 @@ class RoleBlocks {
   is(args: any) {
     if (args.THING == "exist") return `(!!${args.ROLE})`
     return `${args.ROLE}.${args.THING}`
+  }
+  create(args: any) {
+    return `${args.SERVER}.roles.create({
+  name: ${args.NAME},
+  color: ${args.COLOR},
+  reason: ${args.REASON},
+}).then(__DIS__CreatedRole => {
+  ${args.BRANCH1}
+})`
   }
 }
   

@@ -119,7 +119,7 @@ class RoleBlocks {
             },
             COLOR: {
               type: InputShape.VALUE,
-              check: [OutputType.STRING, OutputType.NUMBER, OutputType.COLOR].flat()
+              check: [OutputType.STRING, OutputType.NUMBER, "Colour"].flat()
             },
             REASON: {
               type: InputShape.VALUE,
@@ -132,6 +132,18 @@ class RoleBlocks {
           text: "Created role",
           output: OutputType.DISCORD.ROLE,
           inline: true
+        },
+        {
+          func: "delete",
+          text: "Delete role [ROLE]",
+          shape: BlockShape.STATEMENT,
+          inline: true,
+          arguments: {
+            ROLE: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.ROLE
+            }
+          }
         }
       ]
     };
@@ -168,6 +180,9 @@ class RoleBlocks {
   }
   created(args: any) {
     return `__DIS__CreatedRole`
+  }
+  delete(args: any) {
+    return `${args.ROLE}.delete()`
   }
 }
   

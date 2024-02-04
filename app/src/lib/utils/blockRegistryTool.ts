@@ -330,7 +330,7 @@ class BlocklyTool {
 								// 3 is statement type
 								const val = javascriptGenerator.statementToCode(exportblock, field);
 								args[field] = val.slice(1, val.length - 1);
-								args[field..toUpperCase()] = val.slice(1, val.length - 1);
+								args[field.toUpperCase()] = val.slice(1, val.length - 1);
 								continue;
 							}
 

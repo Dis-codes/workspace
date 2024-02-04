@@ -44,6 +44,39 @@ export default [
   },
   {
     kind: "block",
-    type: "role_create"
+    type: "role_create",
+    inputs: {
+      NAME: {
+        shadow: {
+          kind: "block",
+          type: "text",
+          fields: {
+            TEXT: "New Role"
+          }
+        }
+      },
+      COLOR: {
+        shadow: {
+          kind: "block",
+          type: "text",
+          fields: {
+            TEXT: "#88F"
+          }
+        }
+      },
+      REASON: {
+        shadow: {
+          kind: "block",
+          type: "text",
+          fields: {
+            TEXT: "Creation reason"
+          }
+        }
+      }
+    }
+  },
+  {
+    kind: "block",
+    type: "role_created"
   }
 ];

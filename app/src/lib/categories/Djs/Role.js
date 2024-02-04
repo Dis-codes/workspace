@@ -78,5 +78,9 @@ export default [
   {
     kind: "block",
     type: "role_created"
+  },
+  {
+    kind: "block",
+    type: "role_delete"
   }
 ];

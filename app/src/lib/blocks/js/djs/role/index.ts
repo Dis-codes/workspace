@@ -104,7 +104,7 @@ class RoleBlocks {
         },
         {
           func: "member_give_remove",
-          text: "[ACTION] role(s) [ROLE] to [MEMBER]",
+          text: "[ACTION] role(s) [ROLE] to [MEMBER] member",
           shape: BlockShape.STATEMENT,
           inline: true,
           arguments: {

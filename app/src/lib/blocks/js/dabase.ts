@@ -159,43 +159,43 @@ class databaseBlocks {
 	}
 
 	set(args: any) {
-		return `${args.DATABASE}.set(String(${args.VALUE}), "${args.NAME}")\n))`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.set(String(${args.NAME}), ${args.VALUE})`;
 	}
 
 	create_new(args: any) {
-		return `const ${args.NAME} = new Database("./${args.NAME}.json")\n`;
+		return `const ${args.NAME.substring(1, args.NAME.length-1)} = new Database("./${args.NAME.substring(1, args.NAME.length-1)}.json")\n`;
 	}
 
 	get(args: any) {
-		return `${args.DATABASE}.get(String(${args.NAME}))`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.get(String(${args.NAME}))`;
 	}
 
 	exists(args: any) {
-		return `${args.DATABASE}.has(String(${args.NAME}))`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.has(String(${args.NAME}))`;
 	}
 
 	delete(args: any) {
-		return `${args.DATABASE}.delete(String(${args.NAME}))`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.delete(String(${args.NAME}))`;
 	}
 
 	all(args: any) {
-		return `${args.DATABASE}.all()`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.all()`;
 	}
 
 	clear(args: any) {
-		return `${args.DATABASE}.clear()`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.clear()`;
 	}
 
 	push(args: any) {
-		return `${args.DATABASE}.push(String(${args.NAME}), ${args.VALUE})`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.push(String(${args.NAME}), ${args.VALUE})`;
 	}
 
 	addsubstract(args: any) {
 		switch (args.A) {
 			case "add":
-				return `${args.DATABASE}.add(String(${args.NAME}), ${args.VALUE})`;
+				return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.add(String(${args.NAME}), ${args.VALUE})`;
 			case "subtract":
-				return `${args.DATABASE}.subtract(String(${args.NAME}), ${args.VALUE})`;
+				return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.subtract(String(${args.NAME}), ${args.VALUE})`;
 			default:
 				return "";
 		}

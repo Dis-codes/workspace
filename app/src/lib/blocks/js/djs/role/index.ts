@@ -105,7 +105,7 @@ class RoleBlocks {
         {
           func: "member_give_remove",
           text: "[ACTION] role(s) [ROLE] to [MEMBER]",
-          output: OutputType.BOOLEAN,
+          shape: BlockShape.STATEMENT,
           inline: true,
           arguments: {
             ACTION: {

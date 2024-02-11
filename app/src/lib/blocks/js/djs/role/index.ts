@@ -167,6 +167,35 @@ class RoleBlocks {
               check: OutputType.DISCORD.ROLE
             }
           }
+        },
+        {
+          func: "edit",
+          text: "In role [ROLE] set [THING] to [VALUE]",
+          shape: BlockShape.STATEMENT,
+          inline: true,
+          arguments: {
+            ROLE: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.ROLE
+            },
+            THING: {
+              type: InputShape.MENU,
+              options: [
+                ["name", "name"],
+                ["color", "color"],
+                ["icon", "icon"],
+                ["unicode icon", "unicodeEmoji"],
+                ["position", "position"],
+                //["permissions", "permissions"], - no permisions category or type yet
+                ["mentionable", "mentionable"],
+                ["hoisted", "hoist"]
+              ]
+            },
+            VALUE: {
+              type: InputShape.VALUE,
+              check: [OutputType.STRING, OutputType.NUMBER, OutputType.COLOR, OutputType.BOOLEAN, "Colour"].flat()
+            }
+          }
         }
       ]
     };
@@ -209,6 +238,24 @@ class RoleBlocks {
   }
   delete(args: any) {
     return `${args.ROLE}.delete()`
+  }
+  edit(args: any) {
+    switch (args.THING) {
+      case 'name':
+        return `${args.ROLE}.setName(${args.VALUE})`
+      case 'color':
+        return `${args.ROLE}.setColor(${args.VALUE})`
+      case 'icon':
+        return `${args.ROLE}.setIcon(${args.VALUE})`
+      case 'unicodeEmoji':
+        return `${args.ROLE}.setUnicodeEmoji(${args.VALUE})`
+      case 'position':
+        return `${args.ROLE}.setPosition(${args.VALUE})`
+      case 'mentionable':
+        return `${args.ROLE}.setMentionable(${args.VALUE})`
+      case 'hoist':
+        return `${args.ROLE}.setHoist(${args.VALUE})`
+    }
   }
 }
   

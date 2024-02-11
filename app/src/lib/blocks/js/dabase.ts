@@ -159,11 +159,11 @@ class databaseBlocks {
 	}
 
 	set(args: any) {
-		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.set(String(${args.VALUE}), "${args.NAME}")\n))`;
+		return `${args.DATABASE.substring(1, args.DATABASE.length-1)}.set(String(${args.NAME}), ${args.VALUE})`;
 	}
 
 	create_new(args: any) {
-		return `const ${args.NAME.substring(1, args.NAME.length-1)} = new Database("./${args.NAME}.json")\n`;
+		return `const ${args.NAME.substring(1, args.NAME.length-1)} = new Database("./${args.NAME.substring(1, args.NAME.length-1)}.json")\n`;
 	}
 
 	get(args: any) {

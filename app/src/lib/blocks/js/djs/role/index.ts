@@ -321,7 +321,7 @@ class RoleBlocks {
                 ["Send Voice Messages", 70368744177664n]
               ]
             },
-            {
+            OP: {
               type: InputShape.menu,
               options: [
                 ['Allow', 'add'],

@@ -17,6 +17,7 @@ import message from "./Djs/Message";
 import embed from "./Djs/Embed";
 import member from "./Djs/Member"
 import user from "./Djs/User"
+import Webhook from "./Djs/Webhook";
 
 import coretest from "./coretest";
 
@@ -216,7 +217,7 @@ export default [
 						kind: "category",
 						name: "Webhooks",
 						colour: "#3c4cf0",
-						contents: []
+						contents: Webhook
 					},
 					{
 						id: "reactions",

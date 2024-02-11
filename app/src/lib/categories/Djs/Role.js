@@ -44,6 +44,10 @@ export default [
   },
   {
     kind: "block",
+    type: "role_member_give_remove"
+  },
+  {
+    kind: "block",
     type: "role_create",
     inputs: {
       NAME: {

@@ -103,6 +103,29 @@ class RoleBlocks {
           }
         },
         {
+          func: "member_give_remove",
+          text: "[ACTION] role(s) [ROLE] to [MEMBER]",
+          output: OutputType.BOOLEAN,
+          inline: true,
+          arguments: {
+            ACTION: {
+              type: InputShape.MENU,
+              options: [
+                ["Give", "add"],
+                ["Remove", "remove"]
+              ]
+            },
+            ROLE: {
+              type: InputShape.VALUE,
+              check: [OutputType.DISCORD.ROLE, OutputType.ARRAY].flat()
+            },
+            MEMBER: {
+              type: InputShape.VALUE,
+              check: OutputType.DISCORD.MEMBER
+            }
+          }
+        },
+        {
           func: "create",
           text: "Create role in server [SERVER] Name [NAME] Color [COLOR] Reason [REASON] Then",
           shape: BlockShape.STATEMENT,
@@ -168,6 +191,9 @@ class RoleBlocks {
   is(args: any) {
     if (args.THING == "exist") return `(!!${args.ROLE})`
     return `${args.ROLE}.${args.THING}`
+  }
+  member_give_remove(args: any) {
+    return `${args.MEMBER}.roles.${args.ACTION}(${args.ROLE})`
   }
   create(args: any) {
     return `${args.SERVER}.roles.create({

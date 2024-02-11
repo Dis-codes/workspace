@@ -102,4 +102,16 @@ export default [
       }
     }
   }
+  {
+    kind: "label",
+    text: "Permissions"
+  },
+  {
+    kind: "block",
+    type: "role_has_perm"
+  },
+  {
+    kind: "block",
+    type: "role_set_perm"
+  }
 ];

@@ -163,7 +163,7 @@ class databaseBlocks {
 	}
 
 	create_new(args: any) {
-		return `const ${args.args.NAME.substring(1, args.NAME.length-1)} = new Database("./${args.NAME}.json")\n`;
+		return `const ${args.NAME.substring(1, args.NAME.length-1)} = new Database("./${args.NAME}.json")\n`;
 	}
 
 	get(args: any) {

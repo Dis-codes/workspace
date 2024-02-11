@@ -89,6 +89,17 @@ export default [
   },
   {
     kind: "block",
-    type: "role_edit"
+    type: "role_edit",
+    inputs: {
+      VALUE: {
+        shadow: {
+          kind: "block",
+          type: "text",
+          fields: {
+            TEXT: "Role"
+          }
+        }
+      }
+    }
   }
 ];

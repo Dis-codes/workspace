@@ -101,7 +101,7 @@ export default [
         }
       }
     }
-  }
+  },
   {
     kind: "label",
     text: "Permissions"

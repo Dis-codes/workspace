@@ -260,7 +260,7 @@ class RoleBlocks {
         },
         {
           func: "set_perm",
-          text: "Role [ROLE] set permission [PERM] to [OP]",
+          text: "Role [ROLE] set permission [PERM] to OP",
           shape: BlockShape.STATEMENT,
           inline: true,
           arguments: {
@@ -318,14 +318,14 @@ class RoleBlocks {
                 ["Use External Sounds", "35184372088832n"],
                 ["Send Voice Messages", "70368744177664n"]
               ]
-            },
+            }/*,
             OP: {
               type: InputShape.menu,
               options: [
                 ["Allow", "add"],
                 ["Disallow", "remove"]
               ]
-            }
+            }*/
           }
         }
       ]

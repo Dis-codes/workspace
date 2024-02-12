@@ -198,7 +198,7 @@ class RoleBlocks {
         {
           func: "has_perm",
           text: "Role [ROLE] has permission [PERM]",
-          shape: BlockShape.STATEMENT,
+          output: OutputType.DISCORD.BOOLEAN,
           inline: true,
           arguments: {
             ROLE: {
@@ -322,8 +322,8 @@ class RoleBlocks {
             OP: {
               type: InputShape.menu,
               options: [
-                ['Allow', 'add'],
-                ['Disallow', 'remove']
+                ["Allow", "add"],
+                ["Disallow", "remove"]
               ]
             }
           }

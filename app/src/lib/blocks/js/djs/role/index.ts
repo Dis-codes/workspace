@@ -198,7 +198,7 @@ class RoleBlocks {
         {
           func: "has_perm",
           text: "Role [ROLE] has permission [PERM]",
-          output: OutputType.DISCORD.BOOLEAN,
+          output: OutputType.BOOLEAN,
           inline: true,
           arguments: {
             ROLE: {

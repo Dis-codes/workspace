@@ -392,7 +392,7 @@ class RoleBlocks {
     return `${args.ROLE}.permissions.has(${args.PERM})`
   }
   set_perm(args: any) {
-    return `${args.ROLE}.setPermissions(${args.ROLE}.permissions.${args.OP}(${args.PERM}))`
+    return `${args.ROLE}.setPermissions(${args.ROLE}.permissions.${args.ALLOW}(${args.PERM}))`
   }
 }
   

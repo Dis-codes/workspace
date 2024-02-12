@@ -112,6 +112,6 @@ export default [
   },
   {
     kind: "block",
-    type: "role_has_perm"
+    type: "role_set_perm"
   }
 ];

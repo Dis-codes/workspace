@@ -314,7 +314,7 @@ class RoleBlocks {
                 ["Use External Sounds", "35184372088832n"],
                 ["Send Voice Messages", "70368744177664n"]
               ]
-            }
+            },
             ROLE: {
               type: InputShape.VALUE,
               check: OutputType.DISCORD.ROLE

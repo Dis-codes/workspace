@@ -1,4 +1,5 @@
-import { OutputType, BlockShape, InputShape } from '$lib/utils/blockRegistryTool';
+import { MutatorType } from "$lib/interfaces/mutator";
+import { OutputType, BlockShape, InputShape, Permissions } from '$lib/utils/blockRegistryTool';
 class RoleBlocks {
   getRegistry () {
     return {
@@ -126,9 +127,9 @@ class RoleBlocks {
         },
         {
           func: "create",
-          text: "Create role in server [SERVER] Name [NAME] Color [COLOR] Reason [REASON] Then",
+          text: "Create role in server [SERVER] Name [NAME] Color [COLOR] Reason [REASON]",
           shape: BlockShape.STATEMENT,
-          branches: 1,
+         // branches: 1,
           inline: false,
           arguments: {
             SERVER: {
@@ -147,7 +148,20 @@ class RoleBlocks {
               type: InputShape.VALUE,
               check: OutputType.STRING
             }
-          }
+          },
+          mutator: "create_mutator",
+					mutatorData: {
+						type: MutatorType.CheckBox,
+						inputs: [
+							{
+								text: "Then", // text for input text
+								inputName: "Then",
+								type: OutputType.STRING, // type for input added to the main block
+								defaultValue: false, // whether the checkbox is checked also will affect if input is showed on start
+								branch: true
+							}
+						]
+					},
         },
         {
           func: "created",
@@ -207,54 +221,7 @@ class RoleBlocks {
             },
             PERM: {
               type: InputShape.MENU,
-              options: [
-                ["Create Invites", "1n"],
-                ["Kick Members", "2n"],
-                ["Ban Members", "4n"],
-                ["Administrator", "8n"],
-                ["Manage Channels", "16n"],
-                ["Manage Guild", "32n"],
-                ["Add Reactions", "64n"],
-                ["View Audit Log", "128n"],
-                ["Priority Speaker", "256n"],
-                ["Stream", "512n"],
-                ["View Channel", "1024n"],
-                ["Send Messages", "2048n"],
-                ["Send TTS Messages", "4096n"],
-                ["Manage Messages", "8192n"],
-                ["Embed Links", "16384n"],
-                ["Attach Files", "32768n"],
-                ["Read Message History", "65536n"],
-                ["Mention Everyone", "131072n"],
-                ["Use External Emojis", "262144n"],
-                ["View Guild Insights", "524288n"],
-                ["Connect", "1048576n"],
-                ["Speak", "2097152n"],
-                ["Mute Members", "4194304n"],
-                ["Deafen Members", "8388608n"],
-                ["Move Members", "16777216n"],
-                ["Use VAD", "33554432n"],
-                ["Change Nickname", "67108864n"],
-                ["Manage Nicknames", "134217728n"],
-                ["Manage Roles", "268435456n"],
-                ["Manage Webhooks", "536870912n"],
-                ["Manage Emojis And Stickers", "1073741824n"],
-                ["Manage Guild Expressions", "1073741824n"],
-                ["Use Application Commands", "2147483648n"],
-                ["Request To Speak", "4294967296n"],
-                ["Manage Events", "8589934592n"],
-                ["Manage Threads", "17179869184n"],
-                ["Create Public Threads", "34359738368n"],
-                ["Create Private Threads", "68719476736n"],
-                ["Use External Stickers", "137438953472n"],
-                ["Send Messages In Threads", "274877906944n"],
-                ["Use Embedded Activities", "549755813888n"],
-                ["Timeout Members", "1099511627776n"],
-                ["View Creator Monetization Analytics", "2199023255552n"],
-                ["Use Soundboard", "4398046511104n"],
-                ["Use External Sounds", "35184372088832n"],
-                ["Send Voice Messages", "70368744177664n"]
-              ]
+              options: Permissions
             }
           }
         },
@@ -266,54 +233,7 @@ class RoleBlocks {
           arguments: {
             PERM: {
               type: InputShape.MENU,
-              options: [
-                ["Create Invites", "1n"],
-                ["Kick Members", "2n"],
-                ["Ban Members", "4n"],
-                ["Administrator", "8n"],
-                ["Manage Channels", "16n"],
-                ["Manage Guild", "32n"],
-                ["Add Reactions", "64n"],
-                ["View Audit Log", "128n"],
-                ["Priority Speaker", "256n"],
-                ["Stream", "512n"],
-                ["View Channel", "1024n"],
-                ["Send Messages", "2048n"],
-                ["Send TTS Messages", "4096n"],
-                ["Manage Messages", "8192n"],
-                ["Embed Links", "16384n"],
-                ["Attach Files", "32768n"],
-                ["Read Message History", "65536n"],
-                ["Mention Everyone", "131072n"],
-                ["Use External Emojis", "262144n"],
-                ["View Guild Insights", "524288n"],
-                ["Connect", "1048576n"],
-                ["Speak", "2097152n"],
-                ["Mute Members", "4194304n"],
-                ["Deafen Members", "8388608n"],
-                ["Move Members", "16777216n"],
-                ["Use VAD", "33554432n"],
-                ["Change Nickname", "67108864n"],
-                ["Manage Nicknames", "134217728n"],
-                ["Manage Roles", "268435456n"],
-                ["Manage Webhooks", "536870912n"],
-                ["Manage Emojis And Stickers", "1073741824n"],
-                ["Manage Guild Expressions", "1073741824n"],
-                ["Use Application Commands", "2147483648n"],
-                ["Request To Speak", "4294967296n"],
-                ["Manage Events", "8589934592n"],
-                ["Manage Threads", "17179869184n"],
-                ["Create Public Threads", "34359738368n"],
-                ["Create Private Threads", "68719476736n"],
-                ["Use External Stickers", "137438953472n"],
-                ["Send Messages In Threads", "274877906944n"],
-                ["Use Embedded Activities", "549755813888n"],
-                ["Timeout Members", "1099511627776n"],
-                ["View Creator Monetization Analytics", "2199023255552n"],
-                ["Use Soundboard", "4398046511104n"],
-                ["Use External Sounds", "35184372088832n"],
-                ["Send Voice Messages", "70368744177664n"]
-              ]
+              options: Permissions
             },
             ROLE: {
               type: InputShape.VALUE,
@@ -356,13 +276,18 @@ class RoleBlocks {
     return `${args.MEMBER}.roles.${args.ACTION}(${args.ROLE})`
   }
   create(args: any) {
-    return `${args.SERVER}.roles.create({
+    console.log(args, args.T)
+    let code = `${args.SERVER}.roles.create({
   name: ${args.NAME},
   color: ${args.COLOR},
   reason: ${args.REASON},
-}).then(__DIS__CreatedRole => {
-  ${args.BRANCH1}
-})`
+})\n`
+    if (args.THEN){
+      code += `.then(__DIS__CreatedRole => {
+        ${args.THEN}
+      })\n`
+    }
+    return code
   }
   created(args: any) {
     return `__DIS__CreatedRole`

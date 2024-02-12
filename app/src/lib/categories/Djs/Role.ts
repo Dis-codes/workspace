@@ -15,12 +15,49 @@ export default [
             TEXT: "0"
           }
         }
+      },
+      SERVER: {
+        shadow: {
+          kind: "block",
+          type: "server_get",
+          inputs: {
+            INPUT: {
+              shadow: {
+                kind: "block",
+                type: "text",
+                fields: {
+                  TEXT: "123"
+                }
+              }
+            }
+          }
+        }
       }
     }
   },
   {
     kind: "block",
-    type: "role_get_all"
+    type: "role_get_all",
+    inputs: {
+      VAL: {
+        shadow: {
+          kind: "block",
+          type: "server_get",
+          inputs: {
+            INPUT: {
+              shadow: {
+                kind: "block",
+                type: "text",
+                fields: {
+                  TEXT: "123"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
   },
   {
     kind: "block",

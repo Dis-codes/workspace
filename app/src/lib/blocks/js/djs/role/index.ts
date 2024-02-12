@@ -129,7 +129,6 @@ class RoleBlocks {
           func: "create",
           text: "Create role in server [SERVER] Name [NAME] Color [COLOR] Reason [REASON]",
           shape: BlockShape.STATEMENT,
-         // branches: 1,
           inline: false,
           arguments: {
             SERVER: {
@@ -154,10 +153,10 @@ class RoleBlocks {
 						type: MutatorType.CheckBox,
 						inputs: [
 							{
-								text: "Then", // text for input text
+								text: "Then",
 								inputName: "Then",
-								type: OutputType.STRING, // type for input added to the main block
-								defaultValue: false, // whether the checkbox is checked also will affect if input is showed on start
+								type: OutputType.STRING,
+								defaultValue: false,
 								branch: true
 							}
 						]
@@ -276,7 +275,6 @@ class RoleBlocks {
     return `${args.MEMBER}.roles.${args.ACTION}(${args.ROLE})`
   }
   create(args: any) {
-    console.log(args, args.T)
     let code = `${args.SERVER}.roles.create({
   name: ${args.NAME},
   color: ${args.COLOR},

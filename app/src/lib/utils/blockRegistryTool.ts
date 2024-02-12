@@ -7,7 +7,7 @@ import { WarningMessages } from "../../data";
 import { Warning } from "postcss";
 
 //type for defining blocks easier to develop blocks
-export { OutputType, BlockShape, InputShape, BlocklyTool };
+export { OutputType, BlockShape, InputShape, BlocklyTool, Permissions };
 
 const OutputType = {
 	STRING: ["String", "Text"],
@@ -20,7 +20,8 @@ const OutputType = {
 		SERVER: ["Server"],
 		CHANNEL: ["Channel"],
 		MESSAGE: ["Message"],
-		MEMBER: ["Member", "User"]
+		MEMBER: ["Member", "User"],
+		ROLE: ["Role"]
 	}
 };
 
@@ -59,6 +60,55 @@ const InputShape = {
 		MESSAGE: "field_message"
 	}
 };
+
+const Permissions = [
+	["Create Invites", "1n"],
+	["Kick Members", "2n"],
+	["Ban Members", "4n"],
+	["Administrator", "8n"],
+	["Manage Channels", "16n"],
+	["Manage Guild", "32n"],
+	["Add Reactions", "64n"],
+	["View Audit Log", "128n"],
+	["Priority Speaker", "256n"],
+	["Stream", "512n"],
+	["View Channel", "1024n"],
+	["Send Messages", "2048n"],
+	["Send TTS Messages", "4096n"],
+	["Manage Messages", "8192n"],
+	["Embed Links", "16384n"],
+	["Attach Files", "32768n"],
+	["Read Message History", "65536n"],
+	["Mention Everyone", "131072n"],
+	["Use External Emojis", "262144n"],
+	["View Guild Insights", "524288n"],
+	["Connect", "1048576n"],
+	["Speak", "2097152n"],
+	["Mute Members", "4194304n"],
+	["Deafen Members", "8388608n"],
+	["Move Members", "16777216n"],
+	["Use VAD", "33554432n"],
+	["Change Nickname", "67108864n"],
+	["Manage Nicknames", "134217728n"],
+	["Manage Roles", "268435456n"],
+	["Manage Webhooks", "536870912n"],
+	["Manage Emojis And Stickers", "1073741824n"],
+	["Manage Guild Expressions", "1073741824n"],
+	["Use Application Commands", "2147483648n"],
+	["Request To Speak", "4294967296n"],
+	["Manage Events", "8589934592n"],
+	["Manage Threads", "17179869184n"],
+	["Create Public Threads", "34359738368n"],
+	["Create Private Threads", "68719476736n"],
+	["Use External Stickers", "137438953472n"],
+	["Send Messages In Threads", "274877906944n"],
+	["Use Embedded Activities", "549755813888n"],
+	["Timeout Members", "1099511627776n"],
+	["View Creator Monetization Analytics", "2199023255552n"],
+	["Use Soundboard", "4398046511104n"],
+	["Use External Sounds", "35184372088832n"],
+	["Send Voice Messages", "70368744177664n"]
+  ]
 const EventsToTriggerWarnings = {
 	[Blockly.Events.CHANGE]: 0,
 	[Blockly.Events.MOVE]: 0,

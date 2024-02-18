@@ -1,0 +1,29 @@
+{
+  "id": "text",
+  "kind": "category",
+  "name": "Text",
+  "colour": "%{BKY_TEXTS_HUE}",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "text_startsEndsWith"
+    },
+    {
+      "kind": "block",
+      "type": "text_newline"
+    },
+    {
+      "kind": "block",
+      "type": "text_containsNumber"
+    },
+    {
+      "kind": "block",
+      "type": "text_forEach"
+    },
+    {
+      "kind": "block",
+      "type": "text_character"
+    }
+  ],
+  "expanded": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "member",
+  "kind": "category",
+  "name": "Member",
+  "colour": "#187494",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "member_getmemberbyid"
+    },
+    {
+      "kind": "block",
+      "type": "member_getmemberarraybyrole"
+    },
+    {
+      "kind": "block",
+      "type": "member_exists"
+    },
+    {
+      "kind": "block",
+      "type": "member_getmembernickname"
+    },
+    {
+      "kind": "block",
+      "type": "member_getmemberjoin"
+    },
+    {
+      "kind": "block",
+      "type": "member_timeout"
+    },
+    {
+      "kind": "block",
+      "type": "member_haspermission"
+    }
+  ],
+  "expanded": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "requests",
+  "kind": "category",
+  "name": "Requests",
+  "colour": "#4b9afb",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "requests_request"
+    },
+    {
+      "kind": "block",
+      "type": "requests_header"
+    },
+    {
+      "kind": "block",
+      "type": "requests_body"
+    },
+    {
+      "kind": "block",
+      "type": "requests_body_data"
+    },
+    {
+      "kind": "block",
+      "type": "requests_response"
+    },
+    {
+      "kind": "block",
+      "type": "requests_response_status"
+    },
+    {
+      "kind": "block",
+      "type": "requests_all"
+    }
+  ],
+  "expanded": false
+}

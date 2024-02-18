@@ -1,0 +1,13 @@
+{
+  "id": "math",
+  "kind": "category",
+  "name": "Math",
+  "colour": "%{BKY_MATH_HUE}",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "math_convert_to_number"
+    }
+  ],
+  "expanded": false
+}

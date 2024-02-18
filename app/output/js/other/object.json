@@ -1,0 +1,41 @@
+{
+  "id": "objects",
+  "kind": "category",
+  "name": "Objects",
+  "colour": "#bc4c94",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "objects_create"
+    },
+    {
+      "kind": "block",
+      "type": "objects_add_to_object"
+    },
+    {
+      "kind": "block",
+      "type": "objects_create_empty"
+    },
+    {
+      "kind": "block",
+      "type": "objects_add"
+    },
+    {
+      "kind": "block",
+      "type": "objects_set"
+    },
+    {
+      "kind": "block",
+      "type": "objects_get"
+    },
+    {
+      "kind": "block",
+      "type": "objects_has"
+    },
+    {
+      "kind": "block",
+      "type": "objects_delete"
+    }
+  ],
+  "expanded": false
+}

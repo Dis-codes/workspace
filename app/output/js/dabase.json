@@ -1,0 +1,45 @@
+{
+  "id": "database",
+  "kind": "category",
+  "name": "Database",
+  "colour": "#5aa48d",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "database_get"
+    },
+    {
+      "kind": "block",
+      "type": "database_set"
+    },
+    {
+      "kind": "block",
+      "type": "database_exists"
+    },
+    {
+      "kind": "block",
+      "type": "database_delete"
+    },
+    {
+      "kind": "block",
+      "type": "database_all"
+    },
+    {
+      "kind": "block",
+      "type": "database_clear"
+    },
+    {
+      "kind": "block",
+      "type": "database_push"
+    },
+    {
+      "kind": "block",
+      "type": "database_addsubstract"
+    },
+    {
+      "kind": "block",
+      "type": "database_create_new"
+    }
+  ],
+  "expanded": false
+}

@@ -1,0 +1,37 @@
+{
+  "id": "base",
+  "kind": "category",
+  "name": "Base",
+  "colour": "#3844fc",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "base_token"
+    },
+    {
+      "kind": "block",
+      "type": "base_env"
+    },
+    {
+      "kind": "block",
+      "type": "base_bot_connected"
+    },
+    {
+      "kind": "block",
+      "type": "base_bot_status"
+    },
+    {
+      "kind": "block",
+      "type": "base_bot_as_member"
+    },
+    {
+      "kind": "block",
+      "type": "base_bot_in_server"
+    },
+    {
+      "kind": "block",
+      "type": "base_bot_info"
+    }
+  ],
+  "expanded": false
+}

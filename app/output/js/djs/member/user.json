@@ -1,0 +1,17 @@
+{
+  "id": "user",
+  "kind": "category",
+  "name": "User",
+  "colour": "#60bcec",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "user_getid"
+    },
+    {
+      "kind": "block",
+      "type": "user_isuser"
+    }
+  ],
+  "expanded": false
+}

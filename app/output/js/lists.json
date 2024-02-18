@@ -1,0 +1,29 @@
+{
+  "id": "lists",
+  "kind": "category",
+  "name": "Lists",
+  "colour": "%{BKY_LISTS_HUE}",
+  "contents": [
+    {
+      "kind": "block",
+      "type": "lists_contains"
+    },
+    {
+      "kind": "block",
+      "type": "lists_push"
+    },
+    {
+      "kind": "block",
+      "type": "lists_concat"
+    },
+    {
+      "kind": "block",
+      "type": "lists_filter"
+    },
+    {
+      "kind": "block",
+      "type": "lists_map"
+    }
+  ],
+  "expanded": false
+}

@@ -5,6 +5,7 @@ class databaseBlocks {
 		return {
 			id: "database",
 			color: "#5aa48d",
+			weight: 9,
 			blocks: [
 				{
 					func: "get",

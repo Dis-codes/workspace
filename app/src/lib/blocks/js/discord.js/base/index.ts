@@ -4,7 +4,8 @@ class BaseBlocks {
 	getRegistry() {
 		return {
 			id: "base",
-			color: "#3844fc",
+			color: "#f5677f",
+			weight: 1,
 			blocks: [
 				{
 					func: "token",

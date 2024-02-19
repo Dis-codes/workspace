@@ -5,6 +5,7 @@ class Mathblocks {
 		return {
 			id: "math",
 			color: "%{BKY_MATH_HUE}",
+			weight: 3,
 			blocks: [
 				{
 					func: "convert_to_number",

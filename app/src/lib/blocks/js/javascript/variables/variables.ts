@@ -5,6 +5,7 @@ class VariablesBlocks {
 		return {
 			id: "variables",
 			color: "%{BKY_VARIABLES_HUE}",
+			weight: 7,
 			blocks: [
 				{
 					func: "variable",

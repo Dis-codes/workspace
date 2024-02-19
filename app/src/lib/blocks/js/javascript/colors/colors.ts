@@ -5,6 +5,7 @@ class ColorsBlocks {
 		return {
 			id: "colour",
 			color: "%{BKY_COLOUR_HUE}",
+			weight: 6,
 			blocks: [
 				{
 					func: "RGB",

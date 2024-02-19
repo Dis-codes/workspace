@@ -3,27 +3,38 @@ export default {
         "discord.js": {
           name: "Discord.JS",
 	    	colour: "#5b80a5",
-	    	expanded: false
+	    	expanded: false,
+            weight: 2
         },
         "javascript": {
 		    name: "JavaScript",
 	    	colour: "#5b80a5",
-		    expanded: true
+		    expanded: true,
+            weight: 1
         },
         "other": {
             name: "Others",
             colour: "#bc4c94",
-            expanded: false
+            expanded: false,
+            weight: 100
         },
         "servers":{
             name: "Servers",
 		    colour: "#e05c4c",
+			weight: 5,
 		    expanded: false
         },
         "Files":{
             name: "Files",
             colour: "#ffac2c",
-            expanded: false
+            expanded: false,
+            weight: 101
+        },
+        "messages":{
+			weight: 2,
+            name: "Messages",
+		    colour: "#4b9afb",
+		    expanded: false
         }
     },
     logic: [

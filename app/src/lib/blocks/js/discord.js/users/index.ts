@@ -7,6 +7,7 @@ class userBlocks {
         return {
             id: "user",
             color: "#60bcec",
+		      	weight: 6,
             blocks: [
               {
                 func: "getid",

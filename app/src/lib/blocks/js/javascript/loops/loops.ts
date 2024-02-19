@@ -5,6 +5,7 @@ export default class {
 		return {
 			id: "loops",
 			color: "%{BKY_LOOPS_HUE}",
+			weight: 2,
 			blocks: [
 			]
 		};

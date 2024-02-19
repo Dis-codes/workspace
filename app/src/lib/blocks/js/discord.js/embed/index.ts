@@ -5,6 +5,7 @@ class MessageBlocks {
 		return {
 			id: "embed",
 			color: "#40bc54",
+			weight: 3,
 			blocks: [
 				{
 					func: "create",

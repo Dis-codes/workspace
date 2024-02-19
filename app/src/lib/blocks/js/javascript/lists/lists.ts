@@ -5,6 +5,7 @@ class ListsBlocks {
 		return {
 			id: "lists",
 			color: "%{BKY_LISTS_HUE}",
+			weight: 5,
 			blocks: [
 				{
 					func: "contains",

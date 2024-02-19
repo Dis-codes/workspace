@@ -5,6 +5,7 @@ export default class {
 		return {
 			id: "webhooks",
 			color: "#3c4cf0",
+			weight: 4,
 			blocks: []
 		};
 	}

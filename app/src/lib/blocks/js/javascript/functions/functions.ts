@@ -3,6 +3,7 @@ export default class {
 		return {
 			id: "function",
 			color: "#995ba5",
+			weight: 8,
 			custom: "PROCEDURE",
 			blocks: [
 			]

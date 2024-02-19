@@ -5,6 +5,7 @@ class TextBlocks {
 		return {
 			id: "text",
 			color: "%{BKY_TEXTS_HUE}",
+			weight: 4,
 			blocks: [
 				{
 					func: "startsEndsWith",

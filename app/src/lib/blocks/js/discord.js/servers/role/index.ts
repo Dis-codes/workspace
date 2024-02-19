@@ -5,6 +5,7 @@ class RoleBlocks {
     return {
       id: "role",
       color: '#30B474',
+			weight: 3,
       blocks: [
         {
           func: "get",

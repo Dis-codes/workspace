@@ -7,6 +7,7 @@ class MemberBlocks {
         return {
             id: "member",
             color: "#187494",
+			      weight: 4,
             blocks: [
               {
                 func: "getmemberbyid",

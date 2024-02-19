@@ -5,6 +5,7 @@ export default class {
 		return {
 			id: "channels",
 			color: "#a85c7c",
+			weight: 2,
 			blocks: []
 		};
 	}

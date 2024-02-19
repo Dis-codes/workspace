@@ -5,6 +5,7 @@ class LogicBlocks {
 		return {
 			id: "logic",
 			color: "%{BKY_LOGIC_HUE}",
+			weight: 1,
 			blocks: [
 				{
 					func: "isEqual",

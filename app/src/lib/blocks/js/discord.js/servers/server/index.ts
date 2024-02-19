@@ -5,6 +5,7 @@ class ServerBlocks {
 		return {
 			id: "server",
 			color: "#e05c4c",
+			weight: 1,
 			blocks: [
 				/*{
                             func: "event", // function name (also used as the block's ID)

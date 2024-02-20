@@ -33,7 +33,7 @@ class TestBlocks {
 						{
 							type: WarningType.RequiredParent,
 							parentType: "coretest_testevent",
-							message: "this block belongs under test event block!"
+							message: "belongs under test event block!"
 						},
 						{
 							type: WarningType.EmptyInput,

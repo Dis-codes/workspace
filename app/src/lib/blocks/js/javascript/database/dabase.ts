@@ -146,6 +146,7 @@ class databaseBlocks {
 				{
 					func: "create_new",
 					text: "create new database with name [NAME]",
+					label: "Creating a new database is mandatory",
 					shape: BlockShape.FLOATING,
 					inline: true,
 					arguments: {
@@ -153,7 +154,7 @@ class databaseBlocks {
 							type: InputShape.VALUE,
 							check: OutputType.STRING
 						}
-					}
+					},
 				}
 			]
 		};

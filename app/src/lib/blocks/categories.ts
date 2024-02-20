@@ -63,8 +63,9 @@ function textToTitleCase(str) {
 }
 function sortCategoriesRecursively(categories: Category[]): Category[] {
 	return categories.sort((a, b) => {
-	  const weightA = a.weight !== undefined ? a.weight : Number.POSITIVE_INFINITY;
-	  const weightB = b.weight !== undefined ? b.weight : Number.POSITIVE_INFINITY;
+	 if (a.weight === b.weight) return 1
+	  const weightA = a.weight !== undefined ? a.weight : 100;
+	  const weightB = b.weight !== undefined ? b.weight : 100
 	  return weightA - weightB;
 	}).map(category => {
 	  if (category.contents && category.contents.length > 0) {
@@ -73,7 +74,128 @@ function sortCategoriesRecursively(categories: Category[]): Category[] {
 	  return category;
 	});
   }
-  
+//   DELIM: {
+// 	shadow: {
+// 		kind: "block",
+// 		type: "text",
+// 		fields: {
+// 			TEXT: ","
+// 		}
+// 	}
+// }
+function genArgs(block:any){
+	const inputs = {}
+	if (!block) return
+	for (const arg in block){
+		let argParm = block[arg]
+		if (argParm.type !== "input_value") continue
+		if (argParm.check){ 
+			switch (argParm.check[0]) {
+				case 'String':
+					inputs[arg] = {shadow: {
+						kind: "block",
+						type: "text",
+						fields: {
+							TEXT: arg
+						}
+					}}
+				break;
+			case 'Number':
+				inputs[arg] = {shadow: {
+					kind: "block",
+					type: "math_number",
+					fields: {
+                   	 	NUM: Math.floor(Math.random() * 256)
+             	   }
+				}}
+				break;
+			case 'Server':
+				inputs[arg] = {shadow: {
+						kind: "block",
+                        type: "server_get",
+						inputs: {
+						INPUT: {
+							shadow: {
+								kind: "block",
+								type: "text",
+								fields: {
+									TEXT: "Server ID"
+								}
+							}
+						}
+						}
+					}}
+				break;
+			case 'Message':
+				inputs[arg] = {shadow: {
+						kind: "block",
+						type: "messageget_message"
+						}}
+				break;
+			case 'Boolean':	// empty
+				break;
+			case 'Role':
+				inputs[arg] = {shadow: {
+					kind: "block",
+					type: "role_get",
+					inputs: {
+						ID :{
+							shadow: {
+								kind: "block",
+								type: "text",
+								fields: {
+									TEXT: "123"
+								}
+							}
+						},
+						SERVER: {
+							shadow: {
+								kind: "block",
+								type: "server_get",
+								inputs: {
+									INPUT: {
+										shadow: {
+											kind: "block",
+											type: "text",
+											fields: {
+												TEXT: "123"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}}
+				break;
+			case 'Member':
+				inputs[arg] = {shadow: {
+						kind: "block",
+						type: "member_getmemberbyid",
+						inputs: {
+							ID: {
+								shadow: {
+									kind: "block",
+									type: "text",
+									fields: {
+										TEXT: "123"
+									}
+								}
+							}
+						}
+					}}
+				break;
+			case 'Channel':	//missing blocks
+				break;
+			default:
+				console.log("input not found:",  argParm.check[0])
+			break;
+			}
+		}
+
+	}
+	return inputs
+}
 // importBlocks.ts
 const categories: [] = [];
 const importBlocks = async () => {
@@ -87,10 +209,18 @@ const importBlocks = async () => {
 	if (!registry || !registry.id || registry.hidden) continue
 	let genBlocks = []
 	for (const genBlock of registry.blocks){
-	if(genBlock.hidden) continue
+	if(genBlock.hidden || !genBlock.func) continue
+	if (genBlock.label) genBlocks.push({
+		kind: "label",
+		text: genBlock.label,
+		weight: genBlock.weight,
+	})
+	
 	genBlocks.push({
-		kind: genBlock.func? "block" : "label",
-		type: registry.id + "_" + genBlock.func
+		kind: "block",
+		type: registry.id + "_" + genBlock.func,
+		weight: genBlock.weight,
+		inputs: genArgs(genBlock.arguments)
 	})
 	}
 	if (extended[registry.id]) {

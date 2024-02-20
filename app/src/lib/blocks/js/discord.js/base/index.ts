@@ -11,23 +11,24 @@ class BaseBlocks {
 					func: "token",
 					text: "Connect to bot using [TOKEN]",
 					blockShape: BlockShape.FLOATING,
-					arguments: [
-						{
+					arguments: {
+					TOKEN: 	{
 							type: InputShape.VALUE,
 							check: OutputType.STRING
-						}
-					]
+					}
+				}
 				},
 				{
 					func: "env",
 					text: "Get environment variable [NAME]",
 					output: OutputType.STRING,
-					arguments: [
-						{
+					arguments: {
+						NAME: {
 							type: InputShape.VALUE,
-							check: OutputType.STRING
+							check: OutputType.STRING,
+							text: "env"
 						}
-					]
+					},
 				},
 				{
 					func: "bot_connected",

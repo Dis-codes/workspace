@@ -96,7 +96,7 @@ function genArgs(block:any){
 						kind: "block",
 						type: "text",
 						fields: {
-							TEXT: arg
+							TEXT: argParm.text || arg.toLowerCase()
 						}
 					}}
 				break;
@@ -208,6 +208,16 @@ const importBlocks = async () => {
 	
 	if (!registry || !registry.id || registry.hidden) continue
 	let genBlocks = []
+	if (extended[registry.id]) {
+		for (const extBlock of extended[registry.id] ){
+			genBlocks.push({
+				kind: "block",
+				type: extBlock.type,
+				weight: extBlock.weight,
+				inputs: extBlock.inputs
+			})
+		}
+	}
 	for (const genBlock of registry.blocks){
 	if(genBlock.hidden || !genBlock.func) continue
 	if (genBlock.label) genBlocks.push({
@@ -220,12 +230,10 @@ const importBlocks = async () => {
 		kind: "block",
 		type: registry.id + "_" + genBlock.func,
 		weight: genBlock.weight,
-		inputs: genArgs(genBlock.arguments)
+		inputs: genBlock.inputs ||genArgs(genBlock.arguments)
 	})
 	}
-	if (extended[registry.id]) {
-		genBlocks = extended[registry.id].concat(genBlocks)
-	}
+
 	const category = {
 		id: registry.id,
 		kind: "category",

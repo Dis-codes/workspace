@@ -135,12 +135,6 @@ class MessageBlocks {
 					func: "setTimestamp",
 					text: "set embed timestamp",
 					shape: BlockShape.STATEMENT,
-					arguments: {
-						TIMESTAMP: {
-							type: InputShape.VALUE,
-							check: OutputType.STRING
-						}
-					}
 				}
 			]
 		};

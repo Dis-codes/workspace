@@ -1,28 +1,25 @@
-import javascriptGenerator from '$lib/javascript';
-import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
+import { BlockShape, InputShape, OutputType,Permissions } from "$lib/utils/blockRegistryTool";
 import {MutatorType} from "$lib/interfaces/mutator";
-import { Input } from 'postcss';
-import { Block } from 'blockly';
 
 class ChannelBlocks {
 	getRegistry() {
 		return {
-			id: "channels",
+			id: "channel",
 			color: "#a85c7c",
 			weight: 2,
 			blocks: [
 			  {
-				func: "getchannel_category_byid",
-				text: "get the channel/category with [ID] equal to [NAME]",
+				func: "get",
+				text: "get the channel with [ID] equal to [NAME]",
 				output: OutputType.DISCORD.CHANNEL,
 				mutator: "getserverbyid",
 				mutatorData: {
 					type: MutatorType.CheckBox,
 					inputs: [
 					  {
-						text: "Server",
+						text: "Server - (with name)",
 						type: OutputType.DISCORD.SERVER,
-						defaultValue: true,
+						defaultValue: false,
 					  }
 					]
 				  },
@@ -41,7 +38,7 @@ class ChannelBlocks {
 				},
 			  },
 			  {
-				func: "getchannel#onserver",
+				func: "getbynum",
 				text: "get channel # [NUMBER] on server [SERVER]",
 				output: OutputType.DISCORD.CHANNEL,
 				arguments: {
@@ -57,7 +54,7 @@ class ChannelBlocks {
 				}
 			  },
 			  {
-				func: "get_first_last_random_channel",
+				func: "get_number",
 				text: "[TYPE] channel in server [SERVER]",
 				output: OutputType.DISCORD.CHANNEL,
 				arguments: {
@@ -67,7 +64,7 @@ class ChannelBlocks {
 							['first', 'first'],
 							['last', 'last'],
 							['random', 'random'],
-							['channel #', 'channel #']
+							// ['channel #', 'channel #']
 						],
 				},
 				    SERVER: {
@@ -77,7 +74,7 @@ class ChannelBlocks {
 				}
 			  },
 			  {
-				func: "getchannelstuff",
+				func: "info",
 				text: "get [TYPE] of channel [CHANNEL]",
 				output: OutputType.STRING,
 				arguments: {
@@ -103,7 +100,7 @@ class ChannelBlocks {
 				}
 			  },
 			  {
-				func: "allchannelsinserver",
+				func: "get_all",
 				text: "get all channels in server [SERVER] then for each do \n",
 				shape: BlockShape.STATEMENT,
 				branches: 1,
@@ -166,7 +163,7 @@ class ChannelBlocks {
 			  },
 			  {
 				func: "check_perms",
-				text: "does channel [CHANNEL] \n have permission [PERMS] \n allowed for member/role [ROLE] \n in server [SERVER]?",
+				text: "does channel [CHANNEL] have permission [PERMS] allowed for member/role [ROLE] in server [SERVER]",
 				output: OutputType.BOOLEAN,
 				inline: false,
 				arguments: {
@@ -184,50 +181,13 @@ class ChannelBlocks {
 					},
 					PERMS: {
 						type: InputShape.MENU,
-						options: [
-							['CREATE_INSTANT_INVITE', 'CREATE_INSTANT_INVITE'],
-							['MANAGE_CHANNELS', 'MANAGE_CHANNELS'],
-							['ADD_REACTIONS', 'ADD_REACTIONS'],
-							['PRIORITY_SPEAKER', 'PRIORITY_SPEAKER'],
-							['STREAM', 'STREAM'],
-							['VIEW_CHANNEL', 'VIEW_CHANNEL'],
-							['SEND_MESSAGES', 'SEND_MESSAGES'],
-							['SEND_TTS_MESSAGES','SEND_TTS_MESSAGES'],
-							['MANAGE_MESSAGES', 'PMANAGE_MESSAGES'],
-							['EMBED_LINKS', 'EMBED_LINKS'],
-							['ATTACH_FILES', 'ATTACH_FILES'],
-							['READ_MESSAGE_HISTORY', 'READ_MESSAGE_HISTORY'],
-							['MENTION_EVERYONE', 'MENTION_EVERYONE'],
-							['USE_EXTERNAL_EMOJIS', 'USE_EXTERNAL_EMOJIS'],
-							['CONNECT', 'CONNECT'],
-							['SPEAK', 'SPEAK'],
-							['MUTE_MEMBERS', 'MUTE_MEMBERS'],
-							['DEAFEN_MEMBERS', 'DEAFEN_MEMBERS'],
-							['MOVE_MEMBERS', 'MOVE_MEMBERS'],
-							['USE_VAD', 'USE_VAD'],
-							['MANAGE_ROLES', 'MANAGE_ROLES'],
-							['MANAGE_WEBHOOKS', 'MANAGE_WEBHOOKS'],
-							['USE_APPLICATION_COMMANDS', 'USE_APPLICATION_COMMANDS'],
-							['REQUEST_TO_SPEAK', 'REQUEST_TO_SPEAK'],
-							['MANAGE_EVENTS', 'MANAGE_EVENTS'],
-							['MANAGE_THREADS', 'MANAGE_THREADS'],
-							['CREATE_PUBLIC_THREADS', 'CREATE_PUBLIC_THREADS'],
-							['CREATE_PRIVATE_THREADS', 'CREATE_PRIVATE_THREADS'],
-							['USE_EXTERNAL_STICKERS', 'USE_EXTERNAL_STICKERS'],
-							['SEND_MESSAGES_IN_THREADS', 'SEND_MESSAGES_IN_THREADS'],
-							['USE_EMBEDDED_ACTIVITIES', 'USE_EMBEDDED_ACTIVITIES'],
-							['USE_SOUNDBOARD', 'USE_SOUNDBOARD'],
-							['CREATE_EVENTS', 'CREATE_EVENTS'],
-							['USE_EXTERNAL_SOUNDS', 'USE_EXTERNAL_SOUNDS'],
-							['SEND_VOICE_MESSAGES', 'SEND_VOICE_MESSAGES']  //Complete list is available at: https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
-
-						]
+						options: Permissions
 					}
 				}
 			},
 			  {
-				func: "createchannel_category",
-				text: "Create Channel/Category with name [NAME] of type [TYPE] on server [SERVER]",
+				func: "create",
+				text: "Create Channel with name [NAME] of type [TYPE] on server [SERVER]",
 				shape: BlockShape.STATEMENT,
 				inline: false,
 				color: "#4C97FF",
@@ -236,7 +196,7 @@ class ChannelBlocks {
 					type: MutatorType.CheckBox,
 					inputs: [
 						{
-							text: "Category (Only for channel creation)",
+							text: "Category (channel creation)",
 							inputname: "Category (Only for channel creation)",
 							type: OutputType.DISCORD.CHANNEL,
 							defaultValue: false
@@ -273,13 +233,13 @@ class ChannelBlocks {
 				}
 			  },
 			  {
-				func: "createdchannel",
-				text: "Created category/channel",
+				func: "created",
+				text: "Created channel",
 				output: OutputType.DISCORD.CHANNEL
 			  },
 			  {
                 func: "deletechannel",
-				text: "delete channel/category [CHANNEL]",
+				text: "delete channel [CHANNEL]",
 				shape: BlockShape.STATEMENT,
 				color: "#4C97FF",
 				inline: true,
@@ -336,7 +296,7 @@ class ChannelBlocks {
                 
 			  },
 			  {
-				func: "follow_channel",
+				func: "follow",
 				text: "follow channel [FC] to channel [TC]",
 				shape: BlockShape.STATEMENT,
 				color: "#4C97FF",
@@ -423,50 +383,13 @@ class ChannelBlocks {
 				arguments: {
 					PERM: {
 						type: InputShape.MENU,
-						options: [
-							['CREATE_INSTANT_INVITE', 'CREATE_INSTANT_INVITE'],
-							['MANAGE_CHANNELS', 'MANAGE_CHANNELS'],
-							['ADD_REACTIONS', 'ADD_REACTIONS'],
-							['PRIORITY_SPEAKER', 'PRIORITY_SPEAKER'],
-							['STREAM', 'STREAM'],
-							['VIEW_CHANNEL', 'VIEW_CHANNEL'],
-							['SEND_MESSAGES', 'SEND_MESSAGES'],
-							['SEND_TTS_MESSAGES','SEND_TTS_MESSAGES'],
-							['MANAGE_MESSAGES', 'PMANAGE_MESSAGES'],
-							['EMBED_LINKS', 'EMBED_LINKS'],
-							['ATTACH_FILES', 'ATTACH_FILES'],
-							['READ_MESSAGE_HISTORY', 'READ_MESSAGE_HISTORY'],
-							['MENTION_EVERYONE', 'MENTION_EVERYONE'],
-							['USE_EXTERNAL_EMOJIS', 'USE_EXTERNAL_EMOJIS'],
-							['CONNECT', 'CONNECT'],
-							['SPEAK', 'SPEAK'],
-							['MUTE_MEMBERS', 'MUTE_MEMBERS'],
-							['DEAFEN_MEMBERS', 'DEAFEN_MEMBERS'],
-							['MOVE_MEMBERS', 'MOVE_MEMBERS'],
-							['USE_VAD', 'USE_VAD'],
-							['MANAGE_ROLES', 'MANAGE_ROLES'],
-							['MANAGE_WEBHOOKS', 'MANAGE_WEBHOOKS'],
-							['USE_APPLICATION_COMMANDS', 'USE_APPLICATION_COMMANDS'],
-							['REQUEST_TO_SPEAK', 'REQUEST_TO_SPEAK'],
-							['MANAGE_EVENTS', 'MANAGE_EVENTS'],
-							['MANAGE_THREADS', 'MANAGE_THREADS'],
-							['CREATE_PUBLIC_THREADS', 'CREATE_PUBLIC_THREADS'],
-							['CREATE_PRIVATE_THREADS', 'CREATE_PRIVATE_THREADS'],
-							['USE_EXTERNAL_STICKERS', 'USE_EXTERNAL_STICKERS'],
-							['SEND_MESSAGES_IN_THREADS', 'SEND_MESSAGES_IN_THREADS'],
-							['USE_EMBEDDED_ACTIVITIES', 'USE_EMBEDDED_ACTIVITIES'],
-							['USE_SOUNDBOARD', 'USE_SOUNDBOARD'],
-							['CREATE_EVENTS', 'CREATE_EVENTS'],
-							['USE_EXTERNAL_SOUNDS', 'USE_EXTERNAL_SOUNDS'],
-							['SEND_VOICE_MESSAGES', 'SEND_VOICE_MESSAGES']  //Complete list is available at: https://discord.com/developers/docs/topics/permissions#permissions-bitwise-permission-flags
-
-						]
+						options: Permissions
 					}
 				}
 			  },
 			  {
-				func: "enable_slowmode",
-				text: "Enable slowmode on channel [CHANNEL] for (seconds) [TIME]",
+				func: "set_slowmode",
+				text: "Set slowmode on channel [CHANNEL] for [TIME] seconds",
 				inline: true,
                 color: "#4C97FF",
 				shape: BlockShape.STATEMENT,
@@ -494,18 +417,6 @@ class ChannelBlocks {
 				}
 
 			  },
-			  {
-				func: "disable_slowmode",
-				text: "Disable slowmode on channel [CHANNEL]",
-				shape: BlockShape.STATEMENT,
-				color: "#4C97FF",
-				arguments: {
-					CHANNEL: {
-						type: InputShape.VALUE,
-						check: OutputType.DISCORD.CHANNEL
-					}
-				}
-			  }
 			]
 		}
 

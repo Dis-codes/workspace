@@ -185,7 +185,22 @@ function genArgs(block:any){
 						}
 					}}
 				break;
-			case 'Channel':	//missing blocks
+			case 'Channel':	
+				inputs[arg] = {shadow: {
+					kind: "block",
+					type: "channel_get",
+					inputs: {
+						NAME: {
+							shadow: {
+								kind: "block",
+								type: "text",
+								fields: {
+									TEXT: "123"
+								}
+							}
+						}
+					}
+				}}
 				break;
 			default:
 				console.log("input not found:",  argParm.check[0])

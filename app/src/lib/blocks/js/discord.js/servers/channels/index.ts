@@ -155,8 +155,14 @@ class ChannelBlocks {
 							['text', 'text'],
 							['voice', 'voice'],
 							['announcement', 'announcement'],
-						    ['forum', 'forum'],
-							['stage', 'stage']
+						        ['forum', 'forum'],
+							['stage', 'stage'],
+							['dm', 'dm'],
+							['category', 'category'],
+							['announcement thread', 'announcement_thread'],
+							['public thread', 'public_thread'],
+							['private thread', 'private_thread'],
+							['directory', 'directory']
 						]
 					}
 				}

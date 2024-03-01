@@ -5,6 +5,8 @@ import type { BlockDefinition } from "$lib/interfaces";
 import { WarningType } from "$lib/interfaces/warnings";
 import { WarningMessages } from "../../data";
 import { Warning } from "postcss";
+import {BlockModifierMutator} from "$lib/utils/blockModiferMutator";
+import {MutatorType} from "$lib/interfaces/mutator";
 
 //type for defining blocks easier to develop blocks
 export { OutputType, BlockShape, InputShape, BlocklyTool, Permissions };
@@ -49,6 +51,7 @@ const InputShape = {
 	CHECKBOX: "field_checkbox", //Checkbox field usually for toggles.
 	COLOR: "field_colour", //Color field.
 	MENU: "field_dropdown", //Dropdown menu field with options.
+	GRID_MENU: "field_grid_dropdown",
 	SERIALIZABLE_LABEL: "field_label_serializable", //Label that serializes to the project.
 	NUMBER: "field_number", //Number field. Used for restricting to certain numbers.
 	TEXT: "field_input", //Text field. Used if blocks shouldnt be used here,but text can still be input here.
@@ -235,6 +238,7 @@ class BlocklyTool {
 				}
 			}
 
+
 			// actually define the block
 			Blockly.Blocks[`${idPrefix}${block.func}`] = {
 				init: function () {
@@ -271,10 +275,12 @@ class BlocklyTool {
 					if (block.color) {
 						this.setColour(block.color);
 					}
-					if (nBlock.warnings) {
+					if (nBlock.warnings || (nBlock.mutatorData && nBlock.mutatorData.type == MutatorType.ModifyBlock)) {
 						const tBlock = this;
 
 						this.setOnChange(function (changeEvent) {
+
+							BlockModifierMutator(block, tBlock)
 							/*
 							 * when tab opens make the error not be added to WarningMessages
 							 *

@@ -3,6 +3,7 @@ import type { WarningData } from "./warnings";
 interface Register {
 	id: string;
 	color: number | string;
+	hidden: boolean
 	blocks: BlockDefinition[];
 }
 interface BlockDefinition {
@@ -26,6 +27,7 @@ interface Argument {
 	alt?: string;
 	spellcheck?: boolean;
 	check?: string;
+	options: string[][]
 }
 interface MutatorData {
 	type: string;
@@ -33,9 +35,15 @@ interface MutatorData {
 	blockType?: string;
 	color?: string;
 	inputs: MutatorInput[];
-
+	blockModifier?: {[p: string]: blockModifier}
 	inputModifier?: (block: Blockly.Block) => void; // BlockList mutator type field
 	blockList: string[];
+}
+interface blockModifier {
+	conditions: {[k: string]: blockModifierConditions}
+}
+interface blockModifierConditions {
+	text: string
 }
 interface MutatorInput {
 	text?: string; // adding string[] type will be later when adding more mutators

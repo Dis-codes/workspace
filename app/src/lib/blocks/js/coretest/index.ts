@@ -3,6 +3,7 @@ import { WarningType } from "$lib/interfaces/warnings";
 import javascriptGenerator from "$lib/javascript";
 import type { Register } from "../../../interfaces";
 import { BlockShape, InputShape, OutputType } from "../../../utils/blockRegistryTool";
+import Blockly from "blockly";
 
 class TestBlocks {
 	/**
@@ -17,11 +18,37 @@ class TestBlocks {
 			blocks: [
 				{
 					func: "mutator_mutator",
-					text: "test_block\n Bozo: [INPUT]",
+					text: "mutator select menu modify the block mutator test [SELECT]",
 					shape: BlockShape.EVENT,
+					mutatorData: {
+						type: MutatorType.ModifyBlock,
+						blockModifier:
+							{
+								"SELECT": {
+									conditions: {
+										codeshow1: "SELECT_SECRET",
+										codeshow2: "",
+									}
+								},
+							},
+
+					},
 					arguments: {
-						INPUT: {
-							type: InputShape.CHECKBOX
+						SELECT: {
+							type: InputShape.MENU,
+							options: [
+									["show1", "codeshow1"],
+									["show2", "codeshow2"]
+
+							],
+						},
+						SELECT_SECRET: {
+							type: InputShape.MENU,
+							options: [
+								["lol", "lol1"],
+								["lol2", "lol2"]
+
+							],
 						}
 					}
 				},

@@ -1,7 +1,6 @@
 import type { BlockDefinition, MutatorInput } from "$lib/interfaces";
 import { MutatorType } from "$lib/interfaces/mutator";
 import Blockly from "blockly/core";
-
 export function CheckBoxMutator(blockData: BlockDefinition, id: string) {
 	const blockFields: string[] = [];
 	const blockTypes: string[] = [];
@@ -231,8 +230,9 @@ export function CheckMutatorType(blockData: BlockDefinition, id: string) {
 	switch (blockData.mutatorData?.type) {
 		case MutatorType.CheckBox:
 			if (!Blockly.Extensions.isRegistered(blockData.mutator as string))
-				CheckBoxMutator(blockData, id);
-		// case MutatorType.BlockList:
+				CheckBoxMutator(blockData, id); break;
+		case MutatorType.ModifyBlock: return;
+			// case MutatorType.BlockList:
 		//     if (!Blockly.Extensions.isRegistered(blockData.mutator as string)) BlockListMutator(blockData, id)
 	}
 }

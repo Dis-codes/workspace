@@ -18,7 +18,7 @@ class TestBlocks {
 			blocks: [
 				{
 					func: "mutator_mutator",
-					text: "mutator select menu modify the block mutator test [SELECT]",
+					text: "mutator select menu modify the block mutator test [SELECT] [SELECT_SECRET]",
 					shape: BlockShape.EVENT,
 					mutatorData: {
 						type: MutatorType.ModifyBlock,
@@ -26,8 +26,18 @@ class TestBlocks {
 							{
 								"SELECT": {
 									conditions: {
-										codeshow1: "SELECT_SECRET",
-										codeshow2: "",
+										codeshow1: [
+											{
+												input: "SELECT_SECRET",
+												action: "hide"
+											}
+										],
+										codeshow2: [
+											{
+												input: "SELECT_SECRET",
+												action: "hide"
+											}
+										],
 									}
 								},
 							},

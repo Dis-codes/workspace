@@ -29,7 +29,7 @@ class TestBlocks {
 										codeshow1: [
 											{
 												input: "SELECT_SECRET",
-												action: "hide"
+												action: "show"
 											}
 										],
 										codeshow2: [

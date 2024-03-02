@@ -13,9 +13,11 @@ export function BlockModifierMutator(blockData: BlockDefinition, block: Blockly.
             * input: string
             * action: string
             * */
+            console.log(sCondElement)
             switch (sCondElement.action) {
                 case "show":
-                    block.appendValueInput(sCondElement.input)
+                    console.log(1)
+                    if(!block.getInput(sCondElement.input)) block.appendValueInput(sCondElement.input)
                 break
                 case "hide":
                     block.removeInput(sCondElement.input, true)

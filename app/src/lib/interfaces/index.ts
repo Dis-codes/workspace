@@ -31,6 +31,7 @@ interface Argument {
 }
 interface MutatorData {
 	type: string;
+	arguments: {[p: string]: Argument}
 	// if this is not "" it will use this for mutator.ts block and then add checkbox inputs to that block
 	blockType?: string;
 	color?: string;
@@ -40,10 +41,11 @@ interface MutatorData {
 	blockList: string[];
 }
 interface blockModifier {
-	conditions: {[k: string]: blockModifierConditions}
+	conditions: {[k: string]: blockModifierConditions[]}
 }
 interface blockModifierConditions {
-	text: string
+	input: string
+	action: string
 }
 interface MutatorInput {
 	text?: string; // adding string[] type will be later when adding more mutators

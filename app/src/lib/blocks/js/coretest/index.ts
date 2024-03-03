@@ -2,8 +2,7 @@ import { MutatorType } from "$lib/interfaces/mutator";
 import { WarningType } from "$lib/interfaces/warnings";
 import javascriptGenerator from "$lib/javascript";
 import type { Register } from "../../../interfaces";
-import { BlockShape, InputShape, OutputType } from "../../../utils/blockRegistryTool";
-import Blockly from "blockly";
+import { BlockShape, InputShape, OutputType, BlockModifierAction} from "../../../utils/blockRegistryTool";
 
 class TestBlocks {
 	/**
@@ -18,10 +17,17 @@ class TestBlocks {
 			blocks: [
 				{
 					func: "mutator_mutator",
-					text: "mutator select menu modify the block mutator test [SELECT] [SELECT_SECRET]",
+					text: "mutator select menu modify the block mutator test [SELECT]",
 					shape: BlockShape.EVENT,
+
 					mutatorData: {
 						type: MutatorType.ModifyBlock,
+						arguments: {
+							SELECT_SECRET: {
+								check: OutputType.STRING,
+								type: InputShape.VALUE,
+							},
+						},
 						blockModifier:
 							{
 								"SELECT": {
@@ -29,13 +35,13 @@ class TestBlocks {
 										codeshow1: [
 											{
 												input: "SELECT_SECRET",
-												action: "show"
+												action: BlockModifierAction.Show
 											}
 										],
 										codeshow2: [
 											{
 												input: "SELECT_SECRET",
-												action: "hide"
+												action: BlockModifierAction.Hide
 											}
 										],
 									}
@@ -44,6 +50,7 @@ class TestBlocks {
 
 					},
 					arguments: {
+
 						SELECT: {
 							type: InputShape.MENU,
 							options: [
@@ -52,14 +59,8 @@ class TestBlocks {
 
 							],
 						},
-						SELECT_SECRET: {
-							type: InputShape.MENU,
-							options: [
-								["lol", "lol1"],
-								["lol2", "lol2"]
 
-							],
-						}
+
 					}
 				},
 				{
@@ -210,6 +211,9 @@ class TestBlocks {
 				}
 			]
 		} as Register;
+	}
+	mutator_mutator(args: any) {
+		return `${args.SELECT_SECRET}`
 	}
 	test_sec_mut(args: any) {
 		return `${args.TITLE}`;

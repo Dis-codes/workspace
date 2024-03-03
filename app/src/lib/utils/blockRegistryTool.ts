@@ -9,8 +9,11 @@ import {BlockModifierMutator} from "$lib/utils/blockModiferMutator";
 import {MutatorType} from "$lib/interfaces/mutator";
 
 //type for defining blocks easier to develop blocks
-export { OutputType, BlockShape, InputShape, BlocklyTool, Permissions };
-
+export { OutputType, BlockShape, InputShape, BlocklyTool, Permissions, BlockModifierAction };
+const BlockModifierAction = {
+	Show: "show",
+	Hide: "hide"
+}
 const OutputType = {
 	STRING: ["String", "Text"],
 	NUMBER: ["Number"],
@@ -130,6 +133,7 @@ class BlocklyTool {
 			return; // we are done here if theres no blocks
 		}
 		for (const block of registry.blocks) {
+
 			if (typeof block.manual === "string") {
 				// manual block, dont do anything actually
 				// just run the function
@@ -183,16 +187,19 @@ class BlocklyTool {
 					arrayText.splice(index, 0, id);
 				}
 			}
+
 			// now parse this and add to message0 and args0
 			const blockMessage = arrayText.join(" ");
 			let idx = 0;
 			// parse blockMessage and add it to message0
 			blockDisplayContent.message0 = String(blockMessage).replace(/(\[\S+\])+/gim, (match) => {
 				idx++;
+
 				// reads the text inside of the brackets
 				const inputName: string = String(match).replace(/[\[\]]*/gim, "");
 				// add to arguments
 				// get the argument data
+				// if(block.arguments[inputName]?.permanent) return
 				const realArgument = block.arguments[inputName]
 					? block.arguments[inputName]
 					: // if not defined, default to blank input_value
@@ -242,6 +249,7 @@ class BlocklyTool {
 			// actually define the block
 			Blockly.Blocks[`${idPrefix}${block.func}`] = {
 				init: function () {
+
 					this.jsonInit({
 						message0: blockDisplayContent.message0,
 						args0: blockDisplayContent.args0,
@@ -251,6 +259,8 @@ class BlocklyTool {
 						helpUrl: block.url ? block.url : "",
 						mutator: block.mutator !== "" ? block.mutator : ""
 					});
+					BlockModifierMutator(block, this)
+
 					if (block.shape) {
 						// apply block shape
 						switch (block.shape) {
@@ -400,6 +410,36 @@ class BlocklyTool {
 						}
 					}
 				}
+				if(block.mutatorData && block.mutatorData.arguments) {
+					console.log(1)
+					for (const argumentKey of Object.keys(block.mutatorData.arguments)) {
+						let argument = block.mutatorData.arguments[argumentKey]
+						// args0 is an array of blockly argument objects
+						// the [INPUT] -> INPUT names are saved in the "name" property
+						const argName = argumentKey;
+
+						switch (argument.type) {
+							case "input_value":
+								args[argName] = javascriptGenerator.valueToCode(
+									exportblock,
+									argName,
+									javascriptGenerator.ORDER_ATOMIC
+								);
+								break;
+							case "input_statement":
+								args[argName] = javascriptGenerator.statementToCode(exportblock, argName);
+								break;
+							case "input_dummy":
+							case "input_space":
+								args[argName] = "";
+								break;
+							default:
+								args[argName] = exportblock.getFieldValue(argName);
+								break;
+						}
+					}
+				}
+
 				const returnValue = blockset[block.func](args);
 				// if a non-tuple was returned as an output block,
 				// we need to convert it to one

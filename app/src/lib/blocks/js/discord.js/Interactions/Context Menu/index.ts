@@ -7,13 +7,13 @@ import { Block } from 'blockly';
 class ContextMenus {
 	getRegistry() {
 		return {
-			id: "cm",
+			id: "context_menu",
 			name: "Context Menus",
 			color: "#60cc6c",
 			weight: 7,
 			blocks: [
                 {
-                    func: "createcontextmenu",
+                    func: "createContextMenu",
                     text: "Register Context Menu: \n",
                     branches: 1,
                     shape: BlockShape.EVENT,
@@ -33,7 +33,7 @@ class ContextMenus {
 
                 },
                 {
-                    func: "adjustcontext",
+                    func: "adjustContext",
                     text: "name [NAME] \n type [TYPE]",
                     shape: BlockShape.STATEMENT,
                     inline: true,
@@ -46,14 +46,14 @@ class ContextMenus {
                             type: InputShape.MENU,
                             options: [
                                 ['message', 'message'],
-							    ['user', 'user']
+				['user', 'user']
                             ]
                         }
 
                     }
                 },
                 {
-                    func: "contextmenureceive",
+                    func: "contextMenuRecieved",
                     text: "When a context menu is received \n",
                     shape: BlockShape.EVENT,
                     inline: false,
@@ -61,7 +61,7 @@ class ContextMenus {
                     branches: 1
                 },
                 {
-                    func: "getcontextprops",
+                    func: "getContextProps",
                     text: "[RETURN]",
                     output: [OutputType.STRING, OutputType.DISCORD.CHANNEL, OutputType.DISCORD.MEMBER, OutputType.DISCORD.SERVER].flat(),
                     arguments: {
@@ -69,15 +69,15 @@ class ContextMenus {
                             type: InputShape.MENU,
                             options: [
                                 [ 'context name', 'context name'],
-                ['context member', 'context member'],
-                ['context channel',  'context channel'],
-                [ 'context server',  'context server'] 
-            ]
+                		['context member', 'context member'],
+                		['context channel',  'context channel'],
+                		[ 'context server',  'context server'] 
+            		]	
                     }
                         }
                     },
                 {
-                    func: "getoptions",
+                    func: "getOptions",
                     text: "get [MENU] option",
                     output: [OutputType.STRING, OutputType.DISCORD.MEMBER, OutputType.DISCORD.MESSAGE].flat(),
                     color: "#4C97FF",
@@ -113,15 +113,15 @@ class ContextMenus {
 					type: MutatorType.CheckBox,
 					inputs: [
 						{
-							text: "button/menu row",
-							type: OutputType.ANY,
-							defaultValue: false
+						text: "button/menu row",
+						type: OutputType.ANY,
+						defaultValue: false
 						}
 					]
 				}
                 },
                 {
-                    func: "replyedit",
+                    func: "editReply",
                     text: "Edit context menu reply [MESSAGE]",
                     shape: BlockShape.STATEMENT,
                     inline: false,
@@ -133,13 +133,13 @@ class ContextMenus {
                         }
                     },
                     mutator: "row",
-				    mutatorData: {
-					type: MutatorType.CheckBox,
+		    	mutatorData: {
+				type: MutatorType.CheckBox,
 					inputs: [
 						{
-							text: "button/menu row",
-							type: OutputType.ANY,
-							defaultValue: false
+						text: "button/menu row",
+						type: OutputType.ANY,
+						defaultValue: false
 						}
 					]
 				}

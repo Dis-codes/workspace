@@ -68,10 +68,10 @@ class ContextMenus {
                         RETURN: {
                             type: InputShape.MENU,
                             options: [
-                                [ 'context name', 'context name'],
-                		['context member', 'context member'],
-                		['context channel',  'context channel'],
-                		[ 'context server',  'context server'] 
+                                [ 'context name', 'contextName'],
+                		['context member', 'contextMember'],
+                		['context channel',  'contextChannel'],
+                		[ 'context server',  'contextServer'] 
             		]	
                     }
                         }

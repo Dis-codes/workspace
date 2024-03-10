@@ -36,7 +36,7 @@
 		}
 	}
 	async function addCommand() {
-		if (addCommandText.length > 0) {
+		if (addCommandText.length > 0 && addCommandText.length < 16) {
 			commands = [...commands, addCommandText + ".dsc"];
 			addCommandText = "";
 			addcommand.close();
@@ -153,13 +153,27 @@
 <div class="h-full w-full flex flex-col">
 	<div>
 		<NavBar links={false}>
-			<div class="flex flex-row gap-6 items-center">
+			<div class="flex mx-2 flex-row gap-3 items-center">
+				{#if !sidebarOpen}
+
 				<button
 					class="btn btn-square btn-neutral btn-sm"
 					on:click={() => (sidebarOpen = !sidebarOpen)}
 					><span class="material-symbols-outlined">menu</span></button
 				>
-				<h2 class="text-3xl font-bold">{$settings.settings.botName}</h2>
+				{/if}
+			</div>
+			<div class="flex ml-auto mx-2 flex-row gap-3 items-center">
+				<button on:click={() => (event = "save")} class="btn btn-square btn-sm btn-neutral"
+					><span class="material-symbols-outlined">save</span></button
+				>
+				<button on:click={() => setEvent("download")} class="btn btn-square btn-neutral btn-sm"
+					><span class="material-symbols-outlined">download</span></button
+				>
+				<button on:click={() => setEvent("export")} class="btn btn-square btn-neutral btn-sm"
+					><span class="material-symbols-outlined">javascript</span></button
+				>
+				<h2 class="text-2xl font-bold">{$settings.settings.botName}</h2>
 				<button class="btn btn-square btn-accent btn-sm"
 					><span class="material-symbols-outlined">play_arrow</span></button
 				>
@@ -169,12 +183,22 @@
 
 	<div class="flex flex-row h-screen">
 		{#if sidebarOpen}
-			<div class="bg-base-200 w-80 h-screen">
+			<div class="bg-workspace h-screen">
 				<div class="flex flex-col justify-between h-full">
-					<div>
-						<div class="mt-24 mb-4 px-4 flex flex-row justify-between items-center">
-							<h2 class="text-3xl font-bold">Files</h2>
-							<div class="">
+					<div class="mt-16 w-64">
+						<div class="mb-3 px-2 flex flex-row gap-3">
+							<button
+					class="btn btn-square btn-neutral btn-sm"
+					on:click={() => (sidebarOpen = !sidebarOpen)}
+					><span class="material-symbols-outlined">menu</span></button
+				>
+				<button on:click={() => setPage("settings")} class="btn btn-square btn-neutral btn-sm"
+					><span class="material-symbols-outlined">settings</span></button
+				>
+						</div>
+						<div class="mb-4 px-2 flex flex-row justify-between items-center">
+							<h2 class="text-2xl font-bold">Files</h2>
+							<div>
 								<button on:click={() => openFile()} class="btn btn-square btn-sm btn-neutral"
 									><span class="material-symbols-outlined">attach_file_add</span></button
 								>
@@ -183,12 +207,10 @@
 									class="btn btn-square btn-sm btn-neutral"
 									><span class="material-symbols-outlined">note_add</span></button
 								>
-								<button on:click={() => (event = "save")} class="btn btn-square btn-sm btn-neutral"
-									><span class="material-symbols-outlined">save</span></button
-								>
+
 							</div>
 						</div>
-						<ul class="menu max-w-xs w-full">
+						<ul class="menu menu-sm max-w-xs w-full">
 							<li class="flex flex-row items-center justify-between">
 								<button on:click={() => setActiveFile("index.dsc")}>
 									<span class="material-symbols-outlined"> deployed_code </span>
@@ -246,11 +268,11 @@
 								</details>
 							</li>
 							<!-- <li><button>
-                    <span class="material-symbols-outlined">
-                        inventory_2
-                        </span>
-                  package.json
-                </button></li> -->
+					<span class="material-symbols-outlined">
+						inventory_2
+						</span>
+				  package.json
+				</button></li> -->
 							<li>
 								<button on:click={() => markdown.showModal()}>
 									<span class="material-symbols-outlined"> markdown </span>
@@ -260,37 +282,29 @@
 						</ul>
 					</div>
 					<div class="flex flex-col">
-						<div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
-							<button on:click={() => setPage("settings")} class="btn btn-square btn-neutral"
-								><span class="material-symbols-outlined">settings</span></button
-							>
-							<!-- <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button> -->
-							<!-- <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button> -->
-							<button on:click={() => setEvent("download")} class="btn btn-square btn-neutral"
-								><span class="material-symbols-outlined">download</span></button
-							>
-							<button on:click={() => setEvent("export")} class="btn btn-square btn-neutral"
-								><span class="material-symbols-outlined">javascript</span></button
-							>
-						</div>
+						<!-- <div class="bg-gray-600 w-full h-32 grid grid-cols-4 gap-2 p-4">
+							
+							 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">bar_chart_4_bars</span></button>
+							 <button class="btn btn-square btn-neutral"><span class="material-symbols-outlined">group</span></button>
+						</div> -->
 						<a href="https://discodes.xyz/help" class="btn">help</a>
 					</div>
 				</div>
 			</div>
 		{/if}
-		<div class="w-full h-full flex flex-col">
+		<div class="w-full h-full flex flex-col  overflow-hidden">
 			{#if !page}
 				{#if files.length > 0}
-					<div class="mt-16 bg-gray-700 h-10 w-full flex items-center">
-						<div class="flex flex-row ml-5">
+					<div class="mt-16 bg-gray-900 h-10 w-full flex items-center px-2">
+						<div class="flex flex-row">
 							{#each files as file, index (file)}
-								<div class="flex flex-row w-fit max-w-[12rem] gap-2">
-									<button on:click={() => setActiveFile(file)}
-										><h3 class="text-2xl truncate {index == activeFileIndex ? 'font-bold' : ''}">
+								<div class="flex flex-row w-fit max-w-[12rem] gap-2 p-0.5 px-2 rounded-xl {index == activeFileIndex ? 'bg-gray-800 text-gray-300' : ''}">
+									<button class="truncate" on:click={() => setActiveFile(file)}
+										><h3 class="text-xl">
 											{file}
 										</h3></button
 									>
-									<button on:click={() => closeFile(index)} class="btn btn-square btn-ghost btn-sm">
+									<button on:click={() => closeFile(index)} class="m-auto btn btn-square btn-ghost btn-xs my-auto">
 										<span class="material-symbols-outlined">close</span>
 									</button>
 								</div>
@@ -339,6 +353,7 @@
 				placeholder="Type here"
 				class="input input-bordered w-full max-w-xs"
 				bind:value={addCommandText}
+				maxlength="15"
 			/>
 		</div>
 		<div class="modal-action">

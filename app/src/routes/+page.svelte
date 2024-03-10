@@ -48,7 +48,7 @@
 						<p class="font-bold">{$settings.settings.botName}</p>
 						<p class="text-sm mt-4">updated: {formatDate($settings.settings.updatedAt)}</p>
 					</div>
-					<a href="editor/blockly" class="btn btn-primary my-auto">Edit</a>
+					<a href="editor" class="btn btn-primary my-auto">Edit</a>
 				</div>
 			{:else}
 				<div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">

@@ -1,9 +1,5 @@
-import javascriptGenerator from '$lib/javascript';
 import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 import {MutatorType} from "$lib/interfaces/mutator";
-import { Input } from 'postcss';
-import { Block } from 'blockly';
-
 class ContextMenus {
 	getRegistry() {
 		return {

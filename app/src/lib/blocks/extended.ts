@@ -6,6 +6,12 @@ export default {
 	    	expanded: false,
             weight: 2
         },
+        "interactions": {
+            name: "Interactions",
+	    	colour: "#d054fc",
+		    expanded: true,
+            weight: 4
+        },
         "javascript": {
 		    name: "JavaScript",
 	    	colour: "#5b80a5",

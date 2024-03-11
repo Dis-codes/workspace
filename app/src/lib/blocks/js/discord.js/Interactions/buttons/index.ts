@@ -1,6 +1,5 @@
 import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
 import {MutatorType} from "$lib/interfaces/mutator";
-import { Block, FieldLabel } from "blockly";
 
 class Buttons {
 	getRegistry() {

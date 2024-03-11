@@ -36,18 +36,6 @@ class Buttons {
                     }
                 },
                 {
-                    func: "Think",
-                    text: "think as hidden? [BOOLEAN]",
-                    color: "#4C97FF",
-                    shape: BlockShape.STATEMENT,
-                    arguments: {
-                        BOOLEAN: {
-                            type: InputShape.VALUE,
-                            check: OutputType.BOOLEAN
-                        }
-                    }
-                },
-                {
                     func: "ReplyToButtonClick",
                     text: "button reply: \n Ephemeral [EPHEMERAL]",
                     color: "#4C97FF",

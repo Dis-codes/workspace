@@ -205,7 +205,7 @@ class TimeBlocks {
 
 	current(args: any) {
 		if (args.UNIT == "UNIX") {
-			return `Math.floor(new Date().getTime() / 1000)`;
+			return "Math.floor(new Date().getTime() / 1000)";
 		}
 		return `new Date().${args.UNIT}`;
 	}

@@ -127,7 +127,7 @@ class LogicBlocks {
 	}
 
 	stopScript(args: any) {
-		return `return\n`;
+		return "return\n";
 	}
 }
 

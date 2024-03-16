@@ -1,5 +1,4 @@
-import { BlockShape, InputShape, OutputType, Permissions } from "$lib/utils/constants";
-import { MutatorType } from "$lib/interfaces/mutator";
+import { BlockShape, InputShape, MutatorType, OutputType, Permissions } from "$lib/utils/constants";
 
 class ChannelBlocks {
 	getRegistry() {

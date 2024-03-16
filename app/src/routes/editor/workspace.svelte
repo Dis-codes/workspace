@@ -70,7 +70,7 @@
 			event = undefined;
 		}
 	}
-	let generatedCode = ``;
+	let generatedCode = "";
 	let workspace: Blockly.WorkspaceSvg;
 
 	function registerNewContextMenu() {
@@ -81,7 +81,7 @@
 				weight: 100,
 				scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
 				id: "delete_unused_blocks",
-				preconditionFn: function (e) {
+				preconditionFn: function(e) {
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
 						if (!block.isEnabled()) {
@@ -92,7 +92,7 @@
 			});
 			Blockly.ContextMenuRegistry.registry.register({
 				displayText: "Download Workspace Image",
-				preconditionFn: function () {
+				preconditionFn: function() {
 					//check if workspace is empty
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
@@ -101,8 +101,8 @@
 						}
 					}
 				},
-				callback: function () {
-					workspaceToSvg_(workspace, function (datauri) {
+				callback: function() {
+					workspaceToSvg_(workspace, (datauri) => {
 						let a = document.createElement("a");
 						a.download = "screenshot.png";
 						a.target = "_self";
@@ -186,7 +186,7 @@
 			if (event.target.files[0].name.endsWith(".zip")) {
 				const file = event.target.files[0];
 				const reader = new FileReader();
-				reader.onload = async (event: any) => {
+				reader.onload = async(event: any) => {
 					const contents = event.target.result;
 					try {
 						const zip = await JSZip.loadAsync(contents);
@@ -271,7 +271,7 @@
 				code += indexJs + javascriptGenerator.workspaceToCode(workspace);
 				break;
 			default:
-				code = `//${f}\n` + javascriptGenerator.workspaceToCode(workspace);
+				code = `//${f}\n${  javascriptGenerator.workspaceToCode(workspace)}`;
 				break;
 		}
 		try {
@@ -300,7 +300,7 @@
 		for (const [key, value] of Object.entries($storage)) {
 			if (key && key !== "index.dsc" && key.endsWith(".dsc")) {
 				//remove .dsc from filename and add .js
-				zip.file("commands/" + key.slice(0, -4) + ".js", await generateCode(key));
+				zip.file(`commands/${  key.slice(0, -4)  }.js`, await generateCode(key));
 			}
 		}
 		zip.file("package.json", JSON.stringify(packageJson, null, 2));
@@ -323,7 +323,7 @@
 		const url = URL.createObjectURL(content);
 		const a = document.createElement("a");
 		a.href = url;
-		a.download = $storage.settings.botName + ".zip";
+		a.download = `${$storage.settings.botName  }.zip`;
 		a.click();
 		URL.revokeObjectURL(url);
 		file = fileBeforeDownload;
@@ -356,7 +356,7 @@
 			let text: string[] = [];
 			for (const errsKey of Object.keys(WarningMessages[wType])) {
 				console.log(workspace.getBlockById(wType));
-				text.push(workspace.getBlockById(wType)?.type + " - " + WarningMessages[wType][errsKey]);
+				text.push(`${workspace.getBlockById(wType)?.type  } - ${  WarningMessages[wType][errsKey]}`);
 			}
 			errMessages.push({
 				type: wType,

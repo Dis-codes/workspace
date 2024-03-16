@@ -1,4 +1,6 @@
-const OutputType = {
+//? All members of this file have to be exported!
+
+export const OutputType = {
 	STRING: ["String", "Text"],
 	NUMBER: ["Number"],
 	BOOLEAN: ["Boolean", "Bool"],
@@ -17,7 +19,7 @@ const OutputType = {
 /**
  * List of constants for different block shapes.
  */
-const BlockShape = {
+export const BlockShape = {
 	STATEMENT: "statement", //Block shape for a statement block. Not actually required, but keeps code consistent.
 	EVENT: "event", //Block shape for a floating block with an input inside.Can be replaced with FLOATING, but keeps code consistent.
 	TERMINAL: "terminal", //Block shape for a block with no blocks allowed to attach after.
@@ -29,7 +31,7 @@ const BlockShape = {
 /**
  * List of constants for different input shapes / fields.
  */
-const InputShape = {
+export const InputShape = {
 	VALUE: "input_value", //Input shape for inputs that allow output blocks.
 	DUMMY: "input_dummy", //Can be used for seperating content on a block by a new line.
 	SPACE: "input_space", //Similar to DUMMY.Can be used for seperating content on a block.
@@ -53,7 +55,7 @@ const InputShape = {
 /**
  * Used to make a blockly menu input with all discord's permission flags.
  */
-const Permissions = [
+export const Permissions = [
 	["Create Invites", "1n"],
 	["Kick Members", "2n"],
 	["Ban Members", "4n"],
@@ -102,4 +104,7 @@ const Permissions = [
 	["Send Voice Messages", "70368744177664n"]
 ];
 
-export { OutputType, BlockShape, InputShape, Permissions };
+export const MutatorType = {
+	CheckBox: "checkbox",
+	BlockList: "blocklist" // later adding after its done
+};

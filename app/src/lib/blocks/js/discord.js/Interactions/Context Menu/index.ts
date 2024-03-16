@@ -1,5 +1,4 @@
-import { BlockShape, InputShape, OutputType } from "$lib/utils/constants";
-import { MutatorType } from "$lib/interfaces/mutator";
+import { BlockShape, InputShape, MutatorType, OutputType } from "$lib/utils/constants";
 class ContextMenus {
 	getRegistry() {
 		return {

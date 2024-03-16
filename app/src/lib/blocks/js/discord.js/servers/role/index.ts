@@ -1,5 +1,4 @@
-import { MutatorType } from "$lib/interfaces/mutator";
-import { OutputType, BlockShape, InputShape, Permissions } from "$lib/utils/constants";
+import { BlockShape, InputShape, MutatorType, OutputType, Permissions } from "$lib/utils/constants";
 class RoleBlocks {
 	getRegistry() {
 		return {
@@ -266,7 +265,7 @@ class RoleBlocks {
 })`;
 	}
 	get_all_value(args: any) {
-		return `__DIS__Role`;
+		return "__DIS__Role";
 	}
 	member_has(args: any) {
 		return `${args.MEMBER}.roles.cache.has(${args.ROLE})`;
@@ -295,7 +294,7 @@ class RoleBlocks {
 		return code;
 	}
 	created(args: any) {
-		return `__DIS__CreatedRole`;
+		return "__DIS__CreatedRole";
 	}
 	delete(args: any) {
 		return `${args.ROLE}.delete()`;

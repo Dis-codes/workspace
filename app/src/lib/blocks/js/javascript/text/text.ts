@@ -92,7 +92,7 @@ class TextBlocks {
 	}
 
 	newline() {
-		return `\\n`;
+		return "\\n";
 	}
 
 	containsNumber(args: any) {
@@ -113,9 +113,9 @@ class TextBlocks {
 	character(args: any) {
 		switch (args.SELECT) {
 			case "char":
-				return `char_i_char`;
+				return "char_i_char";
 			case "word":
-				return `word_i_word`;
+				return "word_i_word";
 			default:
 				return "";
 		}

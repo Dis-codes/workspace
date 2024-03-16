@@ -118,7 +118,7 @@ class ObjectBlocks {
 	}
 
 	create_empty() {
-		return `({})`;
+		return "({})";
 	}
 
 	add_to_object(args: any) {

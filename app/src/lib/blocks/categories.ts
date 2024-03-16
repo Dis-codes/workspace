@@ -9,13 +9,13 @@ interface Category {
 	contents?: Category;
 }
 function transformPathToCategory(path: string, blocks, push: boolean = true, category): Category {
-	let parts = path.replaceAll("./", "").split("/");
-	let isBlockFile = parts.at(-1)?.endsWith(".ts");
+	const parts = path.replaceAll("./", "").split("/");
+	const isBlockFile = parts.at(-1)?.endsWith(".ts");
 	if (isBlockFile) {
 		parts.pop();
 	}
 
-	let existingCategory = categories.find((category) => category.id === parts[0]);
+	const existingCategory = categories.find((category) => category.id === parts[0]);
 
 	if (existingCategory) {
 		if (parts.length > 1) {
@@ -48,7 +48,7 @@ function transformPathToCategory(path: string, blocks, push: boolean = true, cat
 			name: textToTitleCase(textToTitleCase(parts[0])),
 			color: "#5b80a5"
 		};
-		let ext = extended?.category[parts[0]];
+		const ext = extended?.category[parts[0]];
 		if (ext) {
 			result.name = ext.name;
 			result.extended = ext.extended;
@@ -74,7 +74,7 @@ function transformPathToCategory(path: string, blocks, push: boolean = true, cat
 }
 
 function textToTitleCase(str) {
-	return str.replace(/\S+/g, function (txt: string) {
+	return str.replace(/\S+/g, (txt: string) => {
 		return txt[0].toUpperCase() + txt.substring(1);
 	});
 }
@@ -106,7 +106,7 @@ function genArgs(block: any) {
 	const inputs = {};
 	if (!block) return;
 	for (const arg in block) {
-		let argParm = block[arg];
+		const argParm = block[arg];
 		if (argParm.type !== "input_value") continue;
 		if (argParm.check) {
 			switch (argParm.check[0]) {
@@ -245,7 +245,7 @@ function genArgs(block: any) {
 }
 // importBlocks.ts
 const categories: [] = [];
-const importBlocks = async () => {
+const importBlocks = async() => {
 	const modules = import.meta.glob("./js/**/**/*.ts");
 	for (const path in modules) {
 		const module = await modules[path]();
@@ -254,7 +254,7 @@ const importBlocks = async () => {
 		const registry = blockInstance.getRegistry();
 
 		if (!registry || !registry.id || registry.hidden) continue;
-		let genBlocks = [];
+		const genBlocks = [];
 		if (extended[registry.id]) {
 			for (const extBlock of extended[registry.id]) {
 				genBlocks.push({
@@ -268,15 +268,15 @@ const importBlocks = async () => {
 		for (const genBlock of registry.blocks) {
 			if (genBlock.hidden || !genBlock.func) continue;
 			if (genBlock.label)
-				genBlocks.push({
+				{genBlocks.push({
 					kind: "label",
 					text: genBlock.label,
 					weight: genBlock.weight
-				});
+				});}
 
 			genBlocks.push({
 				kind: "block",
-				type: registry.id + "_" + genBlock.func,
+				type: `${registry.id  }_${  genBlock.func}`,
 				weight: genBlock.weight,
 				inputs: genBlock.inputs || genArgs(genBlock.arguments)
 			});

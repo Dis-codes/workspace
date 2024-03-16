@@ -1,8 +1,6 @@
-import { MutatorType } from "$lib/interfaces/mutator";
-import { WarningType } from "$lib/interfaces/warnings";
+import { WarningType, type Register } from "$lib/interfaces";
 import javascriptGenerator from "$lib/javascript";
-import type { Register } from "../../../interfaces";
-import { BlockShape, InputShape, OutputType } from "../../../utils/constants";
+import { BlockShape, InputShape, MutatorType, OutputType } from "$lib/utils/constants";
 
 class TestBlocks {
 	/**
@@ -197,7 +195,7 @@ class TestBlocks {
 		return `${args.BRANCH1}\n${args.BRANCH2}`;
 	}
 	testterminal() {
-		return `return;`;
+		return "return;";
 	}
 	testinput(args: any) {
 		return `console.log(${args.INPUT});`;

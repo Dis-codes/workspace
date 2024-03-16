@@ -103,11 +103,11 @@ class TerminalBlocks {
 	}
 
 	clear_console() {
-		return `console.clear();`;
+		return "console.clear();";
 	}
 
 	error() {
-		return `err`;
+		return "err";
 	}
 
 	insert_code_statement(args: any) {

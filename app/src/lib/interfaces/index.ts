@@ -1,11 +1,23 @@
 import type Blockly from "blockly/core";
-import type { WarningData } from "./warnings";
-interface Register {
+
+export enum WarningType {
+	EmptyInput = "empty_input",
+	RequiredParent = "required_parent" // under which parent the block requires it to be
+}
+export interface WarningData {
+	type:  typeof WarningType;
+	inputName?: string | string[];
+	parentType?: string | string[];
+	message: string;
+}
+
+export interface Register {
 	id: string;
 	color: number | string;
 	blocks: BlockDefinition[];
 }
-interface BlockDefinition {
+
+export interface BlockDefinition {
 	func: string;
 	text: string | string[];
 	output?: string;
@@ -17,7 +29,8 @@ interface BlockDefinition {
 	inline?: boolean;
 	warnings: WarningData[];
 }
-interface Argument {
+
+export interface Argument {
 	type: string;
 	text: string;
 	src?: string;
@@ -27,7 +40,8 @@ interface Argument {
 	spellcheck?: boolean;
 	check?: string;
 }
-interface MutatorData {
+
+export interface MutatorData {
 	type: string;
 	// if this is not "" it will use this for mutator.ts block and then add checkbox inputs to that block
 	blockType?: string;
@@ -37,7 +51,8 @@ interface MutatorData {
 	inputModifier?: (block: Blockly.Block) => void; // BlockList mutator type field
 	blockList: string[];
 }
-interface MutatorInput {
+
+export interface MutatorInput {
 	text?: string; // adding string[] type will be later when adding more mutators
 	inputName?: string; // used in js code generation for example `${args.inputName}`
 	type?: string; // optional when used with branch
@@ -47,5 +62,3 @@ interface MutatorInput {
 	//fields for blocklist mutator
 	blockId?: string;
 }
-
-export type { Argument, BlockDefinition, MutatorData, MutatorInput, Register };

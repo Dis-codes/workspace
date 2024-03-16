@@ -119,7 +119,7 @@ class RequestsBlocks {
 	}
 
 	response_status(args: any) {
-		return `response.status`;
+		return "response.status";
 	}
 
 	request(args: any) {
@@ -130,7 +130,7 @@ class RequestsBlocks {
 		if (args.BRANCH2) {
 			code += `, body: {${args.BRANCH2}}`;
 		}
-		code += `})`;
+		code += "})";
 		if (args.BRANCH3) {
 			code += `.then(response => {${args.BRANCH3}})`;
 		}
@@ -141,7 +141,7 @@ class RequestsBlocks {
 	}
 
 	all(args: any) {
-		return `response.data`;
+		return "response.data";
 	}
 }
 

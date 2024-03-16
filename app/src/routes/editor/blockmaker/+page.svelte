@@ -67,7 +67,7 @@
 				contents: [
 					{
 						kind: "block",
-						type: `test_myfunction`
+						type: "test_myfunction"
 					}
 				]
 			}
@@ -126,8 +126,8 @@
             check: OutputType.${selectedOutputType}
         }`;
 	});
-	let functionCode = `return args.ARGUMENT1 + " World!";`;
-	let generatedBlock = `{}`;
+	let functionCode = "return args.ARGUMENT1 + \" World!\";";
+	let generatedBlock = "{}";
 	class Block {
 		getRegistry() {
 			return {

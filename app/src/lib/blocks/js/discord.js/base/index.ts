@@ -147,7 +147,7 @@ class BaseBlocks {
 	}
 
 	bot_as_member(args: any) {
-		return `client.user`;
+		return "client.user";
 	}
 
 	bot_status(args: any) {
@@ -168,17 +168,17 @@ class BaseBlocks {
 	bot_info(args: any) {
 		switch (args.INFO) {
 			case "startup_time":
-				return `client.readyAt`;
+				return "client.readyAt";
 			case "ping":
-				return `client.ws.ping`;
+				return "client.ws.ping";
 			case "uptime":
-				return `client.uptime`;
+				return "client.uptime";
 			case "user_count":
-				return `client.users.cache.size`;
+				return "client.users.cache.size";
 			case "server_count":
-				return `client.guilds.cache.size`;
+				return "client.guilds.cache.size";
 			case "channel_count":
-				return `client.channels.cache.size`;
+				return "client.channels.cache.size";
 		}
 	}
 }

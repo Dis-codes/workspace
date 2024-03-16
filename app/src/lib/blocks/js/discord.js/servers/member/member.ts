@@ -1,5 +1,4 @@
-import { MutatorType } from "$lib/interfaces/mutator";
-import { InputShape, OutputType } from "$lib/utils/constants";
+import { InputShape, MutatorType, OutputType } from "$lib/utils/constants";
 
 class MemberBlocks {
 	getRegistry() {
@@ -121,7 +120,7 @@ class MemberBlocks {
 		};
 	}
 	getmemberbyid(args: any) {
-		let identifier = args.MENU === "id" ? "id" : "name";
+		const identifier = args.MENU === "id" ? "id" : "name";
 		if (args.SERVER) {
 			return `client.guilds.cache.get(${args.SERVER}).members.cache.get(${args.ID})`;
 		} else {

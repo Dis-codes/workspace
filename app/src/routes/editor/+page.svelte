@@ -4,7 +4,8 @@
 	import { persisted } from "$lib/localstorage";
 	import SettingsTab from "./SettingsTab.svelte";
 	import { WarningMessages } from "../../data";
-	import { WarningType } from "$lib/interfaces/warnings";
+	import { WarningType } from "$lib/interfaces";
+	
 	let settings = persisted("workspace");
 	let sidebarOpen = true;
 	let files = ["index.dsc"]; // Array of file names
@@ -37,7 +38,7 @@
 	}
 	async function addCommand() {
 		if (addCommandText.length > 0 && addCommandText.length < 16) {
-			commands = [...commands, addCommandText + ".dsc"];
+			commands = [...commands, `${addCommandText  }.dsc`];
 			addCommandText = "";
 			addcommand.close();
 		}
@@ -299,8 +300,8 @@
 								<div
 									class="flex flex-row w-fit max-w-[12rem] gap-2 p-0.5 px-2 rounded-xl {index ==
 									activeFileIndex
-										? 'bg-gray-800 text-gray-300'
-										: ''}"
+										? "bg-gray-800 text-gray-300"
+										: ""}"
 								>
 									<button class="truncate" on:click={() => setActiveFile(file)}
 										><h3 class="text-xl">
@@ -319,7 +320,7 @@
 						</div>
 					</div>
 				{/if}
-				<div class="flex-1 {files.length > 0 ? '' : 'mt-[4rem]'}">
+				<div class="flex-1 {files.length > 0 ? "" : "mt-[4rem]"}">
 					<Workspace file={files[activeFileIndex]} {event} />
 				</div>
 			{:else if page === "settings"}

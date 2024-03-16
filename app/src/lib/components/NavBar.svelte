@@ -7,7 +7,7 @@
 </script>
 
 <div
-	class="navbar fixed z-10 h-16 {$page.url.pathname === '/editor' ? 'bg-workspace' : 'bg-base-200'}"
+	class="navbar fixed z-10 h-16 {$page.url.pathname === "/editor" ? "bg-workspace" : "bg-base-200"}"
 >
 	<div class="flex-1">
 		<a href="/" class="btn btn-square btn-ghost">

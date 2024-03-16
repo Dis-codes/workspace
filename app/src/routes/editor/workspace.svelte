@@ -214,7 +214,6 @@
 				try {
 					const workspaceFile = JSON.parse(contents);
 					if (workspaceFile && workspaceFile["index.dsc"]) {
-						console.log("workspace found", workspaceFile);
 						storage.set(workspaceFile);
 						window.location.reload();
 					} else {

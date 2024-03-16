@@ -213,7 +213,6 @@
 				const contents = event.target.result;
 				try {
 					const workspaceFile = JSON.parse(contents);
-					console.log(contents)
 					if (workspaceFile && workspaceFile["index.dsc"]) {
 						console.log("workspace found", workspaceFile);
 						storage.set(workspaceFile);

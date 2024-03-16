@@ -50,12 +50,15 @@
 					saveWorkspace(file);
 					break;
 				case "export":
+					saveWorkspace(file);
 					ShowBlockErrorDialog("showjs");
 					break;
 				case "download":
+					saveWorkspace(file);
 					ShowBlockErrorDialog("download");
 					break;
 				case "copy":
+					saveWorkspace(file);
 					copyCode();
 					break;
 				case "delete":
@@ -124,7 +127,7 @@
 			const urlParams = new URLSearchParams(window.location.search);
 			if (urlParams.get("open") === "true") {
 				openFile();
-				window.history.replaceState({}, document.title, "/" + "editor/blockly");
+				window.history.replaceState({}, document.title, "/" + "editor");
 			} else {
 				loadWorkspace();
 			}
@@ -210,7 +213,8 @@
 				const contents = event.target.result;
 				try {
 					const workspaceFile = JSON.parse(contents);
-					if (workspaceFile) {
+					console.log(contents)
+					if (workspaceFile && workspaceFile["index.dsc"]) {
 						console.log("workspace found", workspaceFile);
 						storage.set(workspaceFile);
 						window.location.reload();

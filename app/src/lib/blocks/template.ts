@@ -1,6 +1,3 @@
-import javascriptGenerator from "$lib/javascript";
-import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
-
 class XXXBlocks {
 	getRegistry() {
 		return {

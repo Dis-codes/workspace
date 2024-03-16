@@ -1,4 +1,4 @@
-import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
+import { OutputType, BlockShape, InputShape } from "$lib/utils/constants";
 
 class ListsBlocks {
 	getRegistry() {

@@ -8,7 +8,7 @@
 	import type { Abstract } from "blockly/core/events/events_abstract";
 	import En from "blockly/msg/en";
 
-	import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
+	import { BlockShape, InputShape, OutputType } from "$lib/utils/constants";
 
 	const DarkTheme = Blockly.Theme.defineTheme("a", {
 		name: "true_dark",

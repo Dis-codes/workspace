@@ -1,21 +1,23 @@
 <script lang="ts">
 	// import Account from "./Account.svelte";
-	import { page } from '$app/stores';
+	import { page } from "$app/stores";
 	import { user } from "$lib/userStore";
 	let searchContent = "";
 	export let links: boolean = true;
 </script>
 
-<div class="navbar fixed z-10 h-16 {$page.url.pathname === "/editor" ? "bg-workspace" : "bg-base-200"}">
+<div
+	class="navbar fixed z-10 h-16 {$page.url.pathname === '/editor' ? 'bg-workspace' : 'bg-base-200'}"
+>
 	<div class="flex-1">
 		<a href="/" class="btn btn-square btn-ghost">
 			<img src="/Images/favicon1.png" alt="logo" class="w-full h-full rounded" />
 		</a>
-		{#if $page.url.pathname === "/"}			
-		<h2 class="ml-4 normal-case text-xl">DisCodes</h2>
+		{#if $page.url.pathname === "/"}
+			<h2 class="ml-4 normal-case text-xl">DisCodes</h2>
 		{/if}
 		{#if !links}
-				<slot />
+			<slot />
 		{/if}
 	</div>
 	{#if links}

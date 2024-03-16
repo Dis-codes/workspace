@@ -3,8 +3,7 @@ export default class {
 		return {
 			id: "textedit",
 			color: "#ffac2c",
-			blocks: [
-			]
+			blocks: []
 		};
 	}
 }

@@ -15,7 +15,7 @@
 	import "./blockRegister";
 	// better code export
 	import JSZip from "jszip";
-	import {WarningMessages} from "../../data";
+	import { WarningMessages } from "../../data";
 	import * as prettier from "prettier";
 	import * as prettierPluginBabel from "prettier/plugins/babel";
 	import * as prettierPluginEstree from "prettier/plugins/estree";
@@ -50,10 +50,10 @@
 					saveWorkspace(file);
 					break;
 				case "export":
-				ShowBlockErrorDialog("showjs")
+					ShowBlockErrorDialog("showjs");
 					break;
 				case "download":
-				ShowBlockErrorDialog("download")
+					ShowBlockErrorDialog("download");
 					break;
 				case "copy":
 					copyCode();
@@ -337,53 +337,53 @@
 			}
 		}
 	}
-    interface ErrMsg {
-        type: string
-        msg: string[]
-    }
-    let errMessages: ErrMsg[] = []
-    let actionToPerform1: string;
+	interface ErrMsg {
+		type: string;
+		msg: string[];
+	}
+	let errMessages: ErrMsg[] = [];
+	let actionToPerform1: string;
 
-    function ShowBlockErrorDialog(actionToPerform: string) {
-        actionToPerform1 = actionToPerform
-        let wMsgKeys = Object.keys(WarningMessages);
-        errMessages = []
-        for(const wType of wMsgKeys) {
-            if(!Blockly.getMainWorkspace().getBlockById(wType)) {
-                delete WarningMessages[wType]
-                continue
-            }
-            let text: string[] = []
-            for(const errsKey of Object.keys(WarningMessages[wType])) {
-				console.log(workspace.getBlockById(wType))
-                text.push(workspace.getBlockById(wType)?.type + " - " + WarningMessages[wType][errsKey])
-            }
-            errMessages.push({
-                type: wType,
-                msg: text
-            })
-        }
-        if (errMessages.length === 0) return warningClose(actionToPerform)
+	function ShowBlockErrorDialog(actionToPerform: string) {
+		actionToPerform1 = actionToPerform;
+		let wMsgKeys = Object.keys(WarningMessages);
+		errMessages = [];
+		for (const wType of wMsgKeys) {
+			if (!Blockly.getMainWorkspace().getBlockById(wType)) {
+				delete WarningMessages[wType];
+				continue;
+			}
+			let text: string[] = [];
+			for (const errsKey of Object.keys(WarningMessages[wType])) {
+				console.log(workspace.getBlockById(wType));
+				text.push(workspace.getBlockById(wType)?.type + " - " + WarningMessages[wType][errsKey]);
+			}
+			errMessages.push({
+				type: wType,
+				msg: text
+			});
+		}
+		if (errMessages.length === 0) return warningClose(actionToPerform);
 		blockErrors.showModal();
-    }
-function warningClose(action){
-	blockErrors.close()
-	switch (action) {
-        case "showjs":
-            exportJS();
-       		break;
-        case "download":
-            downloadFiles()
-        	break
-         }
-}
-async function showBlock(val){
-	blockErrors.close()
-	workspace.centerOnBlock(val);
-	workspace.highlightBlock(val, true);
-	await new Promise(resolve => setTimeout(resolve, 700));
-	workspace.highlightBlock(val, false);
-}
+	}
+	function warningClose(action) {
+		blockErrors.close();
+		switch (action) {
+			case "showjs":
+				exportJS();
+				break;
+			case "download":
+				downloadFiles();
+				break;
+		}
+	}
+	async function showBlock(val) {
+		blockErrors.close();
+		workspace.centerOnBlock(val);
+		workspace.highlightBlock(val, true);
+		await new Promise((resolve) => setTimeout(resolve, 700));
+		workspace.highlightBlock(val, false);
+	}
 </script>
 
 <div class="flex flex-col items-center justify-center h-full">
@@ -423,7 +423,7 @@ async function showBlock(val){
 	</div>
 </dialog>
 <dialog id="blockErrors" class="modal scroll">
-	<div class="modal-box max-w-full  h-full">
+	<div class="modal-box max-w-full h-full">
 		<h3 class="font-bold text-3xl text-center mb-5">Your bot's code contains some errors!</h3>
 		<div id="listOfErrors" class="overflow-y-scroll max-h-[67vh]">
 			<div class="grid place-items-center">
@@ -432,21 +432,22 @@ async function showBlock(val){
 						<div class="mr-2 text-red-500">
 							{#each val.msg as msg}
 								{msg}
-								<br/>
+								<br />
 							{/each}
 						</div>
-					<button class="btn mb-2" on:click={() => showBlock(val.type)}>Show block</button>
+						<button class="btn mb-2" on:click={() => showBlock(val.type)}>Show block</button>
 					</div>
 				{/each}
 			</div>
 		</div>
 
 		<div class="absolute bottom-0 left-0 right-0 p-5 bg-white-removed flex justify-center">
-			<button on:click={() => warningClose(actionToPerform1)} class="btn btn-error mr-4">Proceed</button>
+			<button on:click={() => warningClose(actionToPerform1)} class="btn btn-error mr-4"
+				>Proceed</button
+			>
 			<form method="dialog" class="ml-4">
 				<button class="btn btn-success">Close</button>
 			</form>
 		</div>
-
 	</div>
 </dialog>

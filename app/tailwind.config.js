@@ -3,7 +3,7 @@ export default {
 	content: ["./src/**/*.{html,js,svelte,ts}"],
 	theme: {
 		extend: {
-			colors:{
+			colors: {
 				workspace: "#0c111a"
 			}
 		}

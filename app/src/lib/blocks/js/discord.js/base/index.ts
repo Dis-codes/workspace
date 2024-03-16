@@ -1,4 +1,4 @@
-import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
+import { OutputType, BlockShape, InputShape } from "$lib/utils/constants";
 
 class BaseBlocks {
 	getRegistry() {
@@ -12,11 +12,11 @@ class BaseBlocks {
 					text: "Connect to bot using [TOKEN]",
 					blockShape: BlockShape.FLOATING,
 					arguments: {
-					TOKEN: 	{
+						TOKEN: {
 							type: InputShape.VALUE,
 							check: OutputType.STRING
+						}
 					}
-				}
 				},
 				{
 					func: "env",
@@ -28,7 +28,7 @@ class BaseBlocks {
 							check: OutputType.STRING,
 							text: "env"
 						}
-					},
+					}
 				},
 				{
 					func: "bot_connected",

@@ -155,12 +155,11 @@
 		<NavBar links={false}>
 			<div class="flex mx-2 flex-row gap-3 items-center">
 				{#if !sidebarOpen}
-
-				<button
-					class="btn btn-square btn-neutral btn-sm"
-					on:click={() => (sidebarOpen = !sidebarOpen)}
-					><span class="material-symbols-outlined">menu</span></button
-				>
+					<button
+						class="btn btn-square btn-neutral btn-sm"
+						on:click={() => (sidebarOpen = !sidebarOpen)}
+						><span class="material-symbols-outlined">menu</span></button
+					>
 				{/if}
 			</div>
 			<div class="flex ml-auto mx-2 flex-row gap-3 items-center">
@@ -188,13 +187,13 @@
 					<div class="mt-16 w-64">
 						<div class="mb-3 px-2 flex flex-row gap-3">
 							<button
-					class="btn btn-square btn-neutral btn-sm"
-					on:click={() => (sidebarOpen = !sidebarOpen)}
-					><span class="material-symbols-outlined">menu</span></button
-				>
-				<button on:click={() => setPage("settings")} class="btn btn-square btn-neutral btn-sm"
-					><span class="material-symbols-outlined">settings</span></button
-				>
+								class="btn btn-square btn-neutral btn-sm"
+								on:click={() => (sidebarOpen = !sidebarOpen)}
+								><span class="material-symbols-outlined">menu</span></button
+							>
+							<button on:click={() => setPage("settings")} class="btn btn-square btn-neutral btn-sm"
+								><span class="material-symbols-outlined">settings</span></button
+							>
 						</div>
 						<div class="mb-4 px-2 flex flex-row justify-between items-center">
 							<h2 class="text-2xl font-bold">Files</h2>
@@ -207,7 +206,6 @@
 									class="btn btn-square btn-sm btn-neutral"
 									><span class="material-symbols-outlined">note_add</span></button
 								>
-
 							</div>
 						</div>
 						<ul class="menu menu-sm max-w-xs w-full">
@@ -292,19 +290,27 @@
 				</div>
 			</div>
 		{/if}
-		<div class="w-full h-full flex flex-col  overflow-hidden">
+		<div class="w-full h-full flex flex-col overflow-hidden">
 			{#if !page}
 				{#if files.length > 0}
 					<div class="mt-16 bg-gray-900 h-10 w-full flex items-center px-2">
 						<div class="flex flex-row">
 							{#each files as file, index (file)}
-								<div class="flex flex-row w-fit max-w-[12rem] gap-2 p-0.5 px-2 rounded-xl {index == activeFileIndex ? 'bg-gray-800 text-gray-300' : ''}">
+								<div
+									class="flex flex-row w-fit max-w-[12rem] gap-2 p-0.5 px-2 rounded-xl {index ==
+									activeFileIndex
+										? 'bg-gray-800 text-gray-300'
+										: ''}"
+								>
 									<button class="truncate" on:click={() => setActiveFile(file)}
 										><h3 class="text-xl">
 											{file}
 										</h3></button
 									>
-									<button on:click={() => closeFile(index)} class="m-auto btn btn-square btn-ghost btn-xs my-auto">
+									<button
+										on:click={() => closeFile(index)}
+										class="m-auto btn btn-square btn-ghost btn-xs my-auto"
+									>
 										<span class="material-symbols-outlined">close</span>
 									</button>
 								</div>

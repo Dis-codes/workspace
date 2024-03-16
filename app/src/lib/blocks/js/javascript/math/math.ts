@@ -1,4 +1,4 @@
-import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
+import { InputShape, OutputType } from "$lib/utils/constants";
 
 class Mathblocks {
 	getRegistry() {

@@ -3,8 +3,7 @@ export default class {
 		return {
 			id: "data",
 			color: "#ffac2c",
-			blocks: [
-			]
+			blocks: []
 		};
 	}
 }

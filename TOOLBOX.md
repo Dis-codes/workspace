@@ -6,7 +6,7 @@ To make a category, you add a folder by it´s name and a index.ts file containin
 
 ## Category
 ```ts
-import { OutputType, BlockShape, InputShape } from "$lib/utils/blockRegistryTool";
+import { OutputType, BlockShape, InputShape } from "$lib/utils/constants";
 
 class ClassName {
 	getRegistry() {

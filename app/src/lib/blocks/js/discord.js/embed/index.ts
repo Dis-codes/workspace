@@ -1,4 +1,4 @@
-import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
+import { BlockShape, InputShape, OutputType } from "$lib/utils/constants";
 
 class MessageBlocks {
 	getRegistry() {
@@ -134,7 +134,7 @@ class MessageBlocks {
 				{
 					func: "setTimestamp",
 					text: "set embed timestamp",
-					shape: BlockShape.STATEMENT,
+					shape: BlockShape.STATEMENT
 				}
 			]
 		};

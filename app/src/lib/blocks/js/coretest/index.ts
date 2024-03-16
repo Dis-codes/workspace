@@ -2,7 +2,7 @@ import { MutatorType } from "$lib/interfaces/mutator";
 import { WarningType } from "$lib/interfaces/warnings";
 import javascriptGenerator from "$lib/javascript";
 import type { Register } from "../../../interfaces";
-import { BlockShape, InputShape, OutputType } from "../../../utils/blockRegistryTool";
+import { BlockShape, InputShape, OutputType } from "../../../utils/constants";
 
 class TestBlocks {
 	/**
@@ -60,8 +60,7 @@ class TestBlocks {
 								inputName: "Title",
 
 								type: OutputType.STRING, // type for input added to the main block
-								defaultValue: true, // whether the checkbox is checked also will affect if input is showed on start
-								
+								defaultValue: true // whether the checkbox is checked also will affect if input is showed on start
 							},
 							{
 								text: "Description",

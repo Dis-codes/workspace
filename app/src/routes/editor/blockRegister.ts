@@ -1,4 +1,4 @@
-import { BlocklyTool } from "$lib/utils/blockRegistryTool";
+import BlocklyTool from "$lib/utils/blockRegistryTool";
 const BlockRegistryTool = new BlocklyTool();
 
 import blockClasses from "$lib/blocks";

@@ -3,7 +3,7 @@
 	import Workspace from "./workspace.svelte";
 	import { persisted } from "$lib/localstorage";
 	import SettingsTab from "./SettingsTab.svelte";
-	import { WarningMessages } from "../../data";
+	import { WarningMessages } from "../../lib/utils/data";
 	import { WarningType } from "$lib/interfaces";
 
 	let settings = persisted("workspace");

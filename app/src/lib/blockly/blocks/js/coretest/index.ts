@@ -1,5 +1,5 @@
 import { WarningType, type Register } from "$lib/interfaces";
-import javascriptGenerator from "$lib/javascript";
+import javascriptGenerator from "$lib/blockly/javascript";
 import { BlockShape, InputShape, MutatorType, OutputType } from "$lib/utils/constants";
 
 class TestBlocks {

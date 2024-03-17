@@ -1,4 +1,4 @@
-const importBlocks = async () => {
+const importBlocks = async() => {
 	const modules = import.meta.glob("./js/**/**/*.ts");
 
 	const blocks = [];

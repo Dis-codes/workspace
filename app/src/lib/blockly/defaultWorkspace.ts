@@ -1,6 +1,7 @@
 import Blockly from "blockly/core";
 import En from "blockly/msg/en";
-import toolbox from "$lib/toolbox";
+import toolbox from "$lib/blockly/toolbox";
+
 class CustomCategory extends Blockly.ToolboxCategory {
 	/**
 	 * Constructor for a custom category.
@@ -14,12 +15,14 @@ class CustomCategory extends Blockly.ToolboxCategory {
 	//   this.rowDiv_.style.backgroundColor = colour;
 	// }
 }
+
 Blockly.registry.register(
 	Blockly.registry.Type.TOOLBOX_ITEM,
 	Blockly.ToolboxCategory.registrationName,
 	CustomCategory,
 	true
 );
+
 const DarkTheme = Blockly.Theme.defineTheme("a", {
 	name: "true_dark",
 	base: Blockly.Themes.Classic,
@@ -37,12 +40,14 @@ const DarkTheme = Blockly.Theme.defineTheme("a", {
 		cursorColour: "#d0d0d0"
 	}
 });
+
 const en = {
 	rtl: false,
 	msg: {
 		...En
 	}
 };
+
 const config = {
 	theme: DarkTheme,
 	renderer: "zelos",

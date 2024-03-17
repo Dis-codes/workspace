@@ -1,5 +1,5 @@
 import type Blockly from "blockly/core";
-import content from "./blocks/categories";
+import content from "../blockly/blocks/categories";
 const toolbox: Blockly.utils.toolbox.ToolboxDefinition = {
 	kind: "categoryToolbox",
 	contents: content

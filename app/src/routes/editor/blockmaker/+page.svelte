@@ -6,7 +6,7 @@
 	const BlockRegistryTool = new BlocklyTool();
 
 	import BlocklyComponent from "$lib/components/Blockly.svelte";
-	import javascriptGenerator from "$lib/javascript.js";
+	import javascriptGenerator from "$lib/blockly/javascript.js";
 	import Blockly from "blockly/core";
 	import type { Abstract } from "blockly/core/events/events_abstract";
 	import En from "blockly/msg/en";

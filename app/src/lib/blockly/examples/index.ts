@@ -1,4 +1,4 @@
-const test = {
+export const test = {
 	blocks: {
 		languageVersion: 0,
 		blocks: [
@@ -33,5 +33,3 @@ const test = {
 		]
 	}
 };
-
-export { test };

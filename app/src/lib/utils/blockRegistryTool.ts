@@ -1,8 +1,8 @@
 import { type BlockDefinition, WarningType } from "$lib/interfaces";
-import javascriptGenerator from "$lib/javascript";
+import javascriptGenerator from "$lib/blockly/javascript";
 import { CheckMutatorType } from "$lib/utils/mutators";
 import Blockly from "blockly/core";
-import { WarningMessages } from "../../data";
+import { WarningMessages } from "./data";
 import { BlockShape } from "./constants";
 
 const EventsToTriggerWarnings = {

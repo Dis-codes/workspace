@@ -5,7 +5,7 @@ export enum WarningType {
 	RequiredParent = "required_parent" // under which parent the block requires it to be
 }
 export interface WarningData {
-	type:  typeof WarningType;
+	type: typeof WarningType;
 	inputName?: string | string[];
 	parentType?: string | string[];
 	message: string;

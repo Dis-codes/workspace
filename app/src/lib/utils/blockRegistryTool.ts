@@ -97,7 +97,7 @@ export default class BlocklyTool {
 					name: inputName
 				});
 				// return the %1 thing blockly wants
-				return `%${  idx}`;
+				return `%${idx}`;
 			});
 			//block with type
 			const nBlock = block as BlockDefinition;
@@ -133,7 +133,7 @@ export default class BlocklyTool {
 
 			// actually define the block
 			Blockly.Blocks[`${idPrefix}${block.func}`] = {
-				init: function() {
+				init: function () {
 					this.jsonInit({
 						message0: blockDisplayContent.message0,
 						args0: blockDisplayContent.args0,
@@ -170,7 +170,7 @@ export default class BlocklyTool {
 					if (nBlock.warnings) {
 						const tBlock = this;
 
-						this.setOnChange(function(changeEvent) {
+						this.setOnChange(function (changeEvent) {
 							/*
 							 * when tab opens make the error not be added to WarningMessages
 							 *
@@ -199,31 +199,36 @@ export default class BlocklyTool {
 											const parent = key.slice(0, key.length - 3);
 
 											if (topMostParent.type !== parent) {
-												nwtext += `${warningsNew[fullId][key]  }\n`;
-												if (WarningMessages[this.id])
-													{WarningMessages[this.id][key] = `${warningsNew[fullId][key]  }\n`;}
+												nwtext += `${warningsNew[fullId][key]}\n`;
+												if (WarningMessages[this.id]) {
+													WarningMessages[this.id][key] = `${warningsNew[fullId][key]}\n`;
+												}
 											} else {
-												if (WarningMessages[this.id])
-													{if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];}
+												if (WarningMessages[this.id]) {
+													if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];
+												}
 											}
 											break;
 										case "_ri": //required input suffix
 											const input = key.slice(0, key.length - 3);
 											if (tBlock.getInput(input).connection.targetConnection === null) {
-												nwtext += `${warningsNew[fullId][key]  }\n`;
+												nwtext += `${warningsNew[fullId][key]}\n`;
 
-												if (WarningMessages[this.id])
-													{WarningMessages[this.id][key] = `${warningsNew[fullId][key]  }\n`;}
+												if (WarningMessages[this.id]) {
+													WarningMessages[this.id][key] = `${warningsNew[fullId][key]}\n`;
+												}
 											} else {
-												if (WarningMessages[this.id])
-													{if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];}
+												if (WarningMessages[this.id]) {
+													if (WarningMessages[this.id][key]) delete WarningMessages[this.id][key];
+												}
 											}
 											break;
 									}
 								}
 								if (WarningMessages[this.id]) {
-									if (Object.keys(WarningMessages[this.id]).length === 0)
-										{delete WarningMessages[this.id];}
+									if (Object.keys(WarningMessages[this.id]).length === 0) {
+										delete WarningMessages[this.id];
+									}
 								}
 								console.log(WarningMessages);
 								if (nwtext === "") {
@@ -238,7 +243,7 @@ export default class BlocklyTool {
 				}
 			};
 			// define JS gen
-			javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function(
+			javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (
 				exportblock: Blockly.Block
 			) {
 				const args: any = {};

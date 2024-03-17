@@ -245,7 +245,7 @@ function genArgs(block: any) {
 }
 // importBlocks.ts
 const categories: [] = [];
-const importBlocks = async() => {
+const importBlocks = async () => {
 	const modules = import.meta.glob("./js/**/**/*.ts");
 	for (const path in modules) {
 		const module = await modules[path]();
@@ -267,16 +267,17 @@ const importBlocks = async() => {
 		}
 		for (const genBlock of registry.blocks) {
 			if (genBlock.hidden || !genBlock.func) continue;
-			if (genBlock.label)
-				{genBlocks.push({
+			if (genBlock.label) {
+				genBlocks.push({
 					kind: "label",
 					text: genBlock.label,
 					weight: genBlock.weight
-				});}
+				});
+			}
 
 			genBlocks.push({
 				kind: "block",
-				type: `${registry.id  }_${  genBlock.func}`,
+				type: `${registry.id}_${genBlock.func}`,
 				weight: genBlock.weight,
 				inputs: genBlock.inputs || genArgs(genBlock.arguments)
 			});

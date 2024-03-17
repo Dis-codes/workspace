@@ -2,6 +2,9 @@
 	import { NavBar } from "$lib/components/Components";
 	import { onMount } from "svelte";
 
+	import BlocklyTool from "$lib/utils/blockRegistryTool";
+	const BlockRegistryTool = new BlocklyTool();
+
 	import BlocklyComponent from "$lib/components/Blockly.svelte";
 	import javascriptGenerator from "$lib/javascript.js";
 	import Blockly from "blockly/core";
@@ -126,7 +129,7 @@
             check: OutputType.${selectedOutputType}
         }`;
 	});
-	let functionCode = "return args.ARGUMENT1 + \" World!\";";
+	let functionCode = 'return args.ARGUMENT1 + " World!";';
 	let generatedBlock = "{}";
 	class Block {
 		getRegistry() {

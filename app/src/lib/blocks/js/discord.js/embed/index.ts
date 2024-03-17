@@ -144,7 +144,7 @@ class MessageBlocks {
 	}
 
 	setTitle(args: any) {
-		return `.setTitle(${args.TITLE})${args.URL ? `\nurl: ${  args.URL  })` : ""}`;
+		return `.setTitle(${args.TITLE})${args.URL ? `\nurl: ${args.URL})` : ""}`;
 	}
 
 	setColor(args: any) {
@@ -152,8 +152,8 @@ class MessageBlocks {
 	}
 
 	setAuthor(args: any) {
-		return `.setAuthor({name: ${args.AUTHOR}${args.URL ? `, url: ${  args.URL}` : ""}${
-			args.ICON ? `, icon: ${  args.ICON}` : ""
+		return `.setAuthor({name: ${args.AUTHOR}${args.URL ? `, url: ${args.URL}` : ""}${
+			args.ICON ? `, icon: ${args.ICON}` : ""
 		}})`;
 	}
 
@@ -174,7 +174,7 @@ class MessageBlocks {
 	}
 
 	setFooter(args: any) {
-		return `.setFooter({text: ${args.FOOTER}${args.ICON ? `, icon: ${  args.ICON}` : ""}})`;
+		return `.setFooter({text: ${args.FOOTER}${args.ICON ? `, icon: ${args.ICON}` : ""}})`;
 	}
 
 	setTimestamp(args: any) {

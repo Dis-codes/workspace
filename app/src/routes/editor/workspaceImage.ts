@@ -24,7 +24,7 @@ export function svgToPng_(data, width, height, callback) {
 
 	canvas.width = newWidth;
 	canvas.height = newHeight;
-	img.onload = function() {
+	img.onload = function () {
 		context.drawImage(img, 0, 0, width, height, 0, 0, canvas.width, canvas.height);
 		try {
 			const dataUri = canvas.toDataURL("image/png");
@@ -57,14 +57,13 @@ export function workspaceToSvg_(workspace, callback) {
 	const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 	svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 	svg.appendChild(clone);
-	svg.setAttribute("viewBox", `${x  } ${  y  } ${  width  } ${  height}`);
+	svg.setAttribute("viewBox", `${x} ${y} ${width} ${height}`);
 
 	svg.setAttribute(
 		"class",
-		`blocklySvg ${ 
-			workspace.options.renderer || "geras" 
-			}-renderer ${ 
-			workspace.getTheme ? `${workspace.getTheme().name  }-theme` : ""}`
+		`blocklySvg ${workspace.options.renderer || "geras"}-renderer ${
+			workspace.getTheme ? `${workspace.getTheme().name}-theme` : ""
+		}`
 	);
 	svg.setAttribute("width", width);
 	svg.setAttribute("height", height);
@@ -85,7 +84,7 @@ export function workspaceToSvg_(workspace, callback) {
 
 	let svgAsXML = new XMLSerializer().serializeToString(svg);
 	svgAsXML = svgAsXML.replace(/&nbsp/g, "&#160");
-	const data = `data:image/svg+xml,${  encodeURIComponent(svgAsXML)}`;
+	const data = `data:image/svg+xml,${encodeURIComponent(svgAsXML)}`;
 
 	svgToPng_(data, width, height, callback);
 }

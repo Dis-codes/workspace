@@ -81,4 +81,4 @@ const config = {
 		wheel: true
 	}
 };
-export { en, Blockly, config };
+export { en, Blockly, config, DarkTheme };

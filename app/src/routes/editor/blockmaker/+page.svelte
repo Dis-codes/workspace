@@ -3,101 +3,25 @@
 	import { onMount } from "svelte";
 
 	import BlocklyTool from "$lib/utils/blockRegistryTool";
-	const BlockRegistryTool = new BlocklyTool();
 
-	import BlocklyComponent from "$lib/components/Blockly.svelte";
 	import javascriptGenerator from "$lib/blockly/javascript.js";
-	import Blockly from "blockly/core";
-	import type { Abstract } from "blockly/core/events/events_abstract";
-	import En from "blockly/msg/en";
-
+	import BlocklyComponent from "$lib/components/Blockly.svelte";
 	import { BlockShape, InputShape, OutputType } from "$lib/utils/constants";
 
-	const DarkTheme = Blockly.Theme.defineTheme("a", {
-		name: "true_dark",
-		base: Blockly.Themes.Classic,
-		componentStyles: {
-			workspaceBackgroundColour: "#0C111A",
-			toolboxBackgroundColour: "#111827",
-			toolboxForegroundColour: "#ffffff",
-			flyoutBackgroundColour: "#111827",
-			flyoutForegroundColour: "#cccccc",
-			flyoutOpacity: 0.5,
-			scrollbarColour: "#797979",
-			insertionMarkerColour: "#ffffff",
-			insertionMarkerOpacity: 0.3,
-			scrollbarOpacity: 0.01,
-			cursorColour: "#d0d0d0"
-		}
-	});
-	// For styling the categories
-	class CustomCategory extends Blockly.ToolboxCategory {
-		/**
-		 * Constructor for a custom category.
-		 * @override
-		 */
-		constructor(categoryDef: any, toolbox: any, opt_parent: any) {
-			super(categoryDef, toolbox, opt_parent);
-		}
-		// /** @override */
-		// addColourBorder_(colour:any) {
-		//   this.rowDiv_.style.backgroundColor = colour;
-		// }
-	}
-	Blockly.registry.register(
-		Blockly.registry.Type.TOOLBOX_ITEM,
-		Blockly.ToolboxCategory.registrationName,
-		CustomCategory,
-		true
-	);
+	import Blockly from "blockly/core";
+	import type { Abstract } from "blockly/core/events/events_abstract";
 
-	const en = {
-		rtl: false,
-		msg: {
-			...En
-		}
-	};
-	let functionName = "myfunction";
-	const toolbox: Blockly.utils.toolbox.ToolboxDefinition = {
-		kind: "categoryToolbox",
-		contents: [
-			{
-				id: "generated",
-				kind: "category",
-				expanded: true,
-				name: "Generated Block",
-				colour: "#5b80a5",
-				contents: [
-					{
-						kind: "block",
-						type: "test_myfunction"
-					}
-				]
-			}
-		]
-	};
-	const config = {
-		theme: DarkTheme,
-		renderer: "zelos",
-		collapse: false,
-		disable: false,
-		maxBlocks: 1,
-		trashcan: false,
-		horizontalLayout: false,
-		rtl: false,
-		grid: {
-			spacing: 25,
-			length: 2,
-			colour: "#5c5a5a",
-			snap: true
-		},
-		toolbox
-	};
+	import { config, _en as en, toolbox } from "./WorkspaceConfig";
+
+	const BlockRegistryTool = new BlocklyTool();
 
 	let workspace: Blockly.WorkspaceSvg;
+	let functionName = "myfunction";
+
 	onMount(() => {
 		// dont close out instantly if changes were made
-		let refreshValue: any = undefined;
+		let refreshValue: string | undefined = undefined;
+
 		window.onbeforeunload = () => refreshValue;
 		// according to blockly, event is type Abstract
 		workspace.addChangeListener((event: Abstract) => {
@@ -116,21 +40,28 @@
 		reloadBlock();
 	});
 
+	type OutputKeyType = keyof typeof OutputType;
+	type BlockShapeType = keyof typeof BlockShape;
+	type InputShapeType = keyof typeof InputShape;
+
 	// Define variables for selector values
-	let selectedOutputType = "none";
-	let selectedBlockShape = Object.keys(BlockShape)[0];
-	let selectedInputShape = Object.keys(InputShape)[0];
-	let text = "Hello [ARGUMENT1] World!";
-	let inline = true;
-	let arguments_block = text.match(/\[(.*?)\]/g) || [];
-	let arguments_data = arguments_block.map((arg) => {
+	let selectedOutputType: OutputKeyType;
+	let selectedBlockShape: BlockShapeType;
+	let selectedInputShape: InputShapeType;
+
+	let text: string = "Hello [ARGUMENT1] World!";
+	let inline: boolean = true;
+	let arguments_block: string[] = text.match(/\[(.*?)\]/g) || [];
+	let arguments_data: string[] = arguments_block.map((arg) => {
 		return `{
             type: InputShape.${selectedInputShape},
             check: OutputType.${selectedOutputType}
         }`;
 	});
-	let functionCode = 'return args.ARGUMENT1 + " World!";';
-	let generatedBlock = "{}";
+
+	let functionCode: string = 'return args.ARGUMENT1 + " World!";';
+	let generatedBlock: string = "{}";
+
 	class Block {
 		getRegistry() {
 			return {
@@ -159,10 +90,10 @@
 	BlockRegistryTool.registerFromBlockset(new Block());
 
 	function GenerateCode() {
-		code = "te";
 		code = javascriptGenerator.workspaceToCode(workspace);
 		console.log(code);
 	}
+
 	function reloadBlock() {
 		arguments_block = [...new Set(text.match(/\[(.*?)\]/g))] || [];
 		arguments_data = arguments_block.map((arg) => {
@@ -172,32 +103,31 @@
         }`;
 		});
 		generatedBlock = `
-{
-func: "${functionName}",
-text: "${text}",
-inline: ${inline},${
-			selectedOutputType == "none" ? "" : `\noutput: OutputType.${selectedOutputType},`
-		}${selectedBlockShape == "none" ? "" : `\nshape: BlockShape.${selectedBlockShape},`}
-${
-	arguments_block.length == 0
-		? ""
-		: `arguments: {
-        ${arguments_block
-					.map((arg) => {
-						const argName = arg.slice(1, -1);
-						return `${argName}: {
-            type: InputShape.${selectedInputShape},
-            check: OutputType.${selectedOutputType}
+			{
+				func: "${functionName}",
+				text: "${text}",
+				inline: ${inline},${
+					selectedOutputType == null ? "" : "\noutput: OutputType.STRING,"
+				}${selectedBlockShape == null ? "" : "\nshape: BlockShape.STATEMENT,"}
+					${
+						arguments_block.length == 0
+							? ""
+							: `arguments: { ${arguments_block
+									.map((arg) => {
+										const argName = arg.slice(1, -1);
+										return `${argName}: {
+            	type: InputShape.VALUE,
+            	check: OutputType.${selectedOutputType}
             }}`;
-					})
-					.join(",\n")} 
-    }`
-}
-}`;
+									})
+									.join(",\n")} 
+    	}`
+					}
+	}`;
 		BlockRegistryTool.registerFromBlockset(new Block());
 		workspace.updateToolbox(toolbox);
 	}
-	let code = "e";
+	let code = "//Code here";
 </script>
 
 <NavBar />

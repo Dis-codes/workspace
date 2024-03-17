@@ -1,7 +1,7 @@
 <script lang="ts">
-	// import Account from "./Account.svelte";
 	import { page } from "$app/stores";
 	import { user } from "$lib/userStore";
+
 	let searchContent = "";
 	export let links: boolean = true;
 </script>

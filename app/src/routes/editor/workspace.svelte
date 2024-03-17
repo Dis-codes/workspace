@@ -7,15 +7,15 @@
 	import "blockly/blocks";
 
 	import BlocklyComponent from "$lib/components/Blockly.svelte";
-	import { Blockly, config, en } from "$lib/components/defaultWorkspace";
-	import { indexJs, packageJson } from "$lib/components/defaults";
-	import { test } from "$lib/components/examples";
-	import javascriptGenerator from "$lib/javascript.js";
+	import { Blockly, config, en } from "$lib/blockly/defaultWorkspace";
+	import { indexJs, packageJson } from "$lib/blockly/defaults";
+	import { test } from "$lib/blockly/examples";
+	import javascriptGenerator from "$lib/blockly/javascript.js";
 	import type { Abstract } from "blockly/core/events/events_abstract";
 	import "./blockRegister";
 	// better code export
 	import JSZip from "jszip";
-	import { WarningMessages } from "../../data";
+	import { WarningMessages } from "../../lib/utils/data";
 	import * as prettier from "prettier";
 	import * as prettierPluginBabel from "prettier/plugins/babel";
 	import * as prettierPluginEstree from "prettier/plugins/estree";

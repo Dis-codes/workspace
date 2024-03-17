@@ -46,6 +46,7 @@ module.exports = {
 		"@typescript-eslint/no-confusing-void-expression": 0,
 		"@typescript-eslint/no-non-null-assertion": 0,
 		"@typescript-eslint/no-unsafe-argument": 0,
-		"spaced-comment": 0
+		"spaced-comment": 0,
+		"eol-last": ["error", "always"]
 	}
 };

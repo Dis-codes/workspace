@@ -300,8 +300,8 @@
 								<div
 									class="flex flex-row w-fit max-w-[12rem] gap-2 p-0.5 px-2 rounded-xl {index ==
 									activeFileIndex
-										? 'bg-gray-800 text-gray-300'
-										: ''}"
+										? "bg-gray-800 text-gray-300"
+										: ""}"
 								>
 									<button class="truncate" on:click={() => setActiveFile(file)}
 										><h3 class="text-xl">
@@ -320,7 +320,7 @@
 						</div>
 					</div>
 				{/if}
-				<div class="flex-1 {files.length > 0 ? '' : 'mt-[4rem]'}">
+				<div class="flex-1 {files.length > 0 ? "" : "mt-[4rem]"}">
 					<Workspace file={files[activeFileIndex]} {event} />
 				</div>
 			{:else if page === "settings"}

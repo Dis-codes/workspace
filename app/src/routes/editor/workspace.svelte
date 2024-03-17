@@ -84,7 +84,7 @@
 				weight: 100,
 				scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
 				id: "delete_unused_blocks",
-				preconditionFn: function (e) {
+				preconditionFn: function(e) {
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
 						if (!block.isEnabled()) {
@@ -95,7 +95,7 @@
 			});
 			Blockly.ContextMenuRegistry.registry.register({
 				displayText: "Download Workspace Image",
-				preconditionFn: function () {
+				preconditionFn: function() {
 					//check if workspace is empty
 					const allBlocks = workspace.getAllBlocks(true);
 					for (const block of allBlocks) {
@@ -104,7 +104,7 @@
 						}
 					}
 				},
-				callback: function () {
+				callback: function() {
 					workspaceToSvg_(workspace, (datauri) => {
 						let a = document.createElement("a");
 						a.download = "screenshot.png";
@@ -189,7 +189,7 @@
 			if (event.target.files[0].name.endsWith(".zip")) {
 				const file = event.target.files[0];
 				const reader = new FileReader();
-				reader.onload = async (event: any) => {
+				reader.onload = async(event: any) => {
 					const contents = event.target.result;
 					try {
 						const zip = await JSZip.loadAsync(contents);

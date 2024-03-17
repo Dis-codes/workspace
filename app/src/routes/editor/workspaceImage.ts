@@ -24,7 +24,7 @@ export function svgToPng_(data, width, height, callback) {
 
 	canvas.width = newWidth;
 	canvas.height = newHeight;
-	img.onload = function () {
+	img.onload = function() {
 		context.drawImage(img, 0, 0, width, height, 0, 0, canvas.width, canvas.height);
 		try {
 			const dataUri = canvas.toDataURL("image/png");

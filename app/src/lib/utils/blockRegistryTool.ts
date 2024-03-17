@@ -133,7 +133,7 @@ export default class BlocklyTool {
 
 			// actually define the block
 			Blockly.Blocks[`${idPrefix}${block.func}`] = {
-				init: function () {
+				init: function() {
 					this.jsonInit({
 						message0: blockDisplayContent.message0,
 						args0: blockDisplayContent.args0,
@@ -170,7 +170,7 @@ export default class BlocklyTool {
 					if (nBlock.warnings) {
 						const tBlock = this;
 
-						this.setOnChange(function (changeEvent) {
+						this.setOnChange(function(changeEvent) {
 							/*
 							 * when tab opens make the error not be added to WarningMessages
 							 *
@@ -243,7 +243,7 @@ export default class BlocklyTool {
 				}
 			};
 			// define JS gen
-			javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function (
+			javascriptGenerator.forBlock[`${idPrefix}${block.func}`] = function(
 				exportblock: Blockly.Block
 			) {
 				const args: any = {};

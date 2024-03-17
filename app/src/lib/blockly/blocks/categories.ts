@@ -245,7 +245,7 @@ function genArgs(block: any) {
 }
 // importBlocks.ts
 const categories: [] = [];
-const importBlocks = async () => {
+const importBlocks = async() => {
 	const modules = import.meta.glob("./js/**/**/*.ts");
 	for (const path in modules) {
 		const module = await modules[path]();

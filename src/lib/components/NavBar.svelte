@@ -11,7 +11,7 @@
 >
 	<div class="flex-1">
 		<a href="/" class="btn btn-square btn-ghost">
-			<img src="/Images/favicon1.png" alt="logo" class="w-full h-full rounded" />
+			<img src="/Images/favicon.png" alt="logo" class="w-full h-full rounded" />
 		</a>
 		{#if $page.url.pathname === "/"}
 			<h2 class="ml-4 normal-case text-xl">DisCodes</h2>

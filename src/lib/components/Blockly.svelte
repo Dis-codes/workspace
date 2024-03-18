@@ -21,12 +21,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 	import Blockly from "blockly/core.js";
+	import { error } from "@sveltejs/kit";
 
 	export let config: Blockly.BlocklyOptions = {};
 	export let locale: Locale;
 
-	export let workspace: Blockly.WorkspaceSvg = undefined;
-	export let transform: Transform = undefined;
+	export let workspace: Blockly.WorkspaceSvg | undefined = undefined;
+	export let transform: Transform | undefined = undefined;
 
 	$: {
 		// evaluate transform to establish a reactive dependency
@@ -56,10 +57,12 @@
 			if (dom !== null) {
 				try {
 					// don't record this reloading of the workspace for undo
+					// @ts-expect-error
 					Blockly.Events.recordUndo = false;
 
 					Blockly.Xml.clearWorkspaceAndLoadFromXml(dom, workspace);
 
+					// @ts-expect-error
 					Blockly.Events.recordUndo = true;
 				} catch (ex) {
 					console.warn(ex);
@@ -79,6 +82,8 @@
 			// using an arrow function, so `this` is the component not the workspace
 			const translate = workspace.translate.bind(workspace);
 			workspace.translate = (x, y) => {
+				if (!workspace) return error(500, "No existing workspace, cannot translate it.");
+
 				translate(x, y);
 				const { scrollX, scrollY, scale } = workspace;
 				transform = { scrollX, scrollY, scale };
@@ -96,12 +101,16 @@
 
 		return {
 			update(param: InjectParams) {
+				if (!workspace) return error(500, "No existing workspace, cannot update it.");
+
 				const dom = Blockly.Xml.workspaceToDom(workspace);
 				workspace.dispose();
 				injectWorkspace(dom, param);
 			},
 
 			destroy() {
+				if (!workspace) return error(500, "No existing workspace, cannot delete it.");
+
 				workspace.dispose();
 				workspace = undefined;
 			}
@@ -109,7 +118,7 @@
 	}
 
 	function applyTransform() {
-		if (workspace === undefined) return;
+		if (workspace === undefined || transform === undefined) return;
 
 		const { scrollX, scrollY, scale } = transform;
 		if (

@@ -8,7 +8,7 @@ Ever dreamed of building your custom Discord bot without the fuss? Look no furth
 
 ## Getting Started
 
-  - ### Start Creating:
+- ### Start Creating:
 
 - - Dive into the editor to unleash your coding genius. Our structure is clean and ready for your creative chaos.
 

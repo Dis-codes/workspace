@@ -1,16 +1,18 @@
 <script lang="ts">
 	import NavBar from "$lib/components/NavBar.svelte";
-	import Workspace from "./workspace.svelte";
 	import { persisted } from "$lib/localstorage";
+
+	import Workspace from "./workspace.svelte";
 	import SettingsTab from "./SettingsTab.svelte";
-	import { WarningMessages } from "../../lib/utils/data";
+
+	import { WarningMessages } from "$lib/utils/data";
 	import { WarningType } from "$lib/interfaces";
 
 	let settings = persisted("workspace");
 	let sidebarOpen = true;
 	let files = ["index.dsc"]; // Array of file names
 	let activeFileIndex = 0; // Index of the active file
-	let commands = [];
+	let commands: string[] = [];
 	let page;
 	let event;
 	let errorIndex;
@@ -20,6 +22,7 @@
 			commands = [...commands, key];
 		}
 	}
+
 	let addCommandText = "";
 	function setActiveFile(file) {
 		page = undefined;

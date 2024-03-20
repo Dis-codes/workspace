@@ -246,11 +246,9 @@ function genArgs(block: any) {
 // importBlocks.ts
 const categories: [] = [];
 const importBlocks = async() => {
-	const modules = import.meta.glob("./js/**/**/*.ts");
+	const modules = import.meta.glob("./js/**/**/*.ts", {eager: true, import: "default"});
 	for (const path in modules) {
-		const module = await modules[path]();
-		const blockClass = module.default || module;
-		const blockInstance = new blockClass();
+		const blockInstance = await new modules[path]();
 		const registry = blockInstance.getRegistry();
 
 		if (!registry || !registry.id || registry.hidden) continue;

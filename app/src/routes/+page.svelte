@@ -28,66 +28,38 @@
 		}
 	}
 </script>
+<body class="bg-[#0c111a] min-h-screen">
 
 <NavBar />
-<SideBar>
 	<div class="ml-40 mt-40">
 		<h2 class="text-4xl font-bold">Home</h2>
-		<div class="flex flex-col gap-4 mt-6">
-			<button on:click={checkBotExists} class="btn btn-wide btn-primary">Create a new bot</button>
-			<a href="editor?open=true" class="btn btn-wide btn-secondary">Open file</a>
-		</div>
-		<div class="mt-20 mb-2">
-			<h3 class="text-xl">Recent</h3>
-		</div>
-		<div class="flex flex-col gap-4">
-			<!-- recent should be done with github interaction, also localstorage, there is no other way -->
-			{#if $settings["index.dsc"]?.blocks?.blocks.length > 0}
-				<div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
-					<div>
-						<p class="font-bold">{$settings.settings.botName}</p>
-						<p class="text-sm mt-4">updated: {formatDate($settings.settings.updatedAt)}</p>
-					</div>
-					<a href="editor" class="btn btn-primary my-auto">Edit</a>
-				</div>
-			{:else}
-				<div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
-					<div>
-						<p class="font-bold">No recent files</p>
-					</div>
-				</div>
-			{/if}
-			<!-- <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
-                    <div>
-                        <p class="font-bold">bot name</p>
-                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
-                    </div>
-                    <div class="btn btn-primary my-auto">Edit</div>
-                </div>
-                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
-                    <div>
-                        <p class="font-bold">bot name</p>
-                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
-                    </div>
-                    <div class="btn btn-primary my-auto">Edit</div>
-                </div>
-                <div class="w-96 h-16 bg-slate-700 px-2 flex flex-row justify-between rounded-lg">
-                    <div>
-                        <p class="font-bold">bot name</p>
-                        <p class="text-sm mt-4">updated: 12.10.2023 - 18:24</p>
-                    </div>
-                    <div class="btn btn-primary my-auto">Edit</div>
-                </div> -->
-		</div>
 	</div>
-</SideBar>
+	<div class="border border-gray-800 bg-[#111827] shadow-xl mx-40 rounded-xl mt-10 h-auto justify-end">
+	<div class="p-8">
+	<div class="flex-auto card card-compact mx-auto w-80 bg-[#10141d] border border-black duration-[500ms] hover:shadow-2xl hover:border-[#334fdb]">
+    <figure><img src="/Images/image2x.png" alt="Loading..." /></figure>
+    <div class="card-body">
+      <h2 class="card-title">New file</h2>
+      <p>Create a new blockly file, the discord.js library is installed by default.</p>
+      <div class="card-actions justify-end">
+	<button on:click={checkBotExists} class="bg-[#283b9b] text-white px-4 py-2 rounded-xl shadow-xl hover:bg-[#334fdb]">
+		Create a new bot
+	</button>
+      </div>
+    </div>
+  </div>
+  <div class="mt-auto mb-7">
+	<a href="editor?open=true" class="btn border-black hover:border-[#334fdb] btn-sm fixed right-52">Open file</a>
+	</div>
+  </div>
+  </div>
 
 <dialog id="botexists" class="modal">
 	<div class="modal-box">
 		<h3 class="font-bold text-3xl text-white">You are trying to create a new bot</h3>
-		<p>
-			You already have a bot <span class="font-bold">{$settings.settings.botName}</span> saved locally,
-			are you sure you want to overwrite it?
+		<p>You already have a bot <span class="font-bold">
+			{$settings.settings.botName}
+		</span> saved locally,are you sure you want to overwrite it?
 		</p>
 		<div class="modal-action">
 			<form method="dialog">
@@ -97,3 +69,4 @@
 		</div>
 	</div>
 </dialog>
+</body>

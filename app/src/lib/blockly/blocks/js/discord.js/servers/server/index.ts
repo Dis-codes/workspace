@@ -244,6 +244,83 @@ class ServerBlocks {
 							]
 						}
 					}
+				},
+				{
+					func: "get_auditLog",
+					text: "Get audit log for server [INPUT]",
+					color: "#e3317a",
+					output: OutputType.ARRAY,
+					inline: true,
+					arguments: {
+						INPUT: {
+							type: InputShape.VALUE,
+							check: OutputType.DISCORD.SERVER
+						}
+					}
+				},
+				{
+					func: "log_hasReason",
+					text: "Log [INPUT] has reason?",
+					color: "#e3317a",
+					output: OutputType.BOOLEAN,
+					inline: true,
+					arguments: {
+						INPUT: {
+							type: InputShape.VALUE,
+							check: OutputType.DISCORD.AUDIT_LOG
+						}
+					}
+				},
+				{
+					func: "log_getInfo",
+					text: "Get info for audit log [INPUT]",
+					color: "#e3317a",
+					output: OutputType.ARRAY,
+					inline: true,
+					arguments: {
+						INPUT: {
+							type: InputShape.MENU,
+							options: [
+								["Target", "target"],
+								["Target Type", "targetType"],
+								["Action", "action"],
+								["Action Type", "actionType"],
+								["Reason", "reason"],
+								["User", "user"],
+								["Changes", "changes"]
+							]
+						}
+					}
+				},
+				{
+					func: "log_changes",
+					text: "Get changes for audit log [INPUT]",
+					color: "#e3317a",
+					output: OutputType.ARRAY,
+					inline: true,
+					arguments: {
+						INPUT: {
+							type: InputShape.VALUE,
+							check: OutputType.DISCORD.AUDIT_LOG
+						}
+					}
+				},
+				{
+					func: "log_get_change",
+					text: "Get [INPUT] change for audit log",
+					color: "#e3317a",
+					output: OutputType.STRING,
+					inline: true,
+					arguments: {
+						INPUT: {
+							type: InputShape.MENU,
+							options: [
+								["name", "name"],
+								["old", "old"],
+								["new", "new"]
+							]
+						}
+					}
 				}
 			]
 		};

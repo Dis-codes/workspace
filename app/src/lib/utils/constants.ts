@@ -12,7 +12,8 @@ export const OutputType = {
 		CHANNEL: ["Channel"],
 		MESSAGE: ["Message"],
 		MEMBER: ["Member", "User"],
-		ROLE: ["Role"]
+		ROLE: ["Role"],
+		AUDIT_LOG: ["Audit"]
 	}
 };
 

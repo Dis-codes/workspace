@@ -1,5 +1,4 @@
-import { BlockShape, InputShape, OutputType } from "$lib/utils/blockRegistryTool";
-import {MutatorType} from "$lib/interfaces/mutator";
+import { BlockShape, InputShape, MutatorType, OutputType } from "$lib/utils/constants";
 
 class SlashCommands {
 	getRegistry() {
